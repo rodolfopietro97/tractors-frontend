@@ -32,7 +32,7 @@ function ContentLoading({
    * Loading with errors component
    */
   const LoadingWithErrors: JSX.Element = (
-    <div className='text-center text-red-500'>{error}</div>
+    <div className='text-center text-red-500'>{JSON.stringify(error)}</div>
   );
 
   return (
