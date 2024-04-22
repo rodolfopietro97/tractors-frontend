@@ -18,7 +18,7 @@ function BrandOnlineContent({
   return (
     <div>
       {/*SDF Brand*/}
-      {brandName.toLowerCase() === 'sdf' && data.credentials.jwt && (
+      {brandName.toLowerCase().includes('sdf') && data.credentials.jwt && (
         <form action={data.url}>
           <input type='hidden' name='jwt' value={data.credentials.jwt} />
           <Button type='submit'>Vai al portale</Button>

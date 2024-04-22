@@ -32,6 +32,8 @@ function BrandListButton({
         >
           <img src={brand.image} alt={brand.name} className='max-w-[265px]' />
         </Button>
+        {/*TODO: Remove when images are available*/}
+        <p>{brand.name}</p>
         {showBrandMenu && (
           /*Menu for online or PDF brand catalog*/
           <div
