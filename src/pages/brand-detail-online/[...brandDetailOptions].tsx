@@ -5,7 +5,7 @@ import { useBrandOnline } from '@/hooks';
 import { ContentLoading } from '@/app/components/ContentLoading';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
 import { NextPageWithLayout } from '@/pages/_app';
-import Link from 'next/link';
+import { BrandOnlineContent } from '@/app/components/BrandOnlineContent';
 
 /**
  * Brand detail page
@@ -31,42 +31,24 @@ const BrandDetailOnline: NextPageWithLayout = () => {
   }, [router.query.brandDetailOptions]);
 
   // Get brand files
-  const { data, error, isLoading } = useBrandOnline(
-    token as string,
-    brandName as string
-  );
+  const {
+    data: brandOnlineData,
+    error,
+    isLoading,
+  } = useBrandOnline(token as string, brandName as string);
 
   // If brand online has not credentials, redirect to login page of brand website
-  useEffect(() => {
-    if (!isLoading && !error && data === undefined) router.push(data.url);
-  }, [data]);
+  // useEffect(() => {
+  //   if (!isLoading && !error && data === undefined) router.push(data.url);
+  // }, [data]);
 
   return (
     <main>
       <ContentLoading
-        isLoading={isLoading || data?.code == 'token_not_valid'}
+        isLoading={isLoading || brandOnlineData === undefined}
         error={error}
       >
-        <>
-          {data && (
-            <>
-              <h4>
-                Connettiti al sito{' '}
-                <Link href={data.url} className='text-blue-500'>
-                  {data.url}
-                </Link>{' '}
-                con le seguenti credenziali:
-              </h4>
-              <br />
-              <p>
-                <b>Username</b>: {data.credentials.username}
-              </p>
-              <p>
-                <b>Password</b>: {data.credentials.password}
-              </p>
-            </>
-          )}
-        </>
+        <BrandOnlineContent brandName={brandName} data={brandOnlineData} />
       </ContentLoading>
     </main>
   );
