@@ -19,13 +19,6 @@ type CustomerRegistrationAndUpdateFormInputs = {
   // codice fiscale
   fiscal_code: string;
 
-  // Nazione, regione, provincia, città, indirizzo (menu a tendina tranne per indirizzo)
-  // nation: string,
-  region: string;
-  council: string;
-  city: string;
-  address: string;
-
   // Telefono, email
   phone_number: string;
 };
@@ -74,16 +67,10 @@ function CustomerRegistrationAndUpdateForm({
     // Reset errors and success
     setRegistrationError(null);
     setIsSubmitting(true);
-
     const request = await createUpdateCustomerFetcher(
       update ? ENDPOINTS.update_customer : ENDPOINTS.create_customer,
       token as string,
       {
-        nation: 'Italia',
-        region: data.region,
-        council: data.council,
-        city: data.city,
-        address: data.address,
         name: data.name,
         surname: data.surname,
         fiscal_code: data.fiscal_code,
@@ -105,21 +92,8 @@ function CustomerRegistrationAndUpdateForm({
     console.log(Object.keys(response));
     // Update
     if (update) {
-      if (
-        JSON.stringify(Object.keys(response)) ===
-        JSON.stringify([
-          'id',
-          'name',
-          'surname',
-          'fiscal_code',
-          'phone_number',
-          'nation',
-          'region',
-          'council',
-          'city',
-          'address',
-        ])
-      ) {
+      // @TODO: Improve this check
+      if (JSON.stringify(Object.keys(response)).includes('id')) {
         // Clean previous errors
         setRegistrationError(null);
         alert('Cliente modificato con successo!');
@@ -188,56 +162,6 @@ function CustomerRegistrationAndUpdateForm({
           }}
           errors={errors}
         />
-
-        {/* Regione, città */}
-        <FormsLayout.PairRow>
-          <TextInput
-            id='region'
-            type='text'
-            label='Regione'
-            register={register}
-            options={{
-              required: 'Inserisci la regione',
-            }}
-            errors={errors}
-          />
-
-          <TextInput
-            id='city'
-            type='text'
-            label='Comune'
-            register={register}
-            options={{
-              required: 'Inserisci il comunes',
-            }}
-            errors={errors}
-          />
-        </FormsLayout.PairRow>
-
-        {/* Provincia, indirizzo */}
-        <FormsLayout.PairRow>
-          <TextInput
-            id='council'
-            type='text'
-            label='Provincia'
-            register={register}
-            options={{
-              required: 'Inserisci la provincia',
-            }}
-            errors={errors}
-          />
-
-          <TextInput
-            id='address'
-            type='text'
-            label='Indirizzo'
-            register={register}
-            options={{
-              required: "Inserisci l'indirizzo",
-            }}
-            errors={errors}
-          />
-        </FormsLayout.PairRow>
 
         {/* Numero */}
         <TextInput

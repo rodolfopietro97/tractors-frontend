@@ -71,11 +71,6 @@ const createUpdateCustomerFetcher = (
   url: string,
   authenticationToken: string,
   customerToRegisterOrUpdate: {
-    nation: string;
-    region: string;
-    council: string;
-    city: string;
-    address: string;
     name: string;
     surname: string;
     fiscal_code: string;
@@ -356,6 +351,34 @@ const getFileSignedUrlFetcher = (
     }),
   });
 
+/**
+ * Get all products available
+ */
+const productsListFetcher = (url: string): Promise<Response> =>
+  fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+  });
+
+/**
+ * Get all products available
+ */
+const createCheckoutSession = (
+  url: string,
+  authenticationToken: {
+    token: string;
+  }
+): Promise<Response> =>
+  fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      Authorization: 'Bearer ' + authenticationToken.token,
+    },
+  });
+
 export {
   brandsListFether,
   brandFilesFether,
@@ -377,4 +400,6 @@ export {
   getCompanyFetcher,
   getBrandOnlineFetcher,
   getFileSignedUrlFetcher,
+  productsListFetcher,
+  createCheckoutSession,
 };
