@@ -73,8 +73,6 @@ const createUpdateCustomerFetcher = (
   customerToRegisterOrUpdate: {
     name: string;
     surname: string;
-    fiscal_code: string;
-    phone_number: string;
   },
   update: boolean
 ): Promise<Response> =>
@@ -363,9 +361,26 @@ const productsListFetcher = (url: string): Promise<Response> =>
   });
 
 /**
- * Get all products available
+ * Create a checkout session
  */
-const createCheckoutSession = (
+const createCheckoutSessionFetcher = (
+  url: string,
+  authenticationToken: {
+    token: string;
+  }
+): Promise<Response> =>
+  fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      Authorization: 'Bearer ' + authenticationToken.token,
+    },
+  });
+
+/**
+ * Create a checkout session
+ */
+const subscriptionFetcher = (
   url: string,
   authenticationToken: {
     token: string;
@@ -401,5 +416,6 @@ export {
   getBrandOnlineFetcher,
   getFileSignedUrlFetcher,
   productsListFetcher,
-  createCheckoutSession,
+  createCheckoutSessionFetcher,
+  subscriptionFetcher,
 };

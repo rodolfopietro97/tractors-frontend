@@ -9,6 +9,8 @@ import {
   userDetailsFetcher,
   getBrandOnlineFetcher,
   getFileSignedUrlFetcher,
+  productsListFetcher,
+  subscriptionFetcher,
 } from '@/fetchers';
 import useSWR from 'swr';
 
@@ -112,9 +114,9 @@ function useUserDetails(token: string) {
  */
 function useBrandOnline(token: string, brandName: string) {
   return useSWR(
-    brandName !== undefined ? `${ENDPOINTS.brand_online}/${brandName}` : null,
+    brandName !== undefined ? `${ENDPOINTS.brand_online}${brandName}` : null,
     (url: string) =>
-      getBrandOnlineFetcher(`${ENDPOINTS.brand_online}/${brandName}`, {
+      getBrandOnlineFetcher(`${ENDPOINTS.brand_online}${brandName}`, {
         token: token as string,
       }).then((res) => res.json())
   );
@@ -141,6 +143,29 @@ function useFileSignedUrl(token: string, filePath: string) {
   );
 }
 
+/**
+ * Fetch the list of Brands
+ */
+function useProductsList() {
+  return useSWR(ENDPOINTS.products_list, (url) =>
+    productsListFetcher(url).then((res) => res.json())
+  );
+}
+
+/**
+ * Get my subscriptions
+ */
+function useSubscription(token: string) {
+  return useSWR(
+    token ? ENDPOINTS.subscription : null,
+    (url) =>
+      subscriptionFetcher(url, { token: token as string }).then((res) =>
+        res.json()
+      ),
+    { refreshInterval: 3000 }
+  );
+}
+
 export {
   useBrandFilesList,
   useBrandsList,
@@ -151,4 +176,6 @@ export {
   useUserDetails,
   useBrandOnline,
   useFileSignedUrl,
+  useProductsList,
+  useSubscription,
 };

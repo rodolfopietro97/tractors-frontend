@@ -4,7 +4,11 @@ import { RowColHelper } from '@/app/components/RowColHelper';
 import { LinkButton } from '@/app/components/ui/Button';
 import { AuthenticationContext } from '@/contexts';
 import { useUserDetails } from '@/hooks';
-import { faBook, faUser } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBook,
+  faUser,
+  faCreditCard,
+} from '@fortawesome/free-solid-svg-icons';
 import { ReactElement, useContext } from 'react';
 import { NextPageWithLayout } from '@/pages/_app';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
@@ -30,7 +34,7 @@ const Dashboard: NextPageWithLayout = () => {
             {data?.email && (
               <RowColHelper
                 className='my-2 flex flex-col'
-                classNames={['my-10', 'my-2', 'my-2']}
+                classNames={['my-10', 'my-2', 'my-2', 'my-2']}
               >
                 <h1 className='text-center text-2xl'>Welcome {data.email}</h1>
                 <LinkButton href='/profile' icon={faUser}>
@@ -38,6 +42,11 @@ const Dashboard: NextPageWithLayout = () => {
                 </LinkButton>
                 <LinkButton href='/brands' icon={faBook}>
                   <span className='mx-2 text-sm'>Consulta il catalogo</span>
+                </LinkButton>
+                <LinkButton href='/subscription' icon={faCreditCard}>
+                  <span className='mx-2 text-sm'>
+                    Sottoscrizioni e Pagamento
+                  </span>
                 </LinkButton>
               </RowColHelper>
             )}

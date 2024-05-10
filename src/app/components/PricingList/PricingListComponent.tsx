@@ -1,6 +1,16 @@
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { LinkButton } from '../ui/Button';
+import { Button, LinkButton } from '../ui/Button';
+import { useBrandsList, useGetCustomer, useUserDetails } from '@/hooks';
+import {
+  PricePlanType,
+  ProductFuturePlanType,
+} from '@/app/components/PricingList/types.d';
+import { useContext, useState } from 'react';
+import { AuthenticationContext } from '@/contexts';
+import getStripe from '@/utils/get-stripe';
+import { Stripe } from '@stripe/stripe-js';
+import { createCheckoutSessionFetcher, ENDPOINTS } from '@/fetchers';
 
 /**
  * Component for price future of a plan
@@ -14,6 +24,36 @@ function PlanFutureComponent({ text }: { text: string }): JSX.Element {
   );
 }
 
+function CheckoutButton({
+  priceId,
+  token,
+}: {
+  priceId: string;
+  token: string;
+}): JSX.Element {
+  return (
+    <Button
+      onClick={async () => {
+        // 1 - Get checkout session id
+        const request = await createCheckoutSessionFetcher(
+          `${ENDPOINTS.create_checkout_session}${priceId}`,
+          { token: token }
+        );
+        const data = await request.json();
+
+        // 2 - Redirect to stripe checkout
+        const stripe = (await getStripe()) as Stripe;
+        const { error } = await stripe.redirectToCheckout({
+          sessionId: data.session_id,
+        });
+        console.warn(error.message);
+      }}
+    >
+      Get started
+    </Button>
+  );
+}
+
 /**
  * Single price plan component
  */
@@ -21,32 +61,28 @@ function PricingPlanComponent({
   planTitle,
   description,
   price,
-  futures,
-  period,
-  href,
 }: {
   planTitle: string;
   description: string;
-  price: number;
-  futures: Array<string>;
-  period: string;
-  href: string;
+  price: PricePlanType;
 }): JSX.Element {
+  // Authentication context
+  const { token, isJWTValid } = useContext(AuthenticationContext);
+
   return (
     <div className='mx-auto flex max-w-lg flex-col rounded-lg border border-gray-100 bg-white p-6 text-center text-gray-900 shadow xl:p-8'>
       <h3 className='mb-4 text-2xl font-semibold'>{planTitle}</h3>
       <p className='font-light text-gray-500 sm:text-lg'>{description}</p>
       <div className='my-8 flex items-baseline justify-center'>
-        <span className='mr-2 text-5xl font-extrabold'>&euro;{price}</span>
-        <span className='text-gray-500'>/{period}</span>
+        <span className='mr-2 text-5xl font-extrabold'>
+          &euro;{price.price}
+        </span>
       </div>
-      {/* Futures of Plan */}
-      <ul role='list' className='mb-8 space-y-4 text-left'>
-        {futures.map((future, index) => {
-          return <PlanFutureComponent key={index} text={future} />;
-        })}
-      </ul>
-      <LinkButton href={href}>Get started</LinkButton>
+      {token !== null && isJWTValid ? (
+        <CheckoutButton priceId={price.id} token={token}></CheckoutButton>
+      ) : (
+        <LinkButton href='/register'>Get started</LinkButton>
+      )}
     </div>
   );
 }
@@ -55,50 +91,31 @@ function PricingPlanComponent({
  * PricingList component
  */
 function PricingListComponent({
-  monthlyPrice,
-  annualPrice,
+  productFutures,
 }: {
-  monthlyPrice: number;
-  annualPrice: number;
+  productFutures: ProductFuturePlanType[];
 }): JSX.Element {
   return (
     <section className='bg-white'>
       <div className='mx-auto max-w-screen-xl px-4 py-8 lg:px-6 lg:py-16'>
-        {/* Header */}
         <div className='mx-auto mb-8 max-w-screen-md text-center lg:mb-12'>
           <h2 className='mb-4 text-4xl font-extrabold tracking-tight text-gray-900'>
             I nostri prezzi
           </h2>
         </div>
 
+        {/*Futures*/}
         <div className='space-y-8 sm:gap-6 lg:grid lg:grid-cols-2 lg:space-y-0 xl:gap-10'>
-          {/* Monthly price plan */}
-          <PricingPlanComponent
-            planTitle='Mensile'
-            description='Opzione migliore se vuoi usare il servizio mese per mese.'
-            price={monthlyPrice}
-            period='mese'
-            futures={[
-              'Caratteristica 1 ...',
-              'Caratteristica 2 ...',
-              'Caratteristica 3 ...',
-            ]}
-            href='/register'
-          />
-
-          {/* Annual price plan */}
-          <PricingPlanComponent
-            planTitle='Annuale'
-            description={`Opzione migliore se vuoi usare il servizio per un anno risparmiando così ${monthlyPrice * 12 - annualPrice} euro`}
-            price={annualPrice}
-            period='anno'
-            futures={[
-              'Caratteristica 1 ...',
-              'Caratteristica 2 ...',
-              'Caratteristica 3 ...',
-            ]}
-            href='/register'
-          />
+          {productFutures.map((productFuture, index) => {
+            return (
+              <PricingPlanComponent
+                key={index}
+                planTitle={productFuture.name}
+                description={productFuture.description}
+                price={productFuture.price}
+              />
+            );
+          })}
         </div>
       </div>
     </section>

@@ -38,8 +38,13 @@ const ENDPOINTS = {
   // Brands
   brands_list: `${API_URL}/brands/list/`,
   brands_files: `${API_URL}/brands/files/`,
-  brand_online: `${API_URL}/brands/brand-online`,
+  brand_online: `${API_URL}/brands/brand-online/`,
   file_signed_url: `${API_URL}/brands/file-signed-url/`,
+
+  // Payments
+  products_list: `${API_URL}/payments/products/`,
+  create_checkout_session: `${API_URL}/payments/create-checkout-session/`,
+  subscription: `${API_URL}/payments/get-subscription/`,
 };
 
 export { ENDPOINTS, API_URL };

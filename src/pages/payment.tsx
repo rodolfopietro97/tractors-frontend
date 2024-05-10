@@ -25,6 +25,19 @@ declare global {
   }
 }
 
+const PriceTable = ({ email }: { email: string }): JSX.Element => {
+  return (
+    <>
+      <stripe-pricing-table
+        pricing-table-id='prctbl_1OX3gIKyz5Ny4kZHOX95JJIg'
+        publishable-key='pk_test_51OX1FsKyz5Ny4kZHWds3666E5bGGznJ448rU3y34NeauIvozheEPkRsIj7Z9jyfseF4nNp5fJ4MafPR0eEOLMnfp00lmriBy5s'
+        client-reference-id={email}
+      ></stripe-pricing-table>
+      {email}
+    </>
+  );
+};
+
 /**
  * Dashboard page
  */
@@ -46,19 +59,6 @@ const Payment: NextPageWithLayout = () => {
     loadStripeInstance();
   }, []);
 
-  const PriceTable = ({ email }: { email: string }): JSX.Element => {
-    return (
-      <>
-        {email}
-        <stripe-pricing-table
-          pricing-table-id='prctbl_1OX3gIKyz5Ny4kZHOX95JJIg'
-          publishable-key='pk_test_51OX1FsKyz5Ny4kZHWds3666E5bGGznJ448rU3y34NeauIvozheEPkRsIj7Z9jyfseF4nNp5fJ4MafPR0eEOLMnfp00lmriBy5s'
-          client-reference-id={email}
-        ></stripe-pricing-table>
-      </>
-    );
-  };
-
   return (
     <>
       <Script
@@ -68,19 +68,9 @@ const Payment: NextPageWithLayout = () => {
       ></Script>
       <main>
         <div>
-          {JSON.stringify(stripe)}
           {data?.email !== null && data?.email !== undefined && (
             <PriceTable email={data.email} />
           )}
-          {/*<ContentLoading isLoading={isLoading || data?.code == "token_not_valid"} error={error}>*/}
-          {/*    <>*/}
-          {/*{data?.email && <>*/}
-          {/*<stripe-pricing-table pricing-table-id="prctbl_1OX27zKyz5Ny4kZH0dpaMK8L"*/}
-          {/*                      publishable-key="pk_test_51OX1FsKyz5Ny4kZHWds3666E5bGGznJ448rU3y34NeauIvozheEPkRsIj7Z9jyfseF4nNp5fJ4MafPR0eEOLMnfp00lmriBy5s">*/}
-          {/*</stripe-pricing-table>*/}
-          {/*</>}*/}
-          {/*</>*/}
-          {/*</ContentLoading>*/}
         </div>
       </main>
     </>

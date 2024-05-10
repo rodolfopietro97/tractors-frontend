@@ -16,7 +16,7 @@ const redirectMap: RedirectMapType = {
   loggedIn: ['/register-company', '/profile', '/dashboard', '/brands'],
   notLoggedIn: [
     '/register',
-    '/pricing',
+    // '/pricing',
     'password-reset-confirm/[...userParameters]',
     '/login',
     '/',

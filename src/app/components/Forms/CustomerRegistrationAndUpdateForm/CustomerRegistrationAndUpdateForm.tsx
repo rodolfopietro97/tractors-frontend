@@ -73,8 +73,6 @@ function CustomerRegistrationAndUpdateForm({
       {
         name: data.name,
         surname: data.surname,
-        fiscal_code: data.fiscal_code,
-        phone_number: data.phone_number,
       },
       update
     );
@@ -89,7 +87,6 @@ function CustomerRegistrationAndUpdateForm({
    * @param response Response from backend
    */
   const handleResponse = (response: any) => {
-    console.log(Object.keys(response));
     // Update
     if (update) {
       // @TODO: Improve this check
@@ -149,31 +146,6 @@ function CustomerRegistrationAndUpdateForm({
             errors={errors}
           />
         </FormsLayout.PairRow>
-
-        {/* Fiscal code */}
-        <TextInput
-          id='fiscal_code'
-          type='text'
-          maxLength={16}
-          label='Codice fiscale'
-          register={register}
-          options={{
-            required: 'Inserisci il codice fiscale',
-          }}
-          errors={errors}
-        />
-
-        {/* Numero */}
-        <TextInput
-          id='phone_number'
-          type='text'
-          label='Numero di telefono'
-          register={register}
-          options={{
-            required: 'Inserisci il numero di telefono',
-          }}
-          errors={errors}
-        />
 
         {/* Register or Update button */}
         <>
