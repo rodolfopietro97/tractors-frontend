@@ -8,7 +8,7 @@ import { Button } from '../../ui/Button';
 import { FormsLayout } from '..';
 
 /**
- * Inputs type for contacts form
+ * Inputs type for the contact form
  */
 type ContactsFormInputs = {
   email: string;
@@ -19,7 +19,7 @@ type ContactsFormInputs = {
 };
 
 /**
- * Contacts Form component
+ * Contact Form component
  */
 function ContactsForm(): JSX.Element {
   // Use react-hook-form to manage form state
