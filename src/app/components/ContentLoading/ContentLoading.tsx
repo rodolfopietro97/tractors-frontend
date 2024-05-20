@@ -1,4 +1,4 @@
-import { Overlay } from '../Overlay';
+import { Spinner } from '@chakra-ui/react';
 
 /**
  * Content loading component.
@@ -20,7 +20,13 @@ function ContentLoading({
     <>
       {isLoading ? (
         <div className='flex w-full flex-row justify-center text-center'>
-          <Overlay className='h-20' />
+          <Spinner
+            thickness='4px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='blue.500'
+            size='xl'
+          />
         </div>
       ) : (
         children
