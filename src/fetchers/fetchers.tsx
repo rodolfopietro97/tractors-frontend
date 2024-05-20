@@ -1,47 +1,73 @@
-/**
- * Fetcher used to get brands list
- */
-const brandsListFether = (url: string): Promise<Response> =>
-  fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-  });
+import {
+  FetcherBodyType,
+  FetcherMethodType,
+  UrlType,
+} from '@/fetchers/types.d';
+import { API_URL } from '@/fetchers/endpoints';
 
 /**
- * Fetcher used to get brands files
+ * Generic fetcher.
+ * Depending on the method type, url and data, it will fetch the data.
+ * Elegant way to fetch and type the data.
+ *
+ * @param methodType The method type (GET, POST, PUT, DELETE)
+ * @param url The url to fetch
+ * @param data The data to send (token and body)
+ * @returns The response fetcher
  */
-const brandFilesFether = (
-  url: string,
-  authenticationToken: {
-    token: string;
-  }
-): Promise<Response> =>
-  fetch(`${url}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      Authorization: 'Bearer ' + authenticationToken.token,
-    },
-  });
+async function genericFetcher<
+  TFetcherMethodType extends FetcherMethodType,
+  TUrlType extends UrlType,
+  TFetcherBodyType extends FetcherBodyType<TUrlType>,
+>(
+  methodType: TFetcherMethodType,
+  url: TUrlType,
+  data: {
+    token?: string;
+    body: TFetcherBodyType;
+  },
+  customUrlCallback?: (url: TUrlType) => string
+): Promise<Response> {
+  console.log('genericFetcher', methodType, url, data, customUrlCallback);
+  // Initialize headers depending on the authentication token
+  const headers: HeadersInit =
+    data.token !== undefined
+      ? // Authorization header
+        {
+          'Content-Type': 'application/json; charset=UTF-8',
+          Authorization: `Bearer ${data.token}`,
+        }
+      : // No Authorization header
+        {
+          'Content-Type': 'application/json; charset=UTF-8',
+        };
 
-/**
- * Fetcher used to check if customer is registered
- */
-const checkCustomerRegistrationFetcher = (
-  url: string,
-  authenticationToken: {
-    token: string;
-  }
-): Promise<Response> =>
-  fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      Authorization: 'Bearer ' + authenticationToken.token,
-    },
-  });
+  // Init url
+  const requestUrl =
+    customUrlCallback !== undefined
+      ? `${API_URL}/${customUrlCallback(url)}`
+      : `${API_URL}/${url}`;
+
+  if (url === 'brands/brand-online/') console.log('requestUrl', requestUrl);
+
+  // Init fetcher params
+  const fetcherParams =
+    data.body !== null
+      ? // Add body if it is not null
+        {
+          method: methodType,
+          headers: headers,
+          body: JSON.stringify(data.body),
+        }
+      : // No body on the request
+        {
+          method: methodType,
+          headers: headers,
+        };
+
+  // Return fetcher depending on the request body
+  return fetch(requestUrl, fetcherParams);
+}
 
 /**
  * Fetcher used to send email from contacts form
@@ -222,21 +248,6 @@ const tokenVerifyFetcher = (
   });
 
 /**
- * Fetcher for user details
- */
-const userDetailsFetcher = (
-  url: string,
-  authenticationToken: { token: string }
-): Promise<Response> =>
-  fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      Authorization: 'Bearer ' + authenticationToken.token,
-    },
-  });
-
-/**
  * Fetcher used to create and update company
  */
 const createUpdateCompanyFetcher = (
@@ -261,106 +272,6 @@ const createUpdateCompanyFetcher = (
   });
 
 /**
- * Fetcher used to check if company is registered
- */
-const checkCompanyRegistrationFetcher = (
-  url: string,
-  authenticationToken: {
-    token: string;
-  }
-): Promise<Response> =>
-  fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      Authorization: 'Bearer ' + authenticationToken.token,
-    },
-  });
-
-/**
- * Get customer data
- */
-const getCustomerFetcher = (
-  url: string,
-  authenticationToken: {
-    token: string;
-  }
-): Promise<Response> =>
-  fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      Authorization: 'Bearer ' + authenticationToken.token,
-    },
-  });
-
-/**
- * Get company data
- */
-const getCompanyFetcher = (
-  url: string,
-  authenticationToken: {
-    token: string;
-  }
-): Promise<Response> =>
-  fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      Authorization: 'Bearer ' + authenticationToken.token,
-    },
-  });
-
-/**
- * Brands online fetchers
- */
-const getBrandOnlineFetcher = (
-  url: string,
-  authenticationToken: {
-    token: string;
-  }
-): Promise<Response> =>
-  fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      Authorization: 'Bearer ' + authenticationToken.token,
-    },
-  });
-
-/**
- * Fetcher used for signed urls' files
- */
-const getFileSignedUrlFetcher = (
-  url: string,
-  filePath: string,
-  authenticationToken: {
-    token: string;
-  }
-): Promise<Response> =>
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      Authorization: 'Bearer ' + authenticationToken.token,
-    },
-    body: JSON.stringify({
-      file_path: filePath,
-    }),
-  });
-
-/**
- * Get all products available
- */
-const productsListFetcher = (url: string): Promise<Response> =>
-  fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-  });
-
-/**
  * Create a checkout session
  */
 const createCheckoutSessionFetcher = (
@@ -377,27 +288,7 @@ const createCheckoutSessionFetcher = (
     },
   });
 
-/**
- * Create a checkout session
- */
-const subscriptionFetcher = (
-  url: string,
-  authenticationToken: {
-    token: string;
-  }
-): Promise<Response> =>
-  fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      Authorization: 'Bearer ' + authenticationToken.token,
-    },
-  });
-
 export {
-  brandsListFether,
-  brandFilesFether,
-  checkCustomerRegistrationFetcher,
   contactsFormFetcher,
   createUpdateCustomerFetcher,
   emailConfirmFetcher,
@@ -408,14 +299,7 @@ export {
   signUpFetcher,
   tokenRefreshFetcher,
   tokenVerifyFetcher,
-  userDetailsFetcher,
   createUpdateCompanyFetcher,
-  checkCompanyRegistrationFetcher,
-  getCustomerFetcher,
-  getCompanyFetcher,
-  getBrandOnlineFetcher,
-  getFileSignedUrlFetcher,
-  productsListFetcher,
   createCheckoutSessionFetcher,
-  subscriptionFetcher,
+  genericFetcher,
 };

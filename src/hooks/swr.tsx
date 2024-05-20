@@ -1,30 +1,25 @@
-import {
-  ENDPOINTS,
-  brandFilesFether,
-  brandsListFether,
-  checkCompanyRegistrationFetcher,
-  checkCustomerRegistrationFetcher,
-  getCompanyFetcher,
-  getCustomerFetcher,
-  userDetailsFetcher,
-  getBrandOnlineFetcher,
-  getFileSignedUrlFetcher,
-  productsListFetcher,
-  subscriptionFetcher,
-} from '@/fetchers';
+import { genericFetcher, UrlType, FetcherBodyType } from '@/fetchers';
 import useSWR from 'swr';
 
 /**
- * Check company registration
+ * Get all PDF files of a brand
  */
-function useBrandFilesList(token: string, brandName: string) {
-  return useSWR(
-    brandName !== undefined ? `${ENDPOINTS.brands_files}${brandName}` : null,
-    // @TODO refactor this url unused in all!
-    (url: string) =>
-      brandFilesFether(`${ENDPOINTS.brands_files}${brandName}`, {
-        token: token as string,
-      }).then((res) => res.json())
+function useBrandFilesList(token: string | null, brandName: string | null) {
+  // Set url
+  const url: UrlType =
+    brandName !== null && token !== null ? 'brands/files/' : null;
+
+  // Set body
+  const body: FetcherBodyType<'brands/files/'> = null;
+
+  // Return SWR
+  return useSWR(url as 'brands/files/', (url) =>
+    genericFetcher(
+      'GET',
+      url as 'brands/files/',
+      { token: token as string, body },
+      (url) => `${url}${brandName}`
+    ).then((res) => res.json())
   );
 }
 
@@ -32,9 +27,17 @@ function useBrandFilesList(token: string, brandName: string) {
  * Fetch the list of Brands
  */
 function useBrandsList() {
+  // Set url
+  const url = 'brands/list/';
+
+  // Set body
+  const body: FetcherBodyType<'brands/list/'> = null;
+
+  // Return SWR
   return useSWR(
-    ENDPOINTS.brands_list,
-    (url) => brandsListFether(url).then((res) => res.json()),
+    url as 'brands/list/',
+    (url) =>
+      genericFetcher('GET', url as UrlType, { body }).then((res) => res.json()),
     { refreshInterval: 3000 }
   );
 }
@@ -42,13 +45,22 @@ function useBrandsList() {
 /**
  * Check company registration
  */
-function useCheckCompanyRegistration(token: string) {
+function useCheckCompanyRegistration(token: string | null) {
+  // Set url
+  const url: UrlType =
+    token !== null ? 'companies/check-company-registration/' : null;
+
+  // Set body
+  const body: FetcherBodyType<'companies/check-company-registration/'> = null;
+
+  // Return SWR
   return useSWR(
-    token ? ENDPOINTS.check_company_registration : null,
+    url as 'companies/check-company-registration/',
     (url) =>
-      checkCompanyRegistrationFetcher(url, { token: token as string }).then(
-        (res) => res.json()
-      ),
+      genericFetcher('GET', url as UrlType, {
+        token: token as string,
+        body,
+      }).then((res) => res.json()),
     { refreshInterval: 3000 }
   );
 }
@@ -56,86 +68,136 @@ function useCheckCompanyRegistration(token: string) {
 /**
  * Check customer registration
  */
-function useCheckCustomerRegistration(token: string) {
-  return useSWR(
-    token ? ENDPOINTS.check_customer_registration : null,
-    (url) =>
-      checkCustomerRegistrationFetcher(url, { token: token as string }).then(
-        (res) => res.json()
-      ),
-    { refreshInterval: 3000 }
-  );
-}
+function useCheckCustomerRegistration(token: string | null) {
+  // Set url
+  const url: UrlType =
+    token !== null ? 'customers/check-customer-registration/' : null;
 
-/**
- * Check company registration
- */
-function useGetCompany(token: string, companyExists: boolean) {
-  return useSWR(
-    companyExists && token ? ENDPOINTS.get_company : null,
-    (url) =>
-      getCompanyFetcher(url, { token: token as string }).then((res) =>
-        res.json()
-      ),
-    { refreshInterval: 3000 }
-  );
-}
+  // Set body
+  const body: FetcherBodyType<'customers/check-customer-registration/'> = null;
 
-/**
- * Check company registration
- */
-function useGetCustomer(token: string, customerExists: boolean) {
+  // Return SWR
   return useSWR(
-    customerExists && token ? ENDPOINTS.get_customer : null,
+    url as 'customers/check-customer-registration/',
     (url) =>
-      getCustomerFetcher(url, { token: token as string }).then((res) =>
-        res.json()
-      ),
-    { refreshInterval: 3000 }
-  );
-}
-
-/**
- * User details
- */
-function useUserDetails(token: string) {
-  return useSWR(
-    ENDPOINTS.user_details,
-    (url) =>
-      userDetailsFetcher(url, { token: token as string }).then((res) =>
-        res.json()
-      ),
-    { refreshInterval: 3000 }
-  );
-}
-
-/**
- * Brand online
- */
-function useBrandOnline(token: string, brandName: string) {
-  return useSWR(
-    brandName !== undefined ? `${ENDPOINTS.brand_online}${brandName}` : null,
-    (url: string) =>
-      getBrandOnlineFetcher(`${ENDPOINTS.brand_online}${brandName}`, {
+      genericFetcher('GET', url as UrlType, {
         token: token as string,
-      }).then((res) => res.json())
+        body,
+      }).then((res) => res.json()),
+    { refreshInterval: 3000 }
   );
 }
 
 /**
- * Signed urls' files
+ * Get company data (if the company exists)
  */
-function useFileSignedUrl(token: string, filePath: string) {
+function useGetCompany(token: string | null, companyExists: boolean) {
+  // Set url
+  const url: UrlType =
+    token !== null && companyExists ? 'companies/get-company/' : null;
+
+  // Set body
+  const body: FetcherBodyType<'companies/get-company/'> = null;
+
+  // Return SWR
   return useSWR(
-    token !== undefined &&
-      token !== null &&
-      filePath !== undefined &&
-      filePath !== null
-      ? `${ENDPOINTS.file_signed_url}`
-      : null,
-    (url: string) =>
-      getFileSignedUrlFetcher(`${ENDPOINTS.file_signed_url}`, filePath, {
+    url as 'companies/get-company/',
+    (url) =>
+      genericFetcher('GET', url as UrlType, {
         token: token as string,
+        body,
+      }).then((res) => res.json()),
+    { refreshInterval: 3000 }
+  );
+}
+
+/**
+ * Check customer data (if the customer exists)
+ */
+function useGetCustomer(token: string | null, customerExists: boolean) {
+  // Set url
+  const url: UrlType =
+    token !== null && customerExists ? 'customers/get-customer/' : null;
+
+  // Set body
+  const body: FetcherBodyType<'customers/get-customer/'> = null;
+
+  // Return SWR
+  return useSWR(
+    url as 'customers/get-customer/',
+    (url) =>
+      genericFetcher('GET', url as UrlType, {
+        token: token as string,
+        body,
+      }).then((res) => res.json()),
+    { refreshInterval: 3000 }
+  );
+}
+
+/**
+ * Get user details
+ */
+function useUserDetails(token: string | null) {
+  // Set url
+  const url: UrlType = token !== null ? 'users/details/' : null;
+
+  // Set body
+  const body: FetcherBodyType<'users/details/'> = null;
+
+  // Return SWR
+  return useSWR(
+    url as 'users/details/',
+    (url) =>
+      genericFetcher('GET', url as UrlType, {
+        token: token as string,
+        body,
+      }).then((res) => res.json()),
+    { refreshInterval: 3000 }
+  );
+}
+
+/**
+ * Get brand online
+ */
+function useBrandOnline(token: string | null, brandName: string | null) {
+  // Set url
+  const url: UrlType =
+    token !== null && brandName !== null ? 'brands/brand-online/' : null;
+
+  // Set body
+  const body: FetcherBodyType<'brands/brand-online/'> = null;
+
+  // Return SWR
+  return useSWR(url as 'brands/brand-online/', (url) =>
+    genericFetcher(
+      'GET',
+      url,
+      { token: token as string, body },
+      (url) => `${url}${brandName}`
+    ).then((res) => res.json())
+  );
+}
+
+/**
+ * Get signed urls' of files
+ */
+function useFileSignedUrl(token: string | null, filePath: string | null) {
+  // Set url
+  const url: UrlType =
+    token !== null && filePath !== null ? 'brands/file-signed-url/' : null;
+
+  // Set body
+  const body: FetcherBodyType<'brands/file-signed-url/'> = {
+    file_path: filePath as string,
+  };
+
+  // Return SWR
+  return useSWR(
+    url as 'brands/file-signed-url/',
+    (url) =>
+      genericFetcher('POST', url as UrlType, {
+        token: token as string,
+        body,
       }).then((res) => res.json()),
     {
       revalidateOnFocus: false,
@@ -144,24 +206,39 @@ function useFileSignedUrl(token: string, filePath: string) {
 }
 
 /**
- * Fetch the list of Brands
+ * Fetch the list of available products
  */
 function useProductsList() {
-  return useSWR(ENDPOINTS.products_list, (url) =>
-    productsListFetcher(url).then((res) => res.json())
+  // Set url
+  const url: UrlType = 'payments/products/';
+
+  // Set body
+  const body: FetcherBodyType<'payments/products/'> = null;
+
+  // Return SWR
+  return useSWR(url as 'payments/products/', (url) =>
+    genericFetcher('GET', url, { body }).then((res) => res.json())
   );
 }
 
 /**
- * Get my subscriptions
+ * Get user subscription
  */
-function useSubscription(token: string) {
+function useSubscription(token: string | null) {
+  // Set url
+  const url: UrlType = token !== null ? 'payments/get-subscription/' : null;
+
+  // Set body
+  const body: FetcherBodyType<'payments/get-subscription/'> = null;
+
+  // Return SWR
   return useSWR(
-    token ? ENDPOINTS.subscription : null,
+    url as 'payments/get-subscription/',
     (url) =>
-      subscriptionFetcher(url, { token: token as string }).then((res) =>
-        res.json()
-      ),
+      genericFetcher('GET', url as UrlType, {
+        token: token as string,
+        body,
+      }).then((res) => res.json()),
     { refreshInterval: 3000 }
   );
 }
