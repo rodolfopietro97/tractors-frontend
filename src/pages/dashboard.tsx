@@ -21,7 +21,7 @@ const Dashboard: NextPageWithLayout = () => {
   const { token } = useContext(AuthenticationContext);
 
   // User details
-  const { data, error, isLoading } = useUserDetails(token as string);
+  const { data, error, isLoading } = useUserDetails(token);
 
   return (
     <main>

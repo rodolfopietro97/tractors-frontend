@@ -32,14 +32,14 @@ function UserInfoProvider({ children }: { children: JSX.Element }) {
     data: checkCustomerData,
     error: checkCustomerError,
     isLoading: checkCustomerIsLoading,
-  } = useCheckCustomerRegistration(token as string);
+  } = useCheckCustomerRegistration(token);
 
   // Company (if exists)
   const {
     data: checkCompanyData,
     error: checkCompanyError,
     isLoading: checkCompanyIsLoading,
-  } = useCheckCompanyRegistration(token as string);
+  } = useCheckCompanyRegistration(token);
 
   // Customer
   const customerExists = useMemo<boolean>(() => {
@@ -86,14 +86,14 @@ function UserInfoProvider({ children }: { children: JSX.Element }) {
     data: customerData,
     error: customerError,
     isLoading: customerIsLoading,
-  } = useGetCustomer(token as string, customerExists);
+  } = useGetCustomer(token, customerExists);
 
   // Company data
   const {
     data: companyData,
     error: companyError,
     isLoading: companyIsLoading,
-  } = useGetCompany(token as string, companyExists);
+  } = useGetCompany(token, companyExists);
 
   // Track errors
   const error = useMemo<string | null>(() => {

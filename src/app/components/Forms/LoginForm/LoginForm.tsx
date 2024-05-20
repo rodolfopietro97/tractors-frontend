@@ -5,7 +5,7 @@ import {
 import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useContext, useState } from 'react';
-import { ENDPOINTS, loginFetcher } from '@/fetchers';
+import { loginFetcher } from '@/fetchers';
 import { TextInput } from '../../ui/Input';
 import { Button, LinkButton } from '../../ui/Button';
 import { FormsLayout } from '..';
@@ -35,7 +35,7 @@ function LoginForm(): JSX.Element {
   const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
     setIsSubmitting(true);
 
-    const request = await loginFetcher(ENDPOINTS.user_login, {
+    const request = await loginFetcher({
       username: data.email,
       email: data.email,
       password: data.password,

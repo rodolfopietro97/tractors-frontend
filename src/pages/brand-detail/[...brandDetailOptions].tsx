@@ -28,8 +28,8 @@ const BrandDetail: NextPageWithLayout = () => {
   }, [isJWTValid, router]);
 
   // Brand name
-  const brandName = useMemo<string>(() => {
-    if (!router.query.brandDetailOptions) return '';
+  const brandName = useMemo<string | null>(() => {
+    if (!router.query.brandDetailOptions) return null;
     return router.query.brandDetailOptions[0] as string;
   }, [router.query.brandDetailOptions]);
 
@@ -40,10 +40,7 @@ const BrandDetail: NextPageWithLayout = () => {
   }, [router.query.brandDetailOptions]);
 
   // Get brand files
-  const { data, error, isLoading } = useBrandFilesList(
-    token as string,
-    brandName as string
-  );
+  const { data, error, isLoading } = useBrandFilesList(token, brandName);
 
   /**
    * Files list from API data. Array of strings e.g. ["file1", "file2", "file3"]. It filters files by category given into url query string.

@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useContext, useState } from 'react';
-import { ENDPOINTS, logoutFetcher } from '@/fetchers';
+import { logoutFetcher } from '@/fetchers';
 import { RowColHelper } from '../RowColHelper';
 import { Button, LinkButton } from '../ui/Button';
 import { AuthenticationContext } from '@/contexts';
@@ -42,9 +42,7 @@ function NavbarActionButtons({
   // Do logout
   const logout = async () => {
     setIsSubmitting(true);
-    const request = await logoutFetcher(ENDPOINTS.user_logout, {
-      token: token as string,
-    });
+    const request = await logoutFetcher(token as string);
     const response = await request.json();
     if (response.detail) doLogout();
     setIsSubmitting(false);

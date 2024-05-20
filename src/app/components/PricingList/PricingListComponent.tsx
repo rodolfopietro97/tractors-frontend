@@ -1,7 +1,6 @@
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, LinkButton } from '../ui/Button';
-import { useBrandsList, useGetCustomer, useUserDetails } from '@/hooks';
 import {
   PricePlanType,
   ProductFuturePlanType,
@@ -10,7 +9,7 @@ import { useContext, useState } from 'react';
 import { AuthenticationContext } from '@/contexts';
 import getStripe from '@/utils/get-stripe';
 import { Stripe } from '@stripe/stripe-js';
-import { createCheckoutSessionFetcher, ENDPOINTS } from '@/fetchers';
+import { getCheckoutSessionFetcher } from '@/fetchers';
 
 /**
  * Component for price future of a plan
@@ -35,10 +34,7 @@ function CheckoutButton({
     <Button
       onClick={async () => {
         // 1 - Get checkout session id
-        const request = await createCheckoutSessionFetcher(
-          `${ENDPOINTS.create_checkout_session}${priceId}`,
-          { token: token }
-        );
+        const request = await getCheckoutSessionFetcher(priceId, token);
         const data = await request.json();
 
         // 2 - Redirect to stripe checkout

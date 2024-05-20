@@ -2,7 +2,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { ENDPOINTS, signUpFetcher } from '@/fetchers';
+import { signUpFetcher } from '@/fetchers';
 import { TextInput } from '../../ui/Input';
 import { Button } from '../../ui/Button';
 import { FormsLayout } from '..';
@@ -49,7 +49,7 @@ function RegistrationForm(): JSX.Element {
     setRegistrationError(null);
 
     setIsSubmitting(true);
-    const request = await signUpFetcher(ENDPOINTS.user_register, {
+    const request = await signUpFetcher({
       username: data.email,
       email: data.email,
       password1: data.password,

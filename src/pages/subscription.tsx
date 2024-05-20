@@ -18,7 +18,7 @@ const Subscription: NextPageWithLayout = () => {
   const { token } = useContext(AuthenticationContext);
 
   // Get the list of products available
-  const { data, error, isLoading } = useSubscription(token as string);
+  const { data, error, isLoading } = useSubscription(token);
 
   return (
     <main>

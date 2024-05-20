@@ -2,7 +2,7 @@ import { faKitMedical } from '@fortawesome/free-solid-svg-icons';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { ENDPOINTS, passwordResetFetcher } from '@/fetchers';
+import { passwordResetFetcher } from '@/fetchers';
 import { TextInput } from '../../ui/Input';
 import { Button } from '../../ui/Button';
 import { FormsLayout } from '..';
@@ -41,7 +41,7 @@ function PasswordRecoveryForm(): JSX.Element {
     setIsSubmitting(true);
     setPasswordRecoveryError(null);
 
-    const request = await passwordResetFetcher(ENDPOINTS.password_reset, {
+    const request = await passwordResetFetcher({
       email: data.email,
     });
     const response = await request.json();

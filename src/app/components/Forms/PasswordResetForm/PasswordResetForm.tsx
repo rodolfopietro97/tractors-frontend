@@ -2,7 +2,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { ENDPOINTS, passwordResetConfirmFetcher } from '@/fetchers';
+import { passwordResetConfirmFetcher } from '@/fetchers';
 import { TextInput } from '../../ui/Input';
 import { Button } from '../../ui/Button';
 import { FormsLayout } from '..';
@@ -53,15 +53,12 @@ function PasswordResetForm({
     setIsSubmitting(true);
     setPasswordResetError(null);
 
-    const request = await passwordResetConfirmFetcher(
-      ENDPOINTS.password_reset_confirm,
-      {
-        new_password1: data.new_password1,
-        new_password2: data.new_password2,
-        uid: uid,
-        token: token,
-      }
-    );
+    const request = await passwordResetConfirmFetcher({
+      new_password1: data.new_password1,
+      new_password2: data.new_password2,
+      uid: uid,
+      token: token,
+    });
 
     const response = await request.json();
 

@@ -46,7 +46,7 @@ const Payment: NextPageWithLayout = () => {
   const { token } = useContext(AuthenticationContext);
 
   // User details
-  const { data, error, isLoading } = useUserDetails(token as string);
+  const { data, error, isLoading } = useUserDetails(token);
 
   // Stripe instance
   const [stripe, setStripe] = useState<Stripe | null>(null);

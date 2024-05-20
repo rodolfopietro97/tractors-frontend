@@ -2,7 +2,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { faEdit, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { useContext, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
-import { ENDPOINTS, createUpdateCustomerFetcher } from '@/fetchers';
+import { createUpdateCustomerFetcher } from '@/fetchers';
 import { TextInput } from '../../ui/Input';
 import { Button } from '../../ui/Button';
 import { FormsLayout } from '..';
@@ -67,8 +67,8 @@ function CustomerRegistrationAndUpdateForm({
     // Reset errors and success
     setRegistrationError(null);
     setIsSubmitting(true);
+
     const request = await createUpdateCustomerFetcher(
-      update ? ENDPOINTS.update_customer : ENDPOINTS.create_customer,
       token as string,
       {
         name: data.name,

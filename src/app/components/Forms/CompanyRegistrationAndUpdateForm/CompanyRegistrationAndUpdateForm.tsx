@@ -4,7 +4,7 @@ import { Button, LinkButton } from '../../ui/Button';
 import { SelectInput, TextInput } from '../../ui/Input';
 import { useContext, useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ENDPOINTS, createUpdateCompanyFetcher } from '@/fetchers';
+import { createUpdateCompanyFetcher } from '@/fetchers';
 import { faBuilding, faEdit, faX } from '@fortawesome/free-solid-svg-icons';
 import { AuthenticationContext } from '@/contexts';
 
@@ -79,7 +79,6 @@ function CompanyRegistrationAndUpdateForm({
     setIsSubmitting(true);
 
     const request = await createUpdateCompanyFetcher(
-      update ? ENDPOINTS.update_company : ENDPOINTS.create_company,
       token as string,
       {
         name: data.company_name,

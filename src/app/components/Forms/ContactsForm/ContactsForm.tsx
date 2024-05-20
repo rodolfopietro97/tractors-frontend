@@ -2,7 +2,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { faMailForward } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { ENDPOINTS, contactsFormFetcher } from '@/fetchers';
+import { contactsFormFetcher } from '@/fetchers';
 import { TextAreaInput, TextInput } from '../../ui/Input';
 import { Button } from '../../ui/Button';
 import { FormsLayout } from '..';
@@ -45,7 +45,7 @@ function ContactsForm(): JSX.Element {
     setIsSubmitting(true);
     setSendEmailError('');
 
-    const request = await contactsFormFetcher(ENDPOINTS.contacts_form, {
+    const request = await contactsFormFetcher({
       email: data.email,
       name: data.name,
       surname: data.surname,

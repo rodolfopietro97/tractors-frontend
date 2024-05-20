@@ -1,5 +1,5 @@
 import { Button } from '@/app/components/ui/Button/Button';
-import { ENDPOINTS, emailConfirmFetcher } from '@/fetchers';
+import { emailConfirmFetcher } from '@/fetchers';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ReactElement, useState } from 'react';
@@ -24,7 +24,7 @@ const EmailConfirmation: NextPageWithLayout = () => {
   const confirmEmail = async () => {
     setIsSubmitting(true);
 
-    const request = await emailConfirmFetcher(ENDPOINTS.email_confirm, {
+    const request = await emailConfirmFetcher({
       key: router.query.key as string,
     });
     const response = await request.json();

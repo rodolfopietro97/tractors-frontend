@@ -2,6 +2,7 @@ import { Article } from '@/app/components/Article/Article';
 import { ReactElement } from 'react';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
 import { NextPageWithLayout } from '@/pages/_app';
+import { Button } from '@chakra-ui/react';
 
 /**
  * Payment successfully page
@@ -10,7 +11,10 @@ const PaymentSuccess: NextPageWithLayout = () => {
   return (
     <main>
       <Article>
-        <h1>Payment successfully</h1>
+        <>
+          <Button colorScheme='blue'>Button</Button>
+          <h1>Payment successfully</h1>
+        </>
       </Article>
     </main>
   );

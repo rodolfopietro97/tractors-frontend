@@ -43,35 +43,33 @@ const PDFViewer: NextPageWithLayout = () => {
     return coder.decode(router.query.catalogOptions[0] as string);
   }, [router.query.catalogOptions]);
 
-  const { data, error, isLoading } = useFileSignedUrl(
-    token as string,
-    fileUrl as string
-  );
+  const { data, error, isLoading } = useFileSignedUrl(token, fileUrl);
 
   return (
     // Main worker
     <Worker workerUrl='https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.js'>
       {/*Navbar*/}
-      <RowColHelper
-        classNames={[
-          'flex flex-row justify-center',
-          'flex flex-row justify-center',
-        ]}
-        className='flex h-[44px] flex-row justify-center border border-gray-200 bg-[#fcfdfe] '
-      >
-        <zoomPluginInstance.ZoomOut>
-          {(props: RenderZoomInProps) => (
-            <Button onClick={props.onClick} icon={faMagnifyingGlassMinus} />
-          )}
-        </zoomPluginInstance.ZoomOut>
+      <div onContextMenu={(e) => e.preventDefault()}>
+        <RowColHelper
+          classNames={[
+            'flex flex-row justify-center',
+            'flex flex-row justify-center',
+          ]}
+          className='flex h-[44px] flex-row justify-center border border-gray-200 bg-[#fcfdfe]'
+        >
+          <zoomPluginInstance.ZoomOut>
+            {(props: RenderZoomInProps) => (
+              <Button onClick={props.onClick} icon={faMagnifyingGlassMinus} />
+            )}
+          </zoomPluginInstance.ZoomOut>
 
-        <zoomPluginInstance.ZoomIn>
-          {(props: RenderZoomInProps) => (
-            <Button onClick={props.onClick} icon={faMagnifyingGlassPlus} />
-          )}
-        </zoomPluginInstance.ZoomIn>
-      </RowColHelper>
-
+          <zoomPluginInstance.ZoomIn>
+            {(props: RenderZoomInProps) => (
+              <Button onClick={props.onClick} icon={faMagnifyingGlassPlus} />
+            )}
+          </zoomPluginInstance.ZoomIn>
+        </RowColHelper>
+      </div>
       {/*PDF Viewer*/}
       <div
         onContextMenu={(e) => e.preventDefault()}

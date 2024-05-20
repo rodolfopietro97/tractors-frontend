@@ -1,5 +1,5 @@
 'use client';
-import { ENDPOINTS, tokenRefreshFetcher, tokenVerifyFetcher } from '@/fetchers';
+import { tokenRefreshFetcher, tokenVerifyFetcher } from '@/fetchers';
 import { createContext, useEffect, useState } from 'react';
 import secureLocalStorage from 'react-secure-storage';
 import { AuthenticationContextType } from '@/contexts';
@@ -68,20 +68,18 @@ function AuthenticationProvider({ children }: { children: JSX.Element }) {
     // Tokens are present
     if (token && refreshToken) {
       // Verify if token is valid or invalid/expired
-      tokenVerifyFetcher(ENDPOINTS.token_verify, { token: token }).then(
-        (response) => {
-          response.json().then((json) => {
-            // JWT is valid - Set state
-            if (Object.keys(json).length === 0) setIsJWTValid(true);
-            // JWT is invalid or expired - Logout is performed
-            else {
-              secureLocalStorage.removeItem('token');
-              secureLocalStorage.removeItem('refreshToken');
-              setIsJWTValid(false);
-            }
-          });
-        }
-      );
+      tokenVerifyFetcher({ token: token }).then((response) => {
+        response.json().then((json) => {
+          // JWT is valid - Set state
+          if (Object.keys(json).length === 0) setIsJWTValid(true);
+          // JWT is invalid or expired - Logout is performed
+          else {
+            secureLocalStorage.removeItem('token');
+            secureLocalStorage.removeItem('refreshToken');
+            setIsJWTValid(false);
+          }
+        });
+      });
     }
     // Tokens are NOT present
     else setIsJWTValid(false);
@@ -124,7 +122,7 @@ function AuthenticationProvider({ children }: { children: JSX.Element }) {
     const refreshInterval = setInterval(() => {
       // Refresh if JWT is valid
       if (isJWTValid) {
-        tokenRefreshFetcher(ENDPOINTS.token_refresh, {
+        tokenRefreshFetcher({
           refresh: refreshToken as string,
         }).then((response) => {
           response.json().then((jsonResponse) => {

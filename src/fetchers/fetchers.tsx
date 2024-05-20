@@ -28,7 +28,6 @@ async function genericFetcher<
   },
   customUrlCallback?: (url: TUrlType) => string
 ): Promise<Response> {
-  console.log('genericFetcher', methodType, url, data, customUrlCallback);
   // Initialize headers depending on the authentication token
   const headers: HeadersInit =
     data.token !== undefined
@@ -47,8 +46,6 @@ async function genericFetcher<
     customUrlCallback !== undefined
       ? `${API_URL}/${customUrlCallback(url)}`
       : `${API_URL}/${url}`;
-
-  if (url === 'brands/brand-online/') console.log('requestUrl', requestUrl);
 
   // Init fetcher params
   const fetcherParams =
@@ -73,220 +70,230 @@ async function genericFetcher<
  * Fetcher used to send email from contacts form
  */
 const contactsFormFetcher = (
-  url: string,
-  contactsFormEmail: {
-    name: string;
-    surname: string;
-    email: string;
-    subject: string;
-    message: string;
-  }
-): Promise<Response> =>
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: JSON.stringify(contactsFormEmail),
-  });
+  contactsFormEmail: FetcherBodyType<'contacts/form/'>
+): Promise<Response> => {
+  // Set url
+  const url: UrlType = 'contacts/form/';
+
+  // Set body
+  const body: FetcherBodyType<'contacts/form/'> = contactsFormEmail;
+
+  // Return fetcher
+  return genericFetcher('POST', url, { body });
+};
 
 /**
  * Fetcher used to create customer
  */
 const createUpdateCustomerFetcher = (
-  url: string,
-  authenticationToken: string,
-  customerToRegisterOrUpdate: {
-    name: string;
-    surname: string;
-  },
+  token: string,
+  customerToRegisterOrUpdate: FetcherBodyType<'customers/create-customer/'>,
   update: boolean
-): Promise<Response> =>
-  fetch(url, {
-    method: update ? 'PUT' : 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      Authorization: 'Bearer ' + authenticationToken,
-    },
-    body: JSON.stringify(customerToRegisterOrUpdate),
+): Promise<Response> => {
+  // Set url
+  const url: UrlType = update
+    ? 'customers/update-customer/'
+    : 'customers/create-customer/';
+
+  // Set body
+  const body: FetcherBodyType<'customers/create-customer/'> =
+    customerToRegisterOrUpdate;
+
+  // Return fetcher
+  return genericFetcher(update ? 'PUT' : 'POST', url, {
+    token,
+    body,
   });
+};
 
 /**
  * Fetcher for email confirmation using key
  */
 const emailConfirmFetcher = (
-  url: string,
-  keyToConfirm: { key: string }
-): Promise<Response> =>
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: JSON.stringify(keyToConfirm),
+  keyToConfirm: FetcherBodyType<'users/account-confirm-email/'>
+): Promise<Response> => {
+  // Set url
+  const url: UrlType = 'users/account-confirm-email/';
+
+  // Set body
+  const body: FetcherBodyType<'users/account-confirm-email/'> = keyToConfirm;
+
+  // Return fetcher
+  return genericFetcher('POST', url, {
+    body,
   });
+};
 
 /**
- * Fetcher used to login USER
+ * Fetcher used to log-in USER
  */
 const loginFetcher = (
-  url: string,
-  userToLogin: {
-    username: string;
-    email: string;
-    password: string;
-  }
-): Promise<Response> =>
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: JSON.stringify(userToLogin),
+  userToLogin: FetcherBodyType<'users/login/'>
+): Promise<Response> => {
+  // Set url
+  const url: UrlType = 'users/login/';
+
+  // Set body
+  const body: FetcherBodyType<'users/login/'> = userToLogin;
+
+  // Return fetcher
+  return genericFetcher('POST', url, {
+    body,
   });
+};
 
 /**
- * Fetcher used to logout user
+ * Fetcher used to log-out user
  */
-const logoutFetcher = (
-  url: string,
-  authenticationToken: { token: string }
-): Promise<Response> =>
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      Authorization: 'Bearer ' + authenticationToken.token,
-    },
+const logoutFetcher = (token: string): Promise<Response> => {
+  // Set url
+  const url: UrlType = 'users/logout/';
+
+  // Set body
+  const body: FetcherBodyType<'users/logout/'> = null;
+
+  // Return fetcher
+  return genericFetcher('POST', url, {
+    token,
+    body,
   });
+};
 
 /**
  * Fetcher used to confirm password reset
  */
 const passwordResetConfirmFetcher = (
-  url: string,
-  newPasswordsAndUserData: {
-    new_password1: string;
-    new_password2: string;
-    uid: string;
-    token: string;
-  }
-): Promise<Response> =>
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: JSON.stringify(newPasswordsAndUserData),
+  newPasswords: FetcherBodyType<'users/password/reset/confirm/'>
+): Promise<Response> => {
+  // Set url
+  const url: UrlType = 'users/password/reset/confirm/';
+
+  // Set body
+  const body: FetcherBodyType<'users/password/reset/confirm/'> = newPasswords;
+
+  // Return fetcher
+  return genericFetcher('POST', url, {
+    body,
   });
+};
 
 /**
  * Fetcher for password reset
  */
 const passwordResetFetcher = (
-  url: string,
-  emailToRecovery: {
-    email: string;
-  }
-): Promise<Response> =>
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: JSON.stringify(emailToRecovery),
+  emailToRecovery: FetcherBodyType<'users/password/reset/'>
+): Promise<Response> => {
+  // Set url
+  const url: UrlType = 'users/password/reset/';
+
+  // Set body
+  const body: FetcherBodyType<'users/password/reset/'> = emailToRecovery;
+
+  // Return fetcher
+  return genericFetcher('POST', url, {
+    body,
   });
+};
 
 /**
  * Fetcher used to sign up USERS
  */
 const signUpFetcher = (
-  url: string,
-  userToRegister: {
-    username: string;
-    email: string;
-    password1: string;
-    password2: string;
-  }
-): Promise<Response> =>
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: JSON.stringify(userToRegister),
+  userToRegister: FetcherBodyType<'users/register/'>
+): Promise<Response> => {
+  // Set url
+  const url: UrlType = 'users/register/';
+
+  // Set body
+  const body: FetcherBodyType<'users/register/'> = userToRegister;
+
+  // Return fetcher
+  return genericFetcher('POST', url, {
+    body,
   });
+};
 
 /**
  * Fetcher used to refresh token
  */
 const tokenRefreshFetcher = (
-  url: string,
-  tokenToRefresh: { refresh: string }
-): Promise<Response> =>
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: JSON.stringify(tokenToRefresh),
+  tokenToRefresh: FetcherBodyType<'users/token/refresh/'>
+): Promise<Response> => {
+  // Set url
+  const url: UrlType = 'users/token/refresh/';
+
+  // Set body
+  const body: FetcherBodyType<'users/token/refresh/'> = tokenToRefresh;
+
+  // Return fetcher
+  return genericFetcher('POST', url, {
+    body,
   });
+};
 
 /**
  * Fetcher used to verify token
  */
 const tokenVerifyFetcher = (
-  url: string,
-  tokenToVerify: { token: string }
-): Promise<Response> =>
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: JSON.stringify(tokenToVerify),
+  tokenToVerify: FetcherBodyType<'users/token/verify/'>
+): Promise<Response> => {
+  // Set url
+  const url: UrlType = 'users/token/verify/';
+
+  // Set body
+  const body: FetcherBodyType<'users/token/verify/'> = tokenToVerify;
+
+  // Return fetcher
+  return genericFetcher('POST', url, {
+    body,
   });
+};
 
 /**
- * Fetcher used to create and update company
+ * Fetcher used to create and update the company
  */
 const createUpdateCompanyFetcher = (
-  url: string,
-  authenticationToken: string,
-  companyToRegisterOrUpdate: {
-    name: string;
-    type: string;
-    vat_number: string;
-    pec: string;
-    unique_company_code: string;
-  },
+  token: string,
+  companyToRegisterOrUpdate: FetcherBodyType<'companies/create-company/'>,
   update: boolean
-): Promise<Response> =>
-  fetch(url, {
-    method: update ? 'PUT' : 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      Authorization: 'Bearer ' + authenticationToken,
-    },
-    body: JSON.stringify(companyToRegisterOrUpdate),
+): Promise<Response> => {
+  // Set url
+  const url: UrlType = update
+    ? 'companies/update-company/'
+    : 'companies/create-company/';
+
+  // Set body
+  const body: FetcherBodyType<'companies/create-company/'> =
+    companyToRegisterOrUpdate;
+
+  // Return fetcher
+  return genericFetcher(update ? 'PUT' : 'POST', url, {
+    token,
+    body,
   });
+};
 
 /**
  * Create a checkout session
  */
-const createCheckoutSessionFetcher = (
-  url: string,
-  authenticationToken: {
-    token: string;
-  }
-): Promise<Response> =>
-  fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      Authorization: 'Bearer ' + authenticationToken.token,
-    },
-  });
+const getCheckoutSessionFetcher = (
+  priceId: string,
+  token: string
+): Promise<Response> => {
+  // Set url
+  const url: UrlType = 'payments/create-checkout-session/';
+
+  // Set body
+  const body: FetcherBodyType<'payments/create-checkout-session/'> = null;
+
+  // Return fetcher
+  return genericFetcher(
+    'GET',
+    url as 'payments/create-checkout-session/',
+    { token: token, body },
+    (url) => `${url}${priceId}`
+  );
+};
 
 export {
   contactsFormFetcher,
@@ -300,6 +307,6 @@ export {
   tokenRefreshFetcher,
   tokenVerifyFetcher,
   createUpdateCompanyFetcher,
-  createCheckoutSessionFetcher,
+  getCheckoutSessionFetcher,
   genericFetcher,
 };
