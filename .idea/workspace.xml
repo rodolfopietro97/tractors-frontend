@@ -4,59 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eff2b00b-99b3-4912-818d-e1422b0c1ca0" name="Changes" comment="fix: typo">
-      <change beforePath="$PROJECT_DIR$/.idea/copilot/chatSessions/00000000000.xd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/copilot/chatSessions/blobs/version" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/copilot/chatSessions/xd.lck" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/Article/Article.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Article/Article.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/BrandOnlineContent/BrandOnlineContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/BrandOnlineContent/BrandOnlineContent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/BrandsList/BrandsList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/BrandsList/BrandsList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/BrandsList/BrandsListWithFilters.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/BrandsList/BrandsListWithFilters.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/ContentLoading/ContentLoading.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/ContentLoading/index.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/Forms/CompanyRegistrationAndUpdateForm/CompanyRegistrationAndUpdateForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Forms/CompanyRegistrationAndUpdateForm/CompanyRegistrationAndUpdateForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/Forms/ContactsForm/ContactsForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Forms/ContactsForm/ContactsForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/Forms/CustomerRegistrationAndUpdateForm/CustomerRegistrationAndUpdateForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Forms/CustomerRegistrationAndUpdateForm/CustomerRegistrationAndUpdateForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/Forms/FormsLayout/FormsLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Forms/FormsLayout/FormsLayout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/Forms/LoginForm/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Forms/LoginForm/LoginForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/Forms/PasswordRecoveryForm/PasswordRecoveryForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Forms/PasswordRecoveryForm/PasswordRecoveryForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/Forms/PasswordResetForm/PasswordResetForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Forms/PasswordResetForm/PasswordResetForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/Forms/RegistrationForm/RegistrationForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Forms/RegistrationForm/RegistrationForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/Layouts/Layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Layouts/Layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/Layouts/PageLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Layouts/PageLayout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/Navbar/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Navbar/Navbar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/PricingList/PricingListComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/PricingList/PricingListComponent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/ui/Button/Button.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/ui/Button/index.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/types.d.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/types.d.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware-components/CustomerRegistrationCheckMiddleware.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware-components/CustomerRegistrationCheckMiddleware.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/api/stripe/webhook.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/brand-detail-online/[...brandDetailOptions].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/brand-detail-online/[...brandDetailOptions].tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/brand-detail/[...brandDetailOptions].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/brand-detail/[...brandDetailOptions].tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/brands-catalog.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/brands.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/brands.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/catalog/[...catalogOptions].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/catalog/[...catalogOptions].tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/contacts.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/contacts.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/email-confirm/[key].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/email-confirm/[key].tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/forgot-password.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/forgot-password.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/login.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/password-reset-confirm/[...userParameters].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/password-reset-confirm/[...userParameters].tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/payment-failure.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/payment-failure.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/payment-success.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/payment-success.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/payment.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/pricing.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/pricing.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/privacy.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/privacy.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/profile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/register-company.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/register-company.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/register.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/subscription.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/subscription.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/terms.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/terms.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/Redirect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Redirect.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tailwind.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.ts" afterDir="false" />
-    </list>
+    <list default="true" id="eff2b00b-99b3-4912-818d-e1422b0c1ca0" name="Changes" comment="fix: first graphics restyling" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -123,6 +71,9 @@
         <option value="TypeScript" />
       </set>
     </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
@@ -262,7 +213,7 @@
       <workItem from="1716025254553" duration="11741000" />
       <workItem from="1716177099207" duration="24000" />
       <workItem from="1716177135306" duration="19541000" />
-      <workItem from="1716274685026" duration="23114000" />
+      <workItem from="1716274685026" duration="23442000" />
     </task>
     <task id="LOCAL-00001" summary="feat: structure of FE">
       <option name="closed" value="true" />
@@ -360,11 +311,30 @@
       <option name="project" value="LOCAL" />
       <updated>1716217133797</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="fix: first graphics restyling">
+      <option name="closed" value="true" />
+      <created>1716309879782</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1716309879782</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat: structure of FE" />
@@ -379,7 +349,8 @@
     <MESSAGE value="feat: chackra ui" />
     <MESSAGE value="fix: remove overlay component" />
     <MESSAGE value="fix: typo" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: typo" />
+    <MESSAGE value="fix: first graphics restyling" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: first graphics restyling" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
