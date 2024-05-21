@@ -2,13 +2,12 @@ import { useRouter } from 'next/router';
 import { ReactElement, useContext, useEffect, useMemo } from 'react';
 import { AuthenticationContext } from '@/contexts';
 import { useBrandFilesList } from '@/hooks';
-import { ContentLoading } from '@/app/components/ContentLoading';
 import { API_URL } from '@/fetchers';
 import { BrandFilesType } from '@/app/components/BrandsList';
 import { TreeView } from '@/app/components/TreeView';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
-import PasswordResetConfirm from '@/pages/password-reset-confirm/[...userParameters]';
 import { NextPageWithLayout } from '@/pages/_app';
+import { Article } from '@/app/components/Article';
 
 /**
  * Brand detail page
@@ -64,12 +63,13 @@ const BrandDetail: NextPageWithLayout = () => {
 
   return (
     <main>
-      <ContentLoading
+      <Article
         isLoading={isLoading || data?.code == 'token_not_valid'}
         error={error}
+        border
       >
         <TreeView paths={ordereFilesListFilteredByCategory} />
-      </ContentLoading>
+      </Article>
     </main>
   );
 };

@@ -9,11 +9,12 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
 import Link from 'next/link';
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { logoutFetcher } from '@/fetchers';
 import { RowColHelper } from '../RowColHelper';
-import { Button, LinkButton } from '../ui/Button';
 import { AuthenticationContext } from '@/contexts';
+import { Button } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 
 /**
  * Type for Menu Entry
@@ -33,6 +34,9 @@ function NavbarActionButtons({
 }: {
   onClick?: () => void;
 }): JSX.Element {
+  // Router instance
+  const router = useRouter();
+
   // Authentication context
   const { isJWTValid, doLogout, token } = useContext(AuthenticationContext);
 
@@ -56,12 +60,20 @@ function NavbarActionButtons({
         className='flex flex-row justify-center'
         classNames={['mx-2 md:w-1/2 w-full', 'mx-2 md:w-1/2 w-full']}
       >
-        <LinkButton onClick={onClick} href='/login' icon={faRightToBracket}>
-          <span className='mx-2 text-sm'>Login</span>
-        </LinkButton>
-        <LinkButton onClick={onClick} href='/register' icon={faUserPlus}>
-          <span className='mx-2 text-sm'>Register</span>
-        </LinkButton>
+        <Button
+          colorScheme={'blackAlpha'}
+          onClick={() => router.push('/login')}
+          leftIcon={<FontAwesomeIcon icon={faRightToBracket} className='h-4' />}
+        >
+          Login
+        </Button>
+        <Button
+          colorScheme={'blackAlpha'}
+          onClick={() => router.push('/register')}
+          leftIcon={<FontAwesomeIcon icon={faUserPlus} className='h-4' />}
+        >
+          Register
+        </Button>
       </RowColHelper>
     );
   // Logged in
@@ -71,13 +83,21 @@ function NavbarActionButtons({
         className='flex flex-row justify-center'
         classNames={['mx-2 md:w-1/2 w-full', 'mx-2 md:w-1/2 w-full']}
       >
-        <Button isLoading={isSubmitting} onClick={logout} icon={faUserPlus}>
-          <span className='mx-2 text-sm'>Logout</span>
+        <Button
+          colorScheme={'blackAlpha'}
+          onClick={() => router.push('/profile')}
+          leftIcon={<FontAwesomeIcon icon={faUser} className='h-4' />}
+        >
+          Profile
         </Button>
-
-        <LinkButton onClick={onClick} href='/profile' icon={faUser}>
-          <span className='mx-2 text-sm'>Profile</span>
-        </LinkButton>
+        <Button
+          colorScheme='red'
+          isLoading={isSubmitting}
+          onClick={logout}
+          leftIcon={<FontAwesomeIcon icon={faUserPlus} className='h-4' />}
+        >
+          Logout
+        </Button>
       </RowColHelper>
     );
 }
@@ -153,8 +173,8 @@ function Navbar({
         {/* Brand and Hamburgher icon (if mobile) */}
         <div className='flex w-full flex-row md:block md:w-1/5'>
           <div className='w-2/3 py-3 md:w-full'>
-            <Link href='/' className='text-2xl font-bold'>
-              Tractors
+            <Link href='/' className='text-xl font-bold uppercase'>
+              FTractors
             </Link>
           </div>
 

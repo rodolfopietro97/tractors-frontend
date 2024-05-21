@@ -3,7 +3,6 @@ import { CompanyRegistrationAndUpdateForm } from '@/app/components/Forms/Company
 import { UserInfoContextContext } from '@/contexts/UserInfoContext';
 import { ReactElement, useContext } from 'react';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
-import Register from '@/pages/register';
 import { NextPageWithLayout } from '@/pages/_app';
 
 /**
@@ -15,7 +14,7 @@ const RegisterCompany: NextPageWithLayout = () => {
 
   return (
     <main>
-      <Article>
+      <Article border>
         <>
           {companyExists ? (
             // Company already registered

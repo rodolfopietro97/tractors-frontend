@@ -9,7 +9,7 @@ import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
 const Home: NextPageWithLayout = () => {
   return (
     <main>
-      <Article>
+      <Article border>
         <>
           <h1 className='text-2xl'>Home page</h1>
           <p className='my-10'>

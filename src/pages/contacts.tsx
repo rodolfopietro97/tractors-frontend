@@ -2,7 +2,6 @@ import { Article } from '@/app/components/Article/Article';
 import { ContactsForm } from '@/app/components/Forms';
 import { ReactElement } from 'react';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
-import BrandsCatalog from '@/pages/brands-catalog';
 import { NextPageWithLayout } from '@/pages/_app';
 
 /**
@@ -11,7 +10,7 @@ import { NextPageWithLayout } from '@/pages/_app';
 const Contacts: NextPageWithLayout = () => {
   return (
     <main>
-      <Article>
+      <Article border>
         <ContactsForm />
       </Article>
     </main>

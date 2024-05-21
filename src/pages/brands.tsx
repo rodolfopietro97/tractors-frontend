@@ -1,6 +1,5 @@
 import { Article } from '@/app/components/Article';
 import { BrandType } from '@/app/components/BrandsList';
-import { ContentLoading } from '@/app/components/ContentLoading/ContentLoading';
 import { useBrandsList } from '@/hooks';
 import { ReactElement, useMemo } from 'react';
 import { BrandsListWithFilters } from '@/app/components/BrandsList/BrandsListWithFilters';
@@ -30,14 +29,13 @@ const Brands: NextPageWithLayout = () => {
 
   return (
     <main>
-      <Article>
-        <ContentLoading
-          isLoading={isLoading || !data || !Array.isArray(data)}
-          error={error}
-        >
-          {/* List of all brands */}
-          <BrandsListWithFilters brands={brands} />
-        </ContentLoading>
+      <Article
+        isLoading={isLoading || !data || !Array.isArray(data)}
+        error={error}
+        border
+      >
+        {/* List of all brands */}
+        <BrandsListWithFilters brands={brands} />
       </Article>
     </main>
   );

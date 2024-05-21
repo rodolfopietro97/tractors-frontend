@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
 import { NextPageWithLayout } from '@/pages/_app';
+import { Article } from '@/app/components/Article';
 
 /**
  * Terms page
@@ -8,8 +9,12 @@ import { NextPageWithLayout } from '@/pages/_app';
 const Privacy: NextPageWithLayout = () => {
   return (
     <main>
-      Non c&apos;è nel documento, ma visto che ci sono gli utenti dovrebbe
-      esserci qualcosa sulla privacy.
+      <Article border>
+        <p>
+          Non c&apos;è nel documento, ma visto che ci sono gli utenti dovrebbe
+          esserci qualcosa sulla privacy.
+        </p>
+      </Article>
     </main>
   );
 };

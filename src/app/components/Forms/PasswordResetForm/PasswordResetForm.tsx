@@ -4,8 +4,9 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { passwordResetConfirmFetcher } from '@/fetchers';
 import { TextInput } from '../../ui/Input';
-import { Button } from '../../ui/Button';
 import { FormsLayout } from '..';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button } from '@chakra-ui/react';
 
 /**
  * Inputs type for password reset form
@@ -124,8 +125,13 @@ function PasswordResetForm({
             )}
         </div>
 
-        <Button type='submit' isLoading={isSubmitting} icon={faRefresh}>
-          <span className='mx-2 text-sm'>Reset</span>
+        <Button
+          type='submit'
+          isLoading={isSubmitting}
+          rightIcon={<FontAwesomeIcon icon={faRefresh} className='h-4' />}
+          colorScheme={'red'}
+        >
+          Reset
         </Button>
       </FormsLayout.Body>
     </form>

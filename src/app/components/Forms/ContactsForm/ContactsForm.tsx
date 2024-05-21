@@ -4,8 +4,9 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { contactsFormFetcher } from '@/fetchers';
 import { TextAreaInput, TextInput } from '../../ui/Input';
-import { Button } from '../../ui/Button';
 import { FormsLayout } from '..';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button } from '@chakra-ui/react';
 
 /**
  * Inputs type for the contact form
@@ -135,8 +136,13 @@ function ContactsForm(): JSX.Element {
         />
 
         {/* Submit */}
-        <Button type='submit' icon={faMailForward} isLoading={isSubmitting}>
-          <span className='mx-2 text-sm'>Invia</span>
+        <Button
+          type='submit'
+          rightIcon={<FontAwesomeIcon icon={faMailForward} className='h-4' />}
+          isLoading={isSubmitting}
+          colorScheme={'blue'}
+        >
+          Invia
         </Button>
       </FormsLayout.Body>
     </form>

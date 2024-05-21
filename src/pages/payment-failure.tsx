@@ -9,8 +9,8 @@ import { NextPageWithLayout } from '@/pages/_app';
 const PaymentFailure: NextPageWithLayout = () => {
   return (
     <main>
-      <Article>
-        <h1>Payment failed</h1>
+      <Article border error={'Pagamento fallito!'}>
+        <></>
       </Article>
     </main>
   );

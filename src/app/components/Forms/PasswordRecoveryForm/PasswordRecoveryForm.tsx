@@ -4,8 +4,9 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { passwordResetFetcher } from '@/fetchers';
 import { TextInput } from '../../ui/Input';
-import { Button } from '../../ui/Button';
 import { FormsLayout } from '..';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button } from '@chakra-ui/react';
 
 /**
  * Inputs type for password recovery form
@@ -86,8 +87,13 @@ function PasswordRecoveryForm(): JSX.Element {
         </p>
 
         {/* Reset */}
-        <Button type='submit' icon={faKitMedical} isLoading={isSubmitting}>
-          <span className='mx-2 text-sm'>Recupera Password</span>
+        <Button
+          type='submit'
+          rightIcon={<FontAwesomeIcon icon={faKitMedical} className='h-4' />}
+          isLoading={isSubmitting}
+          colorScheme={'red'}
+        >
+          Recupera Password
         </Button>
       </FormsLayout.Body>
     </form>

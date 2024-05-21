@@ -1,8 +1,23 @@
-import Link from 'next/link';
 import { BrandType } from '.';
-import { Button } from '@/app/components/ui/Button';
 import { useMemo, useState } from 'react';
 import clsx from 'clsx';
+import { Card, CardBody, CardFooter } from '@chakra-ui/card';
+import { Image } from '@chakra-ui/image';
+import {
+  Button,
+  Container,
+  Divider,
+  IconButton,
+  Stack,
+} from '@chakra-ui/react';
+import {
+  faCaretDown,
+  faCaretUp,
+  faFilePdf,
+  faGlobe,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRouter } from 'next/router';
 
 /**
  * Button of brand list component
@@ -14,6 +29,9 @@ function BrandListButton({
   brand: BrandType;
   categoryFilter: string;
 }): JSX.Element {
+  // Router instance
+  const router = useRouter();
+
   // Show or not brand menu
   const [showBrandMenu, setShowBrandMenu] = useState<boolean>(false);
 
@@ -22,66 +40,88 @@ function BrandListButton({
     return brand.type.toLowerCase();
   }, [brand.type]);
 
-  return (
-    <div className='flex flex-row justify-center'>
-      <div>
-        {/*Brand logo button*/}
-        <Button
-          className='!border-0'
-          onClick={() => setShowBrandMenu(!showBrandMenu)}
-        >
-          <img src={brand.image} alt={brand.name} className='max-w-[265px]' />
-        </Button>
-        {/*TODO: Remove when images are available*/}
-        <p>{brand.name}</p>
-        {showBrandMenu && (
-          /*Menu for online or PDF brand catalog*/
-          <div
-            className={clsx({
-              'flex flex-col items-center py-2': true,
-              invisible: !showBrandMenu,
-              'visible py-5': showBrandMenu,
-            })}
-          >
-            {brandType === 'pdf' && (
-              <Link
-                href={`/brand-detail/${brand.name}/${categoryFilter}`}
-                className='my-2 rounded bg-blue-500 px-4 py-2 text-center font-bold text-white hover:bg-blue-700'
-              >
-                Catalogo PDF
-              </Link>
-            )}
+  /**
+   * PDF Catalog button internal component
+   */
+  const PDFCatalogButton = (
+    <IconButton
+      size={'lg'}
+      icon={<FontAwesomeIcon icon={faFilePdf} className='h-6' />}
+      colorScheme={'yellow'}
+      aria-label={'PDF Catalog'}
+      onClick={() =>
+        router.push(`/brand-detail/${brand.name}/${categoryFilter}`)
+      }
+    >
+      <></>
+    </IconButton>
+  );
 
-            {brandType === 'online' && (
-              <Link
-                href={`/brand-detail-online/${brand.name}`}
-                className='my-2 rounded bg-blue-500 px-4 py-2 text-center font-bold text-white hover:bg-blue-700'
-              >
-                Catalogo Online
-              </Link>
-            )}
+  /**
+   * Online Catalog button internal component
+   */
+  const OnlineCatalogButton = (
+    <IconButton
+      size={'lg'}
+      icon={<FontAwesomeIcon icon={faGlobe} className='h-6' />}
+      colorScheme={'yellow'}
+      aria-label={'Online Catalog'}
+      onClick={() => router.push(`/brand-detail-online/${brand.name}`)}
+    >
+      <></>
+    </IconButton>
+  );
+
+  return (
+    <Card maxW='sm'>
+      <CardBody>
+        <Stack mt='6' spacing='3'>
+          <Container centerContent>
+            <Image
+              src={brand.image}
+              alt={brand.name}
+              borderRadius='lg'
+              className='max-w-[265px]'
+            />
+          </Container>
+          <Divider />
+          <Button
+            colorScheme={'blue'}
+            onClick={() => setShowBrandMenu(!showBrandMenu)}
+            rightIcon={
+              <FontAwesomeIcon
+                icon={showBrandMenu ? faCaretUp : faCaretDown}
+                className='h-4'
+              />
+            }
+          >
+            Dettagli
+          </Button>
+        </Stack>
+      </CardBody>
+      <CardFooter
+        className={clsx({
+          invisible: !showBrandMenu,
+          visible: showBrandMenu,
+        })}
+      >
+        <Container centerContent>
+          <Stack direction={['column', 'row']} spacing='24px'>
+            {brandType === 'pdf' && PDFCatalogButton}
+
+            {brandType === 'online' && OnlineCatalogButton}
 
             {brandType === 'entrambi' && (
               <>
-                <Link
-                  href={`/brand-detail/${brand.name}/${categoryFilter}`}
-                  className='my-2 rounded bg-blue-500 px-4 py-2 text-center font-bold text-white hover:bg-blue-700'
-                >
-                  Catalogo PDF
-                </Link>
+                {PDFCatalogButton}
 
-                <Link
-                  href={`/brand-detail-online/${brand.name}`}
-                  className='my-2 rounded bg-blue-500 px-4 py-2 text-center font-bold text-white hover:bg-blue-700'
-                >
-                  Catalogo Online
-                </Link>
+                {OnlineCatalogButton}
               </>
             )}
-          </div>
-        )}
-      </div>
-    </div>
+          </Stack>
+        </Container>
+      </CardFooter>
+    </Card>
   );
 }
 

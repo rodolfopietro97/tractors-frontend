@@ -2,7 +2,6 @@ import { Article } from '@/app/components/Article/Article';
 import { RegistrationForm } from '@/app/components/Forms';
 import { ReactElement } from 'react';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
-import Profile from '@/pages/profile';
 import { NextPageWithLayout } from '@/pages/_app';
 
 /**
@@ -11,7 +10,7 @@ import { NextPageWithLayout } from '@/pages/_app';
 const Register: NextPageWithLayout = () => {
   return (
     <main>
-      <Article>
+      <Article border>
         <RegistrationForm />
       </Article>
     </main>

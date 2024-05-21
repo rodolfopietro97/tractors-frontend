@@ -7,9 +7,11 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useContext, useState } from 'react';
 import { loginFetcher } from '@/fetchers';
 import { TextInput } from '../../ui/Input';
-import { Button, LinkButton } from '../../ui/Button';
 import { FormsLayout } from '..';
 import { AuthenticationContext } from '@/contexts';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRouter } from 'next/router';
+import { Button } from '@chakra-ui/react';
 
 /**
  * Inputs type for login form
@@ -27,7 +29,6 @@ function LoginForm(): JSX.Element {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<LoginFormInputs>();
 
@@ -63,6 +64,9 @@ function LoginForm(): JSX.Element {
 
   // Login errors
   const [loginError, setLoginError] = useState<string | null>(null);
+
+  // Router
+  const router = useRouter();
 
   return (
     // Main form
@@ -103,15 +107,22 @@ function LoginForm(): JSX.Element {
         {/* Submit buttons */}
         <FormsLayout.PairRow>
           {/* Register */}
-          <LinkButton href='/register' icon={faUserPlus}>
-            <span className='mx-2 text-sm'>Register</span>
-          </LinkButton>
+          <Button
+            rightIcon={<FontAwesomeIcon icon={faUserPlus} className='h-4' />}
+            colorScheme={'blackAlpha'}
+            onClick={() => router.push('/register')}
+          >
+            Registra
+          </Button>
 
           {/* Login */}
           <Button
             isLoading={isSubmitting}
             type='submit'
-            icon={faRightToBracket}
+            rightIcon={
+              <FontAwesomeIcon icon={faRightToBracket} className='h-4' />
+            }
+            colorScheme={'blue'}
           >
             <span className='mx-2 text-sm'>Login</span>
           </Button>

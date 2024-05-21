@@ -1,13 +1,19 @@
 import { ReactElement } from 'react';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
-import RegisterCompany from '@/pages/register-company';
 import { NextPageWithLayout } from '@/pages/_app';
+import { Article } from '@/app/components/Article';
 
 /**
  * Terms page
  */
 const Terms: NextPageWithLayout = () => {
-  return <main>Ci saranno tutti i termini e le condizioni.</main>;
+  return (
+    <main>
+      <Article border>
+        <p>Ci saranno tutti i termini e le condizioni.</p>
+      </Article>
+    </main>
+  );
 };
 
 /**

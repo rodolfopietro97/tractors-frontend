@@ -28,7 +28,7 @@ export function Layout({
       menuEntriesNotLoggedIn={[
         { name: 'Home', href: '/' },
         { name: 'Abbonamenti', href: '/pricing' },
-        { name: 'Catalogo', href: '/brands-catalog' },
+        { name: 'Catalogo', href: '/brands' },
         { name: 'Contatti', href: '/contacts' },
       ]}
       menuEntriesLoggedIn={[
@@ -67,6 +67,7 @@ export function Layout({
             navbar={mainNavbar}
             header={mainHeader}
             footer={mainFooter}
+            showHeader={false}
           >
             {/*Middlewares*/}
             <CustomerRegistrationCheckMiddleware>

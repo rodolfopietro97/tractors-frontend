@@ -4,18 +4,75 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eff2b00b-99b3-4912-818d-e1422b0c1ca0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.env.local.example" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.env.vps" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.prettierrc.json" afterDir="false" />
+    <list default="true" id="eff2b00b-99b3-4912-818d-e1422b0c1ca0" name="Changes" comment="fix: typo">
+      <change beforePath="$PROJECT_DIR$/.idea/copilot/chatSessions/00000000000.xd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copilot/chatSessions/blobs/version" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copilot/chatSessions/xd.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/Article/Article.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Article/Article.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/BrandOnlineContent/BrandOnlineContent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/BrandOnlineContent/BrandOnlineContent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/BrandsList/BrandsList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/BrandsList/BrandsList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/BrandsList/BrandsListWithFilters.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/BrandsList/BrandsListWithFilters.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/ContentLoading/ContentLoading.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/ContentLoading/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/Forms/CompanyRegistrationAndUpdateForm/CompanyRegistrationAndUpdateForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Forms/CompanyRegistrationAndUpdateForm/CompanyRegistrationAndUpdateForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/Forms/ContactsForm/ContactsForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Forms/ContactsForm/ContactsForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/Forms/CustomerRegistrationAndUpdateForm/CustomerRegistrationAndUpdateForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Forms/CustomerRegistrationAndUpdateForm/CustomerRegistrationAndUpdateForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/Forms/FormsLayout/FormsLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Forms/FormsLayout/FormsLayout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/Forms/LoginForm/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Forms/LoginForm/LoginForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/Forms/PasswordRecoveryForm/PasswordRecoveryForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Forms/PasswordRecoveryForm/PasswordRecoveryForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/Forms/PasswordResetForm/PasswordResetForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Forms/PasswordResetForm/PasswordResetForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/Forms/RegistrationForm/RegistrationForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Forms/RegistrationForm/RegistrationForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/Layouts/Layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Layouts/Layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/Layouts/PageLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Layouts/PageLayout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/Navbar/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Navbar/Navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/PricingList/PricingListComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/PricingList/PricingListComponent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/ui/Button/Button.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/ui/Button/index.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/types.d.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/types.d.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middleware-components/CustomerRegistrationCheckMiddleware.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware-components/CustomerRegistrationCheckMiddleware.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/api/stripe/webhook.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/brand-detail-online/[...brandDetailOptions].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/brand-detail-online/[...brandDetailOptions].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/brand-detail/[...brandDetailOptions].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/brand-detail/[...brandDetailOptions].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/brands-catalog.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/brands.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/brands.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/catalog/[...catalogOptions].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/catalog/[...catalogOptions].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/contacts.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/contacts.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/email-confirm/[key].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/email-confirm/[key].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/forgot-password.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/forgot-password.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/password-reset-confirm/[...userParameters].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/password-reset-confirm/[...userParameters].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/payment-failure.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/payment-failure.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/payment-success.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/payment-success.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/payment.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/pricing.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/pricing.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/privacy.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/privacy.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/profile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/register-company.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/register-company.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/register.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/subscription.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/subscription.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/terms.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/terms.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/Redirect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Redirect.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tailwind.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+    </option>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="package.json" />
+      </list>
+    </option>
   </component>
   <component name="FormatOnSaveOptions">
     <option name="mySelectedFileTypes">
@@ -31,8 +88,26 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;rodolfopietro97&quot;
+  }
+}</component>
   <component name="GitToolBoxStore">
     <option name="projectConfigVersion" value="5" />
+  </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:rodolfopietro97/tractors-frontend.git&quot;,
+    &quot;accountId&quot;: &quot;e84a3e41-984c-4fb2-a336-ffd3d44706ab&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/node_modules/@stripe/stripe-js/types/stripe-js/checkout.d.ts" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/node_modules/@stripe/stripe-js/types/stripe-js/stripe.d.ts" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/node_modules/react-hook-form/dist/types/form.d.ts" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/node_modules/typescript/lib/lib.es2015.core.d.ts" root0="SKIP_INSPECTION" />
   </component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
@@ -60,32 +135,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/rodolfo/Projects/personal/tractors-cloud/tractors-frontend&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/rodolfo/Projects/personal/tractors-cloud/tractors-frontend/node_modules/prettier&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.3160323&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/rodolfo/Projects/personal/tractors-cloud/tractors-frontend/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JavaScript Debug.sdf.html.executor": "Run",
+    "Notification.DisplayName-DoNotAsk-alerts": "Pylint Alerts",
+    "Notification.DoNotAsk-alerts": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "git-widget-placeholder": "main",
+    "go.import.settings.migrated": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/rodolfo/Projects/personal/tractors-cloud/tractors-frontend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.stylelint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.stylelint": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "prettierjs.PrettierConfiguration.Package": "/Users/rodolfo/Projects/personal/tractors-cloud/tractors-frontend/node_modules/prettier",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.3160323",
+    "rearrange.code.on.save": "true",
+    "settings.editor.selected.configurable": "editor.preferences.import",
+    "ts.external.directory.path": "/Users/rodolfo/Projects/personal/tractors-cloud/tractors-frontend/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -111,6 +192,22 @@
       <framework value="gotest" />
       <method v="2" />
     </configuration>
+    <configuration name="sdf.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/tractors-frontend/sdf.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.sdf.html" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -128,11 +225,161 @@
       <workItem from="1709282500451" duration="591000" />
       <workItem from="1711440165202" duration="601000" />
       <workItem from="1711531465281" duration="599000" />
+      <workItem from="1711534123706" duration="3834000" />
+      <workItem from="1711621022448" duration="598000" />
+      <workItem from="1712039463033" duration="152000" />
+      <workItem from="1712042452259" duration="1569000" />
+      <workItem from="1712125948366" duration="598000" />
+      <workItem from="1712201449337" duration="526000" />
+      <workItem from="1712638536349" duration="11979000" />
+      <workItem from="1712736674009" duration="1199000" />
+      <workItem from="1712821833418" duration="852000" />
+      <workItem from="1712898880004" duration="1195000" />
+      <workItem from="1713171910227" duration="599000" />
+      <workItem from="1713246893861" duration="7409000" />
+      <workItem from="1713341450429" duration="47000" />
+      <workItem from="1713766433391" duration="14030000" />
+      <workItem from="1713851307313" duration="1211000" />
+      <workItem from="1713932593247" duration="1192000" />
+      <workItem from="1714032949935" duration="599000" />
+      <workItem from="1714051558320" duration="599000" />
+      <workItem from="1714118122459" duration="1199000" />
+      <workItem from="1714368826222" duration="2475000" />
+      <workItem from="1714458926831" duration="19000" />
+      <workItem from="1714458971930" duration="2463000" />
+      <workItem from="1714631936632" duration="599000" />
+      <workItem from="1714974455937" duration="10421000" />
+      <workItem from="1715057972561" duration="717000" />
+      <workItem from="1715062376276" duration="5464000" />
+      <workItem from="1715154955339" duration="1284000" />
+      <workItem from="1715242914793" duration="7428000" />
+      <workItem from="1715328388063" duration="3563000" />
+      <workItem from="1715587885553" duration="1940000" />
+      <workItem from="1715672670469" duration="594000" />
+      <workItem from="1715759124120" duration="1821000" />
+      <workItem from="1715842292930" duration="596000" />
+      <workItem from="1715937037613" duration="1410000" />
+      <workItem from="1716025254553" duration="11741000" />
+      <workItem from="1716177099207" duration="24000" />
+      <workItem from="1716177135306" duration="19541000" />
+      <workItem from="1716274685026" duration="23114000" />
     </task>
+    <task id="LOCAL-00001" summary="feat: structure of FE">
+      <option name="closed" value="true" />
+      <created>1711534409259</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1711534409259</updated>
+    </task>
+    <task id="LOCAL-00002" summary="fix: add canvas and remove yarn lock">
+      <option name="closed" value="true" />
+      <created>1711535231226</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1711535231226</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fix: bug">
+      <option name="closed" value="true" />
+      <created>1713775242186</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1713775242186</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat: improve brands">
+      <option name="closed" value="true" />
+      <created>1713775410763</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1713775410763</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat: all SDF brands and tmep comment">
+      <option name="closed" value="true" />
+      <created>1713801794553</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1713801794553</updated>
+    </task>
+    <task id="LOCAL-00006" summary="fix: update customer fields">
+      <option name="closed" value="true" />
+      <created>1715064057219</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1715064057219</updated>
+    </task>
+    <task id="LOCAL-00007" summary="feat: payments integration">
+      <option name="closed" value="true" />
+      <created>1715331404327</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1715331404327</updated>
+    </task>
+    <task id="LOCAL-00008" summary="feat: improve SWR">
+      <option name="closed" value="true" />
+      <created>1716182807779</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1716182807779</updated>
+    </task>
+    <task id="LOCAL-00009" summary="fix: improve fetchers">
+      <option name="closed" value="true" />
+      <created>1716187112298</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1716187112298</updated>
+    </task>
+    <task id="LOCAL-00010" summary="feat: chackra ui">
+      <option name="closed" value="true" />
+      <created>1716187135153</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1716187135153</updated>
+    </task>
+    <task id="LOCAL-00011" summary="fix: remove overlay component">
+      <option name="closed" value="true" />
+      <created>1716212991869</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1716212991869</updated>
+    </task>
+    <task id="LOCAL-00012" summary="fix: typo">
+      <option name="closed" value="true" />
+      <created>1716217133797</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1716217133797</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: structure of FE" />
+    <MESSAGE value="fix: add canvas and remove yarn lock" />
+    <MESSAGE value="fix: bug" />
+    <MESSAGE value="feat: improve brands" />
+    <MESSAGE value="feat: all SDF brands and tmep comment" />
+    <MESSAGE value="fix: update customer fields" />
+    <MESSAGE value="feat: payments integration" />
+    <MESSAGE value="feat: improve SWR" />
+    <MESSAGE value="fix: improve fetchers" />
+    <MESSAGE value="feat: chackra ui" />
+    <MESSAGE value="fix: remove overlay component" />
+    <MESSAGE value="fix: typo" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: typo" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

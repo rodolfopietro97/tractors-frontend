@@ -4,9 +4,10 @@ import { useContext, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { createUpdateCustomerFetcher } from '@/fetchers';
 import { TextInput } from '../../ui/Input';
-import { Button } from '../../ui/Button';
 import { FormsLayout } from '..';
 import { AuthenticationContext } from '@/contexts';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button } from '@chakra-ui/react';
 
 /**
  * Inputs type for Customer Registrationform
@@ -154,17 +155,23 @@ function CustomerRegistrationAndUpdateForm({
             <Button
               type='submit'
               isLoading={isSubmitting}
-              icon={faEdit}
+              rightIcon={<FontAwesomeIcon icon={faEdit} className='h-4' />}
+              colorScheme={'blue'}
               disabled={
                 JSON.stringify(watch()) === JSON.stringify(defaultValues)
               }
             >
-              <span className='mx-2 text-sm'>Update</span>
+              Aggiorna
             </Button>
           ) : (
             // Register button
-            <Button type='submit' isLoading={isSubmitting} icon={faUserPlus}>
-              <span className='mx-2 text-sm'>Register</span>
+            <Button
+              type='submit'
+              isLoading={isSubmitting}
+              rightIcon={<FontAwesomeIcon icon={faUserPlus} className='h-4' />}
+              colorScheme={'blue'}
+            >
+              Registra
             </Button>
           )}
         </>

@@ -1,14 +1,13 @@
-import { PricingListComponent } from '@/app/components/PricingList/PricingListComponent';
-import { ReactElement, useContext, useMemo } from 'react';
+import { ReactElement, useContext } from 'react';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
 import { NextPageWithLayout } from '@/pages/_app';
 import { useSubscription } from '@/hooks';
-import { ContentLoading } from '@/app/components/ContentLoading';
 import { AuthenticationContext } from '@/contexts';
 import {
   SubscriptionHandler,
   SubscriptionType,
 } from '@/app/components/Sucscription';
+import { Article } from '@/app/components/Article';
 
 /**
  * Subscription page
@@ -22,12 +21,12 @@ const Subscription: NextPageWithLayout = () => {
 
   return (
     <main>
-      <ContentLoading isLoading={isLoading || !data} error={error}>
+      <Article isLoading={isLoading || !data} error={error} border>
         {/* List of all products */}
         {data && data[0] && (
           <SubscriptionHandler subscription={data[0] as SubscriptionType} />
         )}
-      </ContentLoading>
+      </Article>
     </main>
   );
 };

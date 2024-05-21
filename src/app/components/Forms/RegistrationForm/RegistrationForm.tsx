@@ -4,8 +4,17 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { signUpFetcher } from '@/fetchers';
 import { TextInput } from '../../ui/Input';
-import { Button } from '../../ui/Button';
 import { FormsLayout } from '..';
+import {
+  Button,
+  Checkbox,
+  Container,
+  ListItem,
+  Text,
+  UnorderedList,
+} from '@chakra-ui/react';
+import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 /**
  * Inputs type for Registration form
@@ -75,6 +84,9 @@ function RegistrationForm(): JSX.Element {
     setIsSubmitting(false);
   };
 
+  // Confirm or deny terms
+  const [termsAccepted, setTermsAccepted] = useState<boolean>(false);
+
   return (
     // Main form
     <form className='w-full' onSubmit={handleSubmit(onSubmit)}>
@@ -126,9 +138,44 @@ function RegistrationForm(): JSX.Element {
             )}
         </div>
 
+        <Text>
+          Cliccando &quot;Registra&quot;, registrerai un nuovo account. <br />
+          Cio implica l&apos;accettazione:
+        </Text>
+
+        <UnorderedList spacing={3}>
+          <ListItem>
+            Dei nostri{' '}
+            <Link className='text-blue-400 hover:underline' href='/terms'>
+              Termini e condizioni
+            </Link>
+          </ListItem>
+          <ListItem>
+            Della nostra{' '}
+            <Link className='text-blue-400 hover:underline' href='/privacy'>
+              Privacy Policy
+            </Link>
+          </ListItem>
+        </UnorderedList>
+
+        <Container centerContent>
+          <Checkbox
+            isInvalid
+            onChange={(e) => setTermsAccepted(e.target.checked)}
+          >
+            Confermo di accettare
+          </Checkbox>
+        </Container>
+
         {/* Register */}
-        <Button type='submit' isLoading={isSubmitting} icon={faUserPlus}>
-          <span className='mx-2 text-sm'>Register</span>
+        <Button
+          isDisabled={!termsAccepted}
+          type='submit'
+          isLoading={isSubmitting}
+          rightIcon={<FontAwesomeIcon icon={faUserPlus} className='h-4' />}
+          colorScheme={'blue'}
+        >
+          Registra
         </Button>
       </FormsLayout.Body>
     </form>

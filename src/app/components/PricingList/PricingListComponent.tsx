@@ -1,54 +1,23 @@
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, LinkButton } from '../ui/Button';
 import {
   PricePlanType,
   ProductFuturePlanType,
 } from '@/app/components/PricingList/types.d';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { AuthenticationContext } from '@/contexts';
 import getStripe from '@/utils/get-stripe';
 import { Stripe } from '@stripe/stripe-js';
 import { getCheckoutSessionFetcher } from '@/fetchers';
-
-/**
- * Component for price future of a plan
- */
-function PlanFutureComponent({ text }: { text: string }): JSX.Element {
-  return (
-    <li className='flex items-center space-x-3'>
-      <FontAwesomeIcon icon={faCheck} className='h-5 w-5 text-green-500' />
-      <span>{text}</span>
-    </li>
-  );
-}
-
-function CheckoutButton({
-  priceId,
-  token,
-}: {
-  priceId: string;
-  token: string;
-}): JSX.Element {
-  return (
-    <Button
-      onClick={async () => {
-        // 1 - Get checkout session id
-        const request = await getCheckoutSessionFetcher(priceId, token);
-        const data = await request.json();
-
-        // 2 - Redirect to stripe checkout
-        const stripe = (await getStripe()) as Stripe;
-        const { error } = await stripe.redirectToCheckout({
-          sessionId: data.session_id,
-        });
-        console.warn(error.message);
-      }}
-    >
-      Get started
-    </Button>
-  );
-}
+import {
+  Button,
+  CardHeader,
+  Container,
+  Divider,
+  Heading,
+  SimpleGrid,
+  Text,
+} from '@chakra-ui/react';
+import { Card, CardBody, CardFooter } from '@chakra-ui/card';
+import { useRouter } from 'next/router';
 
 /**
  * Single price plan component
@@ -65,21 +34,62 @@ function PricingPlanComponent({
   // Authentication context
   const { token, isJWTValid } = useContext(AuthenticationContext);
 
-  return (
-    <div className='mx-auto flex max-w-lg flex-col rounded-lg border border-gray-100 bg-white p-6 text-center text-gray-900 shadow xl:p-8'>
-      <h3 className='mb-4 text-2xl font-semibold'>{planTitle}</h3>
-      <p className='font-light text-gray-500 sm:text-lg'>{description}</p>
-      <div className='my-8 flex items-baseline justify-center'>
-        <span className='mr-2 text-5xl font-extrabold'>
-          &euro;{price.price}
-        </span>
-      </div>
+  // Router
+  const router = useRouter();
+
+  // Subscription button.
+  const SubscriptionButton = (
+    <>
       {token !== null && isJWTValid ? (
-        <CheckoutButton priceId={price.id} token={token}></CheckoutButton>
+        <Button
+          colorScheme='yellow'
+          onClick={async () => {
+            // 1 - Get checkout session id
+            const request = await getCheckoutSessionFetcher(price.id, token);
+            const data = await request.json();
+
+            // 2 - Redirect to stripe checkout
+            const stripe = (await getStripe()) as Stripe;
+            const { error } = await stripe.redirectToCheckout({
+              sessionId: data.session_id,
+            });
+            console.warn(error.message);
+          }}
+        >
+          Get started
+        </Button>
       ) : (
-        <LinkButton href='/register'>Get started</LinkButton>
+        <Button colorScheme='yellow' onClick={() => router.push('/register')}>
+          Iscriviti ora!
+        </Button>
       )}
-    </div>
+    </>
+  );
+
+  return (
+    <Card>
+      <CardHeader>
+        <Container centerContent>
+          <Heading size='md'>{planTitle}</Heading>
+        </Container>
+      </CardHeader>
+      <CardBody>
+        <Container mb={10} centerContent>
+          <Text>{description}</Text>
+        </Container>
+        <Divider />
+        <Container centerContent mt={5} mb={5}>
+          <span className='mr-2 text-5xl font-extrabold'>
+            &euro;{price.price}
+            <sub className='ml-3 text-xs'>/mese</sub>
+          </span>
+        </Container>
+        <Divider />
+      </CardBody>
+      <CardFooter>
+        <Container centerContent>{SubscriptionButton}</Container>
+      </CardFooter>
+    </Card>
   );
 }
 
@@ -92,29 +102,18 @@ function PricingListComponent({
   productFutures: ProductFuturePlanType[];
 }): JSX.Element {
   return (
-    <section className='bg-white'>
-      <div className='mx-auto max-w-screen-xl px-4 py-8 lg:px-6 lg:py-16'>
-        <div className='mx-auto mb-8 max-w-screen-md text-center lg:mb-12'>
-          <h2 className='mb-4 text-4xl font-extrabold tracking-tight text-gray-900'>
-            I nostri prezzi
-          </h2>
-        </div>
-
-        {/*Futures*/}
-        <div className='space-y-8 sm:gap-6 lg:grid lg:grid-cols-2 lg:space-y-0 xl:gap-10'>
-          {productFutures.map((productFuture, index) => {
-            return (
-              <PricingPlanComponent
-                key={index}
-                planTitle={productFuture.name}
-                description={productFuture.description}
-                price={productFuture.price}
-              />
-            );
-          })}
-        </div>
-      </div>
-    </section>
+    <SimpleGrid spacing={12} columns={{ base: 1, md: 1, lg: 2 }}>
+      {productFutures.map((productFuture, index) => {
+        return (
+          <PricingPlanComponent
+            key={index}
+            planTitle={productFuture.name}
+            description={productFuture.description}
+            price={productFuture.price}
+          />
+        );
+      })}
+    </SimpleGrid>
   );
 }
 

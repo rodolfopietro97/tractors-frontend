@@ -1,10 +1,4 @@
-import React, {
-  ReactElement,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-} from 'react';
+import React, { ReactElement, useContext, useMemo } from 'react';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
 import { NextPageWithLayout } from '@/pages/_app';
 import { Viewer, Worker } from '@react-pdf-viewer/core';
@@ -13,8 +7,11 @@ import { Viewer, Worker } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/zoom/lib/styles/index.css';
 
-import { RenderZoomInProps, zoomPlugin } from '@react-pdf-viewer/zoom';
-import { Button } from '@/app/components/ui/Button';
+import {
+  RenderZoomInProps,
+  RenderZoomOutProps,
+  zoomPlugin,
+} from '@react-pdf-viewer/zoom';
 import { RowColHelper } from '@/app/components/RowColHelper';
 
 import {
@@ -25,6 +22,8 @@ import { useRouter } from 'next/router';
 import { useFileSignedUrl } from '@/hooks';
 import { AuthenticationContext } from '@/contexts';
 import { coder } from '@/utils/coder';
+import { IconButton } from '@chakra-ui/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const PDFViewer: NextPageWithLayout = () => {
   // Router
@@ -34,7 +33,7 @@ const PDFViewer: NextPageWithLayout = () => {
   const zoomPluginInstance = zoomPlugin({ enableShortcuts: false });
 
   // Auth context
-  const { token, isJWTValid } = useContext(AuthenticationContext);
+  const { token } = useContext(AuthenticationContext);
 
   // File url
   const fileUrl = useMemo<string | null>(() => {
@@ -43,7 +42,7 @@ const PDFViewer: NextPageWithLayout = () => {
     return coder.decode(router.query.catalogOptions[0] as string);
   }, [router.query.catalogOptions]);
 
-  const { data, error, isLoading } = useFileSignedUrl(token, fileUrl);
+  const { data } = useFileSignedUrl(token, fileUrl);
 
   return (
     // Main worker
@@ -58,14 +57,36 @@ const PDFViewer: NextPageWithLayout = () => {
           className='flex h-[44px] flex-row justify-center border border-gray-200 bg-[#fcfdfe]'
         >
           <zoomPluginInstance.ZoomOut>
-            {(props: RenderZoomInProps) => (
-              <Button onClick={props.onClick} icon={faMagnifyingGlassMinus} />
+            {(props: RenderZoomOutProps) => (
+              <IconButton
+                ml={1}
+                mr={1}
+                onClick={props.onClick}
+                aria-label='zoom out'
+                icon={
+                  <FontAwesomeIcon
+                    icon={faMagnifyingGlassMinus}
+                    className='h-4'
+                  />
+                }
+              />
             )}
           </zoomPluginInstance.ZoomOut>
 
           <zoomPluginInstance.ZoomIn>
             {(props: RenderZoomInProps) => (
-              <Button onClick={props.onClick} icon={faMagnifyingGlassPlus} />
+              <IconButton
+                ml={1}
+                mr={1}
+                onClick={props.onClick}
+                aria-label='zoom in'
+                icon={
+                  <FontAwesomeIcon
+                    icon={faMagnifyingGlassPlus}
+                    className='h-4'
+                  />
+                }
+              />
             )}
           </zoomPluginInstance.ZoomIn>
         </RowColHelper>

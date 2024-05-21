@@ -1,6 +1,8 @@
-import { Button } from '@/app/components/ui/Button';
 import { BrandOnlineCredentialsContentData } from '@/app/components/BrandOnlineContent/types.d';
 import Link from 'next/link';
+import { Button } from '@chakra-ui/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 
 /**
  * Content for a single brand online
@@ -21,7 +23,13 @@ function BrandOnlineContent({
       {brandName.toLowerCase().includes('sdf') && data.credentials.jwt && (
         <form action={data.url}>
           <input type='hidden' name='jwt' value={data.credentials.jwt} />
-          <Button type='submit'>Vai al portale</Button>
+          <Button
+            leftIcon={<FontAwesomeIcon icon={faGlobe} className='h-4' />}
+            colorScheme={'blue'}
+            type='submit'
+          >
+            Vai al portale
+          </Button>
         </form>
       )}
 
@@ -29,22 +37,6 @@ function BrandOnlineContent({
       {['landini', 'mccormick', 'valpadana'].includes(
         brandName.toLowerCase()
       ) && (
-        // <form
-        //   action={'https://gate.argotractors.com/portal/index.html#/login'}
-        //   method='post'
-        // >
-        //   <input
-        //     type='hidden'
-        //     name='username'
-        //     value={data.credentials.username}
-        //   />
-        //   <input
-        //     type='hidden'
-        //     name='password'
-        //     value={data.credentials.password}
-        //   />
-        //   <Button type='submit'>Vai al portale</Button>
-        // </form>
         <>
           <h4>
             Connettiti al sito{' '}

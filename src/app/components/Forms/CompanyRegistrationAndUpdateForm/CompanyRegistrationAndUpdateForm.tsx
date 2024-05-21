@@ -1,12 +1,13 @@
 import { useRouter } from 'next/router';
 import { FormsLayout } from '..';
-import { Button, LinkButton } from '../../ui/Button';
 import { SelectInput, TextInput } from '../../ui/Input';
 import { useContext, useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { createUpdateCompanyFetcher } from '@/fetchers';
 import { faBuilding, faEdit, faX } from '@fortawesome/free-solid-svg-icons';
 import { AuthenticationContext } from '@/contexts';
+import { Button } from '@chakra-ui/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 /**
  * Inputs type for Company Registrationform
@@ -239,17 +240,23 @@ function CompanyRegistrationAndUpdateForm({
             <Button
               type='submit'
               isLoading={isSubmitting}
-              icon={faEdit}
+              rightIcon={<FontAwesomeIcon icon={faEdit} className='h-4' />}
               disabled={
                 JSON.stringify(watch()) === JSON.stringify(defaultValues)
               }
+              colorScheme={'blue'}
             >
-              <span className='mx-2 text-sm'>Update</span>
+              Update
             </Button>
           ) : (
             // Register button
-            <Button type='submit' isLoading={isSubmitting} icon={faBuilding}>
-              <span className='mx-2 text-sm'>Register</span>
+            <Button
+              type='submit'
+              isLoading={isSubmitting}
+              rightIcon={<FontAwesomeIcon icon={faBuilding} className='h-4' />}
+              colorScheme={'blue'}
+            >
+              Registra
             </Button>
           )}
         </>
@@ -257,9 +264,13 @@ function CompanyRegistrationAndUpdateForm({
         {/* Continue without registering company */}
         <>
           {!update && (
-            <LinkButton href='/dashboard' icon={faX}>
-              <span className='mx-2 text-sm'>Non registrare</span>
-            </LinkButton>
+            <Button
+              colorScheme={'red'}
+              rightIcon={<FontAwesomeIcon icon={faX} className='h-4' />}
+              onClick={() => router.push('/dashboard')}
+            >
+              Non registrare
+            </Button>
           )}
         </>
       </FormsLayout.Body>

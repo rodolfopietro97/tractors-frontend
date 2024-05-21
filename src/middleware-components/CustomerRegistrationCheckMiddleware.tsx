@@ -42,10 +42,6 @@ function CustomerRegistrationCheckMiddleware({
                     name: '',
                     surname: '',
                     fiscal_code: '',
-                    region: '',
-                    council: '',
-                    city: '',
-                    address: '',
                     phone_number: '',
                   }}
                 />

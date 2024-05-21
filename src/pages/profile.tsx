@@ -1,6 +1,5 @@
 'use client';
 
-import { ContentLoading } from '@/app/components/ContentLoading/ContentLoading';
 import {
   CompanyRegistrationAndUpdateForm,
   CustomerRegistrationAndUpdateForm,
@@ -11,6 +10,7 @@ import Link from 'next/link';
 import { ReactElement, useContext } from 'react';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
 import { NextPageWithLayout } from '@/pages/_app';
+import { Article } from '@/app/components/Article';
 
 /**
  * Profile page
@@ -30,9 +30,10 @@ const Profile: NextPageWithLayout = () => {
   return (
     <main>
       <div>
-        <ContentLoading
+        <Article
           isLoading={isLoading || data?.code == 'token_not_valid'}
           error={error}
+          border
         >
           <>
             {data?.email && customerExists && customer && (
@@ -56,10 +57,6 @@ const Profile: NextPageWithLayout = () => {
                         name: customer.name,
                         surname: customer.surname,
                         fiscal_code: customer.fiscal_code,
-                        region: customer.region,
-                        council: customer.council,
-                        city: customer.city,
-                        address: customer.address,
                         phone_number: customer.phone_number,
                       }}
                     />
@@ -109,7 +106,7 @@ const Profile: NextPageWithLayout = () => {
               </>
             )}
           </>
-        </ContentLoading>
+        </Article>
       </div>
     </main>
   );

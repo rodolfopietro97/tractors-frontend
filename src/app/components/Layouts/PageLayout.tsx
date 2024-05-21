@@ -8,26 +8,28 @@ function PageLayout({
   header,
   footer,
   children,
+  showHeader,
 }: {
   navbar: JSX.Element;
   header: JSX.Element;
   footer: JSX.Element;
   children: JSX.Element;
+  showHeader: boolean;
 }): JSX.Element {
   return (
     // Main layout
-    <div className='bg-main flex h-screen w-full flex-col justify-center overflow-y-hidden'>
+    <div className='flex h-screen w-full flex-col justify-center overflow-y-hidden bg-main'>
       {/* Navbar */}
-      <div className='text-navbarText w-full bg-gradient-to-l from-navbar to-[#144c8f]'>
-        {navbar}
-      </div>
+      <div className='w-full bg-navbar text-navbarText'>{navbar}</div>
 
       {/* Scroll layout */}
       <div className='flex h-auto w-full flex-grow flex-col overflow-y-auto'>
-        {/* Header */}
-        <div className='text-headerText border-mainBorder h-auto w-full border-b-2 bg-header uppercase'>
-          {header}
-        </div>
+        {/* Header (IF PRESENT) */}
+        {showHeader && (
+          <div className='h-auto w-full border-b-2 border-mainBorder bg-header uppercase text-headerText'>
+            {header}
+          </div>
+        )}
 
         {/* Content */}
         <div className='flex h-auto w-full flex-grow flex-col items-center justify-center'>
@@ -35,7 +37,7 @@ function PageLayout({
         </div>
 
         {/* Footer */}
-        <div className='border-mainBorder w-full border-2 bg-footer'>
+        <div className='w-full border-2 border-mainBorder bg-footer'>
           {footer}
         </div>
       </div>

@@ -1,7 +1,4 @@
 'use client';
-import { ContentLoading } from '@/app/components/ContentLoading/ContentLoading';
-import { RowColHelper } from '@/app/components/RowColHelper';
-import { LinkButton } from '@/app/components/ui/Button';
 import { AuthenticationContext } from '@/contexts';
 import { useUserDetails } from '@/hooks';
 import {
@@ -12,11 +9,18 @@ import {
 import { ReactElement, useContext } from 'react';
 import { NextPageWithLayout } from '@/pages/_app';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
+import { Article } from '@/app/components/Article';
+import { Button, SimpleGrid, Text } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 /**
  * Dashboard page
  */
 const Dashboard: NextPageWithLayout = () => {
+  // Router
+  const router = useRouter();
+
   // Authentication context
   const { token } = useContext(AuthenticationContext);
 
@@ -26,32 +30,41 @@ const Dashboard: NextPageWithLayout = () => {
   return (
     <main>
       <div>
-        <ContentLoading
+        <Article
           isLoading={isLoading || data?.code == 'token_not_valid'}
           error={error}
+          border
         >
           <>
             {data?.email && (
-              <RowColHelper
-                className='my-2 flex flex-col'
-                classNames={['my-10', 'my-2', 'my-2', 'my-2']}
-              >
-                <h1 className='text-center text-2xl'>Welcome {data.email}</h1>
-                <LinkButton href='/profile' icon={faUser}>
-                  <span className='mx-2 text-sm'>Gestisci il tuo profilo</span>
-                </LinkButton>
-                <LinkButton href='/brands' icon={faBook}>
-                  <span className='mx-2 text-sm'>Consulta il catalogo</span>
-                </LinkButton>
-                <LinkButton href='/subscription' icon={faCreditCard}>
-                  <span className='mx-2 text-sm'>
-                    Sottoscrizioni e Pagamento
-                  </span>
-                </LinkButton>
-              </RowColHelper>
+              <SimpleGrid columns={1} spacing={5}>
+                <Text mb={10}>
+                  <h1 className='text-2xl'>Benvenuto {data.email}</h1>
+                </Text>
+                <Button
+                  onClick={() => router.push('/profile')}
+                  leftIcon={<FontAwesomeIcon icon={faUser} className='h-4' />}
+                >
+                  Gestisci il tuo profilo
+                </Button>
+                <Button
+                  onClick={() => router.push('/brands')}
+                  leftIcon={<FontAwesomeIcon icon={faBook} className='h-4' />}
+                >
+                  Consulta il catalogo
+                </Button>
+                <Button
+                  onClick={() => router.push('/subscription')}
+                  leftIcon={
+                    <FontAwesomeIcon icon={faCreditCard} className='h-4' />
+                  }
+                >
+                  Sottoscrizioni e Pagamento
+                </Button>
+              </SimpleGrid>
             )}
           </>
-        </ContentLoading>
+        </Article>
       </div>
     </main>
   );

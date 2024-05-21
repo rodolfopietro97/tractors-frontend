@@ -10,7 +10,7 @@ import { NextPageWithLayout } from '@/pages/_app';
 const ForgotPassword: NextPageWithLayout = () => {
   return (
     <main>
-      <Article>
+      <Article border>
         <PasswordRecoveryForm />
       </Article>
     </main>

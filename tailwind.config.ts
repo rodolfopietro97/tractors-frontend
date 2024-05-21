@@ -15,11 +15,11 @@ const config: Config = {
       },
       colors: {
         // Main
-        main: '#fbfbfb',
+        main: '#F8F8F8',
 
         // Navbar
-        navbar: '#28a7e0', // Facebook blue 3b5998, Previous: 1a4c65 , Alpego from 28a7e0 , Chiaro 10bef6
-        navbarText: '#f2f1f1',
+        navbar: '#3182ce', // Facebook blue 3b5998, Previous: 1a4c65 , Alpego from 28a7e0 , Chiaro 10bef6
+        navbarText: '#ffffff',
 
         // Header
         header: '#f2f1f1',
@@ -27,16 +27,14 @@ const config: Config = {
 
         // Article
         article: '#fbfbfb',
+        error: '#fed7d7',
+        success: '#c6f6d5',
 
         // Footer
         footer: '#f2f1f1',
 
         // Border
-        mainBorder: '#cbcbca',
-
-        // Gradients
-        buttonGradientFrom: '#FFFFFF',
-        buttonGradientTo: '#F8F8F8',
+        mainBorder: '#EFEFEF',
 
         // Buttons
         buttonTextColor: '#144c8f', // Previous: #28a7e0

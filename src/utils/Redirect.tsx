@@ -13,7 +13,7 @@ type RedirectMapType = {
  * Map of redirecting urls
  */
 const redirectMap: RedirectMapType = {
-  loggedIn: ['/register-company', '/profile', '/dashboard', '/brands'],
+  loggedIn: ['/register-company', '/profile', '/dashboard'],
   notLoggedIn: [
     '/register',
     // '/pricing',
@@ -23,7 +23,7 @@ const redirectMap: RedirectMapType = {
     '/forgot-password',
     '/email-confirm/[key]',
     '/contacts',
-    '/brands-catalog',
+    // '/brands-catalog',
   ],
   noRestrictions: ['/terms', '/privacy'],
 };

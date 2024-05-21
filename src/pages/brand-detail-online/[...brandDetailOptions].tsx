@@ -2,11 +2,10 @@ import { useRouter } from 'next/router';
 import { ReactElement, useContext, useEffect, useMemo } from 'react';
 import { AuthenticationContext } from '@/contexts';
 import { useBrandOnline } from '@/hooks';
-import { ContentLoading } from '@/app/components/ContentLoading';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
 import { NextPageWithLayout } from '@/pages/_app';
 import { BrandOnlineContent } from '@/app/components/BrandOnlineContent';
-import { json } from 'node:stream/consumers';
+import { Article } from '@/app/components/Article';
 
 /**
  * Brand detail page
@@ -16,12 +15,18 @@ const BrandDetailOnline: NextPageWithLayout = () => {
   const router = useRouter();
 
   // Auth context
-  const { token } = useContext(AuthenticationContext);
+  const { token, isJWTValid } = useContext(AuthenticationContext);
+
+  // Redirect to pricing if not logged in
+  useEffect(() => {
+    if (!isJWTValid) {
+      router.push('/pricing');
+    }
+  }, [isJWTValid, router]);
 
   // Brand name
   const brandName = useMemo<string | null>(() => {
     if (
-      router.query.brandDetailOptions === undefined ||
       router.query.brandDetailOptions === undefined ||
       router.query.brandDetailOptions.length === 0
     )
@@ -30,20 +35,17 @@ const BrandDetailOnline: NextPageWithLayout = () => {
   }, [router.query.brandDetailOptions]);
 
   // Get brand files
-  const { data, error, isLoading } = useBrandOnline(token, brandName);
+  const { data } = useBrandOnline(token, brandName);
 
   return (
     <main>
-      <ContentLoading
-        isLoading={data === undefined || brandName === null}
-        error={error}
-      >
+      <Article isLoading={data === undefined || brandName === null} border>
         <>
           {data !== undefined && brandName !== null && (
             <BrandOnlineContent brandName={brandName as string} data={data} />
           )}
         </>
-      </ContentLoading>
+      </Article>
     </main>
   );
 };
