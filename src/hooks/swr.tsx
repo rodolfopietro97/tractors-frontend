@@ -255,7 +255,6 @@ function useTokenRefresh(
     refreshToken !== null && isJwtTokenValid === true
       ? 'users/token/refresh/'
       : null;
-  console.log('URL', url);
 
   // Set body
   const body: FetcherBodyType<'users/token/refresh/'> = {
