@@ -214,24 +214,6 @@ const signUpFetcher = (
 };
 
 /**
- * Fetcher used to refresh token
- */
-const tokenRefreshFetcher = (
-  tokenToRefresh: FetcherBodyType<'users/token/refresh/'>
-): Promise<Response> => {
-  // Set url
-  const url: UrlType = 'users/token/refresh/';
-
-  // Set body
-  const body: FetcherBodyType<'users/token/refresh/'> = tokenToRefresh;
-
-  // Return fetcher
-  return genericFetcher('POST', url, {
-    body,
-  });
-};
-
-/**
  * Fetcher used to verify token
  */
 const tokenVerifyFetcher = (
@@ -304,7 +286,6 @@ export {
   passwordResetConfirmFetcher,
   passwordResetFetcher,
   signUpFetcher,
-  tokenRefreshFetcher,
   tokenVerifyFetcher,
   createUpdateCompanyFetcher,
   getCheckoutSessionFetcher,

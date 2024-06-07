@@ -13,11 +13,6 @@ type AuthenticationContextType = {
   refreshToken: string | null;
 
   /**
-   * Check if JWT is valid
-   */
-  isJWTValid: boolean;
-
-  /**
    * Do login function
    *
    * @note This function ONLY sets the tokens in the state. NOT ENDPOINTS

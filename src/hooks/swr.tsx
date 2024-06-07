@@ -243,6 +243,36 @@ function useSubscription(token: string | null) {
   );
 }
 
+/**
+ * Update JWT Token
+ */
+function useTokenRefresh(
+  refreshToken: string | null,
+  isJwtTokenValid: boolean | null
+) {
+  // Set url
+  const url: UrlType =
+    refreshToken !== null && isJwtTokenValid === true
+      ? 'users/token/refresh/'
+      : null;
+  console.log('URL', url);
+
+  // Set body
+  const body: FetcherBodyType<'users/token/refresh/'> = {
+    refresh: refreshToken as string,
+  };
+
+  // Return SWR
+  return useSWR(
+    url as 'users/token/refresh/',
+    (url) =>
+      genericFetcher('POST', url as UrlType, {
+        body,
+      }).then((res) => res.json()),
+    { refreshInterval: 10000 }
+  );
+}
+
 export {
   useBrandFilesList,
   useBrandsList,
@@ -255,4 +285,5 @@ export {
   useFileSignedUrl,
   useProductsList,
   useSubscription,
+  useTokenRefresh,
 };

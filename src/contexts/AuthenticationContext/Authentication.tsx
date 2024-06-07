@@ -1,21 +1,23 @@
 'use client';
-import { tokenRefreshFetcher, tokenVerifyFetcher } from '@/fetchers';
+import { tokenVerifyFetcher } from '@/fetchers';
 import { createContext, useEffect, useState } from 'react';
 import secureLocalStorage from 'react-secure-storage';
 import { AuthenticationContextType } from '@/contexts';
+import { useAuthenticationStore } from '@/hooks/store';
+import { useTokenRefresh } from '@/hooks';
 
 /**
  * Refresh interval in seconds
  */
-const REFRESH_INTERVAL_IN_SECONDS: number = 5;
+const REFRESH_INTERVAL_IN_SECONDS: number = 10;
 
 /**
  * Authentication context
  */
-const AuthenticationContext = createContext<AuthenticationContextType>({
+const AuthenticationContext = createContext<
+  Omit<AuthenticationContextType, 'refreshToken'>
+>({
   token: null,
-  refreshToken: null,
-  isJWTValid: false,
 
   doLogin: (token: string, refreshToken: string) => {},
   doLogout: () => {},
@@ -25,131 +27,121 @@ const AuthenticationContext = createContext<AuthenticationContextType>({
  * Authentication provider
  */
 function AuthenticationProvider({ children }: { children: JSX.Element }) {
+  // Authentication store
+  const authenticationStore = useAuthenticationStore();
+
+  // JWT Token valid or not or checking (null)
+  const [isJWTValid, setIsJWTValid] = useState<boolean | null>(null);
+
+  // Token refresh swr hook
+  const { data: tokenRefreshData } = useTokenRefresh(
+    authenticationStore.refreshToken,
+    isJWTValid
+  );
+
   /**
-   * Do login function
+   * Set new authentication tokens:
    *
-   * @param token - JWT token
-   * @param refreshToken - JWT refresh token
-   */
-  const doLogin = (token: string, refreshToken: string) => {
-    // Set tokens in state
-    setToken(token);
-    setTokenRefreshToken(refreshToken);
-  };
-
-  /**
-   * Do logout function
-   */
-  const doLogout = () => {
-    // Remove tokens from state
-    setToken(null);
-    setTokenRefreshToken(null);
-
-    // Remove JWT from secure local storage
-    secureLocalStorage.removeItem('token');
-    secureLocalStorage.removeItem('refreshToken');
-  };
-
-  // Token hook state
-  const [token, setToken] = useState<string | null>(null);
-
-  // Refresh token hook state
-  const [refreshToken, setTokenRefreshToken] = useState<string | null>(null);
-
-  // Check if JWT is valid hook state
-  const [isJWTValid, setIsJWTValid] = useState<boolean>(false);
-
-  /**
-   * Effect to check if JWT is valid
-   *
-   * It is executed every time token or refreshToken changes.
+   * Every time by using the token refresh hook.
    */
   useEffect(() => {
-    // Tokens are present
-    if (token && refreshToken) {
+    if (
+      isJWTValid === true &&
+      authenticationStore.token !== null &&
+      authenticationStore.refreshToken !== null &&
+      tokenRefreshData !== undefined &&
+      tokenRefreshData.access !== undefined
+    )
+      authenticationStore.doLogin(
+        tokenRefreshData.access,
+        authenticationStore.refreshToken as string
+      );
+  }, [tokenRefreshData]);
+
+  /**
+   * Check if JWT token is valid:
+   *
+   * Every time the token changes.
+   */
+  useEffect(() => {
+    // Token is not null
+    if (authenticationStore.token !== null) {
       // Verify if token is valid or invalid/expired
-      tokenVerifyFetcher({ token: token }).then((response) => {
-        response.json().then((json) => {
-          // JWT is valid - Set state
-          if (Object.keys(json).length === 0) setIsJWTValid(true);
-          // JWT is invalid or expired - Logout is performed
-          else {
-            secureLocalStorage.removeItem('token');
-            secureLocalStorage.removeItem('refreshToken');
-            setIsJWTValid(false);
-          }
-        });
-      });
-    }
-    // Tokens are NOT present
-    else setIsJWTValid(false);
-  }, [token, refreshToken]);
-
-  /**
-   * Effect to load token from secure local storage.
-   *
-   * It is executed only once when page is loaded.
-   */
-  useEffect(() => {
-    // Load token from secure local storage
-    const _token = secureLocalStorage.getItem('token');
-    const _refreshToken = secureLocalStorage.getItem('refreshToken');
-
-    // Secure local storage is not empty
-    if (_token && _refreshToken) {
-      setToken(_token as string);
-      setTokenRefreshToken(_refreshToken as string);
-    }
-  }, []);
-
-  /**
-   * Effect to save token to secure local storage.
-   *
-   * It is executed every time token or refreshToken changes.
-   */
-  useEffect(() => {
-    if (token && refreshToken) {
-      secureLocalStorage.setItem('token', token as string);
-      secureLocalStorage.setItem('refreshToken', refreshToken as string);
-    }
-  }, [token, refreshToken]);
-
-  /**
-   * Effect to refresh JWT token.
-   */
-  useEffect(() => {
-    // Refresh interval
-    const refreshInterval = setInterval(() => {
-      // Refresh if JWT is valid
-      if (isJWTValid) {
-        tokenRefreshFetcher({
-          refresh: refreshToken as string,
-        }).then((response) => {
-          response.json().then((jsonResponse) => {
-            // Valid token
-            if (jsonResponse.access) setToken(jsonResponse.access);
-            // Do logout fo every problem
-            else doLogout();
+      tokenVerifyFetcher({ token: authenticationStore.token }).then(
+        (response) => {
+          // await response.json()
+          response.json().then((json) => {
+            // JWT is valid - Set state
+            if (Object.keys(json).length === 0) {
+              return setIsJWTValid(true);
+            }
+            // JWT is invalid or expired - Logout is performed
+            else {
+              setIsJWTValid(false);
+            }
           });
-        });
-      }
-    }, 1000 * REFRESH_INTERVAL_IN_SECONDS);
+        }
+      );
+    }
+    // If the token is null, set state to null
+    else {
+      setIsJWTValid(null);
+    }
+  }, [authenticationStore.token]);
 
-    // Clear interval on unmount
-    return () => clearInterval(refreshInterval);
-  }, [isJWTValid]);
+  /**
+   * If the token is:
+   *
+   * PRESENT BUT INVALID,
+   * THEN, do the logout.
+   */
+  useEffect(() => {
+    if (isJWTValid === false && authenticationStore.token !== null) {
+      authenticationStore.doLogout();
+    }
+  });
+
+  /**
+   * Logger to see authentication data
+   */
+  const AuthLogger = (
+    <>
+      <p className='text-sm'>
+        {isJWTValid === null && 'JWT Validity: Checking...'}
+      </p>
+      <p className='text-sm'>
+        {isJWTValid !== null &&
+          (isJWTValid === true ? 'JWT Valid' : 'JWT Invalid')}
+      </p>
+
+      <p className='text-sm'>
+        Token:{' '}
+        {authenticationStore.token === null
+          ? 'null'
+          : authenticationStore.token}
+      </p>
+      <p className='text-sm'>
+        Refresh Token:{' '}
+        {authenticationStore.refreshToken === null
+          ? 'null'
+          : authenticationStore.refreshToken}
+      </p>
+    </>
+  );
 
   return (
     <AuthenticationContext.Provider
       value={{
-        token: token as string,
-        refreshToken: refreshToken as string,
-        isJWTValid: isJWTValid,
-        doLogin: doLogin,
-        doLogout: doLogout,
+        token: authenticationStore.token,
+        doLogin: authenticationStore.doLogin,
+        doLogout: authenticationStore.doLogout,
       }}
     >
-      {children}
+      <>
+        {/*Uncomment the following lines to see the token data*/}
+        {/*{AuthLogger}*/}
+        {children}
+      </>
     </AuthenticationContext.Provider>
   );
 }
