@@ -1,7 +1,6 @@
 'use client';
 import { tokenVerifyFetcher } from '@/fetchers';
 import { createContext, useEffect, useState } from 'react';
-import secureLocalStorage from 'react-secure-storage';
 import { AuthenticationContextType } from '@/contexts';
 import { useAuthenticationStore } from '@/hooks/store';
 import { useTokenRefresh } from '@/hooks';
