@@ -1,11 +1,7 @@
 import { Header } from '@/app/components/Header';
 import { Footer } from '@/app/components/Footer';
 import { Navbar } from '@/app/components/Navbar';
-import {
-  AuthenticationProvider,
-  RedirectHandler,
-  UserInfoProvider,
-} from '@/contexts';
+import { AuthenticationProvider, UserInfoProvider } from '@/contexts';
 import {
   PageLayout,
   LAYOUT_TYPE,
@@ -90,11 +86,8 @@ export function Layout({
     /*Providers for context*/
     <AuthenticationProvider>
       <UserInfoProvider>
-        {/*Handlers*/}
-        <RedirectHandler>
-          {/* Main page layout */}
-          <LayoutToApply />
-        </RedirectHandler>
+        {/* Main page layout */}
+        <LayoutToApply />
       </UserInfoProvider>
     </AuthenticationProvider>
   );
