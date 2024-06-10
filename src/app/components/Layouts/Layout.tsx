@@ -1,13 +1,22 @@
 import { Header } from '@/app/components/Header';
 import { Footer } from '@/app/components/Footer';
 import { Navbar } from '@/app/components/Navbar';
-import { AuthenticationProvider, UserInfoProvider } from '@/contexts';
+import {
+  AuthenticationContext,
+  AuthenticationProvider,
+  UserInfoProvider,
+} from '@/contexts';
 import {
   PageLayout,
   LAYOUT_TYPE,
   PDFViewerLayout,
 } from '@/app/components/Layouts';
 import { CustomerRegistrationCheckMiddleware } from '@/middleware-components';
+import { useContext, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { PageLoader } from '@/app/components/PageLoader';
+import { JWT_CHECK_TIME } from '@/utils';
+import { handleRedirect } from '../../../utils/redirect-handler';
 
 export function Layout({
   children,
@@ -16,6 +25,28 @@ export function Layout({
   children: JSX.Element;
   layoutType: LAYOUT_TYPE;
 }): JSX.Element {
+  // Authentication context
+  const { token } = useContext(AuthenticationContext);
+
+  // Router
+  const router = useRouter();
+
+  // Loading state of page (needed to wait correct JWT)
+  const [isLoadingJWTToken, setIsLoadingJWTToken] = useState(true);
+
+  // Redirect handler
+  useEffect(() => {
+    // Give time to check the token
+    const loadToken = async () => {
+      await new Promise((resolve) => setTimeout(resolve, JWT_CHECK_TIME));
+      setIsLoadingJWTToken(false);
+    };
+    loadToken();
+
+    // JWT loading is finished
+    if (!isLoadingJWTToken) handleRedirect(token, router);
+  }, [token, isLoadingJWTToken]);
+
   /**
    * Main navbar
    */
@@ -86,8 +117,8 @@ export function Layout({
     /*Providers for context*/
     <AuthenticationProvider>
       <UserInfoProvider>
-        {/* Main page layout */}
-        <LayoutToApply />
+        {/* Main page layout or loading (needed to wait correct JWT) */}
+        {isLoadingJWTToken ? <PageLoader /> : <LayoutToApply />}
       </UserInfoProvider>
     </AuthenticationProvider>
   );
