@@ -32,7 +32,7 @@ function PricingPlanComponent({
   price: PricePlanType;
 }): JSX.Element {
   // Authentication context
-  const { token, isJWTValid } = useContext(AuthenticationContext);
+  const { token } = useContext(AuthenticationContext);
 
   // Router
   const router = useRouter();
@@ -40,7 +40,7 @@ function PricingPlanComponent({
   // Subscription button.
   const SubscriptionButton = (
     <>
-      {token !== null && isJWTValid ? (
+      {token !== null ? (
         <Button
           colorScheme='yellow'
           onClick={async () => {

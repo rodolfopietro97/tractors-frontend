@@ -38,7 +38,7 @@ function NavbarActionButtons({
   const router = useRouter();
 
   // Authentication context
-  const { isJWTValid, doLogout, token } = useContext(AuthenticationContext);
+  const { doLogout, token } = useContext(AuthenticationContext);
 
   // Is submitting
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -54,7 +54,7 @@ function NavbarActionButtons({
   };
 
   // Not logged in
-  if (!isJWTValid)
+  if (token === null)
     return (
       <RowColHelper
         className='flex flex-row justify-center'
@@ -163,7 +163,7 @@ function Navbar({
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   // Authentication context
-  const { isJWTValid } = useContext(AuthenticationContext);
+  const { token } = useContext(AuthenticationContext);
 
   return (
     // Big Navbar. It is a global div that center our navbar container
@@ -188,7 +188,7 @@ function Navbar({
 
         {/* Menu entries - NON MOBILE */}
         <div className='hidden w-2/5 flex-row items-center justify-center md:flex'>
-          {!isJWTValid &&
+          {token === null &&
             menuEntriesNotLoggedIn.map((entry, index) => (
               <NavbarMenuEntry
                 key={index}
@@ -198,7 +198,7 @@ function Navbar({
                 target={entry.target}
               />
             ))}
-          {isJWTValid &&
+          {token !== null &&
             menuEntriesLoggedIn.map((entry, index) => (
               <NavbarMenuEntry
                 key={index}
@@ -214,7 +214,7 @@ function Navbar({
         {mobileMenuOpen && (
           <div className='flex flex-col py-8 md:hidden'>
             {/* Entries */}
-            {!isJWTValid &&
+            {token === null &&
               menuEntriesNotLoggedIn.map((entry, index) => (
                 <NavbarMenuEntry
                   onClick={() => setMobileMenuOpen(false)}
@@ -225,7 +225,7 @@ function Navbar({
                   target={entry.target}
                 />
               ))}
-            {isJWTValid &&
+            {token !== null &&
               menuEntriesLoggedIn.map((entry, index) => (
                 <NavbarMenuEntry
                   onClick={() => setMobileMenuOpen(false)}
