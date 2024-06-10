@@ -47,9 +47,15 @@ function BrandsListWithFilters({
                 key={category.name}
                 onClick={() => setCategoryFilter(category.name)}
               >
-                <SimpleGrid columns={2} spacingX={3}>
+                <SimpleGrid
+                  columns={{ base: 1, md: 2, lg: 2 }}
+                  spacingX={3}
+                  spacingY={2}
+                >
                   {category.name}
-                  <FontAwesomeIcon icon={category.buttonIcon} />
+                  <Container centerContent>
+                    <FontAwesomeIcon icon={category.buttonIcon} />
+                  </Container>
                 </SimpleGrid>
               </Tab>
             );
