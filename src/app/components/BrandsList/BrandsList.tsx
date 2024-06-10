@@ -17,7 +17,7 @@ import {
   faGlobe,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 /**
  * Button of brand list component
@@ -29,9 +29,6 @@ function BrandListButton({
   brand: BrandType;
   categoryFilter: string;
 }): JSX.Element {
-  // Router instance
-  const router = useRouter();
-
   // Show or not brand menu
   const [showBrandMenu, setShowBrandMenu] = useState<boolean>(false);
 
@@ -44,32 +41,35 @@ function BrandListButton({
    * PDF Catalog button internal component
    */
   const PDFCatalogButton = (
-    <IconButton
-      size={'lg'}
-      icon={<FontAwesomeIcon icon={faFilePdf} className='h-6' />}
-      colorScheme={'yellow'}
-      aria-label={'PDF Catalog'}
-      onClick={() =>
-        router.push(`/brand-detail/${brand.name}/${categoryFilter}`)
-      }
+    <Link
+      href={`/brand-detail/${brand.name}/${categoryFilter}`}
+      target='_blank'
     >
-      <></>
-    </IconButton>
+      <IconButton
+        size={'lg'}
+        icon={<FontAwesomeIcon icon={faFilePdf} className='h-6' />}
+        colorScheme={'yellow'}
+        aria-label={'PDF Catalog'}
+      >
+        <></>
+      </IconButton>
+    </Link>
   );
 
   /**
    * Online Catalog button internal component
    */
   const OnlineCatalogButton = (
-    <IconButton
-      size={'lg'}
-      icon={<FontAwesomeIcon icon={faGlobe} className='h-6' />}
-      colorScheme={'yellow'}
-      aria-label={'Online Catalog'}
-      onClick={() => router.push(`/brand-detail-online/${brand.name}`)}
-    >
-      <></>
-    </IconButton>
+    <Link href={`/brand-detail-online/${brand.name}`} target='_blank'>
+      <IconButton
+        size={'lg'}
+        icon={<FontAwesomeIcon icon={faGlobe} className='h-6' />}
+        colorScheme={'yellow'}
+        aria-label={'Online Catalog'}
+      >
+        <></>
+      </IconButton>
+    </Link>
   );
 
   return (
