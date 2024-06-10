@@ -21,7 +21,7 @@ function BrandOnlineContent({
     <div>
       {/*SDF Brand*/}
       {brandName.toLowerCase().includes('sdf') && data.credentials.jwt && (
-        <form action={data.url}>
+        <form action={data.url} target='_blank'>
           <input type='hidden' name='jwt' value={data.credentials.jwt} />
           <Button
             leftIcon={<FontAwesomeIcon icon={faGlobe} className='h-4' />}
@@ -40,7 +40,7 @@ function BrandOnlineContent({
         <>
           <h4>
             Connettiti al sito{' '}
-            <Link href={data.url} className='text-blue-500'>
+            <Link href={data.url} className='text-blue-500' target='_blank'>
               {data.url}
             </Link>{' '}
             con le seguenti credenziali:
