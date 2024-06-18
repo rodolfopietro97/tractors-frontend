@@ -1,165 +1,222 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   faFile,
   faFolder,
   faPlusCircle,
   faMinusCircle,
+  faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import clsx from 'clsx';
+import { getPdfFileUri } from '@/utils/coder';
+import { NodeElement } from '@/app/components/TreeView/types.d';
+import {
+  getAllFilesOfANode,
+  nodeHasSubFolders,
+  pathArrayToObject,
+} from '@/utils';
+import {
+  Input,
+  InputGroup,
+  InputLeftElement,
+  SimpleGrid,
+} from '@chakra-ui/react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { API_URL } from '@/fetchers';
-import { coder } from '@/utils/coder';
+import clsx from 'clsx';
 
 /**
- * NodeElement type for graph representation
+ * Default FolderList component.
+ * Given a node, it will render a list of the children folders.
  */
-type NodeElement = {
-  element: { relativePath: string; file: string };
-  children: Array<NodeElement>;
-};
-
-/**
- * Convert an array of paths to an object
- *
- * @param paths Array of paths
- * @returns NodeElement object
- */
-function pathArrayToObject(paths: Array<string>): NodeElement {
-  const root: NodeElement = {
-    element: { relativePath: '', file: '' },
-    children: [],
-  };
-
-  paths.forEach((path) => {
-    const parts = path.split('/');
-    let current = root;
-
-    parts.forEach((part) => {
-      let child = current.children.find(
-        (child) => child.element.relativePath === part
-      );
-
-      if (!child) {
-        child = { element: { relativePath: part, file: path }, children: [] };
-        current.children.push(child);
-      }
-
-      current = child;
-    });
-  });
-
-  return root;
-}
-
-function TreeEntryButton({
+function FoldersList({
   node,
-  showChildren,
-  setShowChildren,
-  children,
+  setFilesToShow,
+  isRootNode,
 }: {
   node: NodeElement;
-  showChildren: boolean;
-  setShowChildren: (showChildren: boolean) => void;
-  children: JSX.Element;
+  setFilesToShow: (files: NodeElement[]) => void;
+  isRootNode: boolean;
 }): JSX.Element {
-  // Router
-  const router = useRouter();
+  // Show or not the children folders hook
+  const [showChildrenFolders, setShowChildrenFolders] = useState<boolean>(true);
 
-  // Brand name
-  const brandName = useMemo<string>(() => {
-    if (!router.query.brandDetailOptions) return '';
-    return router.query.brandDetailOptions[0] as string;
-  }, [router.query.brandDetailOptions]);
+  // Understood if the folder has subfolders or not.
+  const hasSubFolders = useMemo<boolean>(() => nodeHasSubFolders(node), [node]);
 
-  // Link to file
-  const fileLink = useMemo<string>(() => {
-    const fileUri = encodeURI(node.element.file);
-    const fileUriBase64 = coder.encode(fileUri);
-    return `/catalog/${fileUriBase64}`;
-  }, [node.element.file, brandName]);
+  /**
+   * List of the children the folder (if the element is a folder)
+   */
+  const ChildrenElements = node.children.map((child, index) => {
+    return (
+      <FoldersList
+        key={index}
+        node={child}
+        setFilesToShow={setFilesToShow}
+        // Children folders are not root folders
+        isRootNode={false}
+      />
+    );
+  });
 
-  return (
-    <>
-      {node.children.length > 0 ? (
-        /*Entry - Button folder*/
-        <button
-          onClick={() => setShowChildren(!showChildren)}
-          className={clsx({
-            'my-2': node.children.length > 0,
-            'my-1': node.children.length === 0,
-            'hover:underline': node.children.length === 0,
-          })}
-        >
-          {children}
-          {node.element.relativePath}
-        </button>
-      ) : (
-        /*Link - Button file*/
-        <>
-          <Link href={fileLink} target='_blank' className={'hover:underline'}>
-            {children}
+  // Element is a folder
+  if (node.children.length > 0)
+    return (
+      // List of folders
+      <div className='flex flex-col justify-items-start'>
+        {/*Folder buttons*/}
+        <div className='flex flex-row'>
+          {/*Show or hide children folders button*/}
+          {hasSubFolders && (
+            <button
+              onClick={() => {
+                // Show or hide children folders
+                setShowChildrenFolders(!showChildrenFolders);
+              }}
+            >
+              {/*Plus and minus simbols for folders*/}
+              <FontAwesomeIcon
+                icon={showChildrenFolders ? faMinusCircle : faPlusCircle}
+                className='mr-2 h-4'
+              />
+            </button>
+          )}
+          {/*Folder button*/}
+          <button
+            className={clsx({
+              'my-2 flex flex-row hover:underline': true,
+              'ml-2': hasSubFolders,
+              'ml-4': !hasSubFolders,
+            })}
+            onClick={() => {
+              // If the folder is the root folder, we need to show all files
+              if (isRootNode) setFilesToShow(getAllFilesOfANode(node));
+              // Set files to show (the files of the folder)
+              else setFilesToShow(node.children);
+            }}
+          >
+            {/*Folder icon*/}
+            <FontAwesomeIcon className='mr-2 h-6' icon={faFolder} />
+
+            {/*Folder name*/}
             {node.element.relativePath}
-          </Link>
-        </>
-      )}
-    </>
+          </button>
+        </div>
+
+        {/*Other folders - recursive part*/}
+        {showChildrenFolders && <div className='ml-7'>{ChildrenElements}</div>}
+      </div>
+    );
+
+  // Element is a file. Don't show anything
+  return <></>;
+}
+
+/**
+ * File element.
+ * It will render a single file element.
+ */
+function FileElement({ node }: { node: NodeElement }): JSX.Element {
+  // Link to the file
+  const fileLink = useMemo<string>(() => getPdfFileUri(node), [node]);
+
+  // File element
+  return (
+    <Link
+      className='my-3 flex flex-col justify-center text-center hover:underline'
+      href={fileLink}
+      target='_blank'
+    >
+      <FontAwesomeIcon icon={faFile} className={'h-12'} />
+      {node.element.relativePath}
+    </Link>
   );
 }
 
 /**
- * Default TreeNode component
+ * List of files to shown when a folder is clicked.
  */
-function TreeNode({
-  node,
-  level,
+function FilesList({
+  filesToShow,
 }: {
-  node: NodeElement;
-  level: number;
+  filesToShow: NodeElement[];
 }): JSX.Element {
-  // Show or hide children
-  const [showChildren, setShowChildren] = useState<boolean>(true);
+  return (
+    <SimpleGrid columns={{ base: 2, md: 3, lg: 4 }} spacingX='10px'>
+      {filesToShow.map((file, index) => {
+        // Don't show folders
+        if (file.children.length === 0)
+          return <FileElement key={index} node={file} />;
+      })}
+    </SimpleGrid>
+  );
+}
+
+/**
+ * Represents a tree node.
+ * It is a recursive component.
+ * It will render a folder list (on the left) and its children (on the right).
+ */
+function TreeNode({ node }: { node: NodeElement }): JSX.Element {
+  // Files to show into the lateral right panel
+  const [filesToShow, setFilesToShow] = useState<NodeElement[]>([]);
+
+  // Search input value
+  const [searchValue, setSearchValue] = useState<string>('');
+
+  // Sort files to show by name
+  const sortedFilesToShow = useMemo<NodeElement[]>(
+    () =>
+      filesToShow
+        // Sort files by name
+        .sort((element1, element2) =>
+          element1.element.relativePath.localeCompare(
+            element2.element.relativePath
+          )
+        )
+        // Filter files by search value
+        .filter((element) =>
+          element.element.relativePath
+            .toLowerCase()
+            .includes(searchValue.toLowerCase())
+        ),
+    [filesToShow, searchValue]
+  );
+
+  // Initial files to show effect
+  useEffect(() => {
+    // Set the files to show to all files of the initial node
+    setFilesToShow(getAllFilesOfANode(node));
+  }, []);
 
   return (
-    <div>
-      {/*Entry*/}
-      {node.element.relativePath !== '' && ( // Avoid null element root
-        <TreeEntryButton
+    // Main container. It is a flex container with two columns, and two rows (if mobile)
+    <div className='flex w-screen flex-col justify-center md:h-[calc(100vh-60px)] md:flex-row'>
+      {/*Search bar AND List of folders*/}
+      <div className='flex h-[calc((100vh-60px)/2)] flex-col overflow-x-scroll overflow-y-scroll border-b-2 border-r-0 px-5 py-10 md:h-full md:w-1/3 md:border-b-0 md:border-r-2'>
+        {/*Search bar*/}
+        <InputGroup className='mb-7'>
+          <InputLeftElement pointerEvents='none'>
+            <FontAwesomeIcon icon={faMagnifyingGlass} className='mx-2 h-4' />
+          </InputLeftElement>
+          <Input
+            id='search'
+            type='text'
+            placeholder='Cerca'
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+        </InputGroup>
+        {/*List of folders*/}
+        <FoldersList
           node={node}
-          showChildren={showChildren}
-          setShowChildren={setShowChildren}
-        >
-          <>
-            {/*Plus and minus simbols for folders*/}
-            {node.children.length > 0 && (
-              <FontAwesomeIcon
-                icon={showChildren ? faMinusCircle : faPlusCircle}
-                className='mr-2 h-6'
-              />
-            )}
+          setFilesToShow={setFilesToShow}
+          // First folder is a root folder
+          isRootNode={true}
+        />
+      </div>
 
-            {/*Folder or file icon*/}
-            <FontAwesomeIcon
-              icon={node.children.length > 0 ? faFolder : faFile}
-              className={clsx({
-                'mr-2': true,
-                'h-6': node.children.length > 0,
-                'h-10': node.children.length > 0 && level === 2,
-              })}
-            />
-          </>
-        </TreeEntryButton>
-      )}
-
-      {/*Children*/}
-      {node.children.length > 0 && showChildren && (
-        <div className='ml-10'>
-          {node.children.map((child, index) => (
-            <TreeNode key={index} node={child} level={level + 1} />
-          ))}
-        </div>
-      )}
+      {/*List of files when a folder is clicked*/}
+      <div className='h-[calc((100vh-60px)/2)] w-full overflow-y-scroll py-10 md:h-full md:w-2/3'>
+        <FilesList filesToShow={sortedFilesToShow} />
+      </div>
     </div>
   );
 }
@@ -169,12 +226,19 @@ function TreeNode({
  * Given a list of paths, it will render a tree view.
  */
 function TreeView({ paths }: { paths: Array<string> }): JSX.Element {
-  const pathsObject = useMemo<NodeElement>(
-    () => pathArrayToObject(paths),
+  /**
+   * Path object.
+   * It is a tree representation of the paths.
+   * Every element is a NodeElement.
+   */
+  const pathObject = useMemo<NodeElement>(
+    // Remove first element (root), 'brands' folder and 'brand_name' folder
+    () => pathArrayToObject(paths).children[0].children[0].children[0],
     [paths]
   );
 
-  return <TreeNode node={pathsObject} level={0} />;
+  // Render the tree
+  return <TreeNode node={pathObject} />;
 }
 
 export { TreeView, TreeNode };
