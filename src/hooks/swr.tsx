@@ -1,5 +1,6 @@
 import { genericFetcher, UrlType, FetcherBodyType } from '@/fetchers';
 import useSWR from 'swr';
+import { JWT_REFRESH_TIME } from '@/utils';
 
 /**
  * Get all PDF files of a brand
@@ -268,7 +269,7 @@ function useTokenRefresh(
       genericFetcher('POST', url as UrlType, {
         body,
       }).then((res) => res.json()),
-    { refreshInterval: 10000 }
+    { refreshInterval: JWT_REFRESH_TIME }
   );
 }
 
