@@ -10,6 +10,7 @@ import {
   PageLayout,
   LAYOUT_TYPE,
   PDFViewerLayout,
+  BrandFilesLayout,
 } from '@/app/components/Layouts';
 import { CustomerRegistrationCheckMiddleware } from '@/middleware-components';
 import { useContext, useEffect, useState } from 'react';
@@ -108,6 +109,14 @@ export function Layout({
           /*Middlewares*/
           <CustomerRegistrationCheckMiddleware>
             <PDFViewerLayout>{children}</PDFViewerLayout>
+          </CustomerRegistrationCheckMiddleware>
+        );
+
+      case LAYOUT_TYPE.BRAND_FILES:
+        return (
+          /*Middlewares*/
+          <CustomerRegistrationCheckMiddleware>
+            <BrandFilesLayout navbar={mainNavbar}>{children}</BrandFilesLayout>
           </CustomerRegistrationCheckMiddleware>
         );
     }
