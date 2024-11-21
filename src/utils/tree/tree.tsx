@@ -10,8 +10,10 @@ function pathArrayToObject(paths: Array<string>): NodeElement {
   const root: NodeElement = {
     element: { relativePath: '', file: '' },
     children: [],
+    id: 0,
   };
 
+  let currentNodeId = 0;
   paths.forEach((path) => {
     const parts = path.split('/');
     let current = root;
@@ -22,7 +24,11 @@ function pathArrayToObject(paths: Array<string>): NodeElement {
       );
 
       if (!child) {
-        child = { element: { relativePath: part, file: path }, children: [] };
+        child = {
+          element: { relativePath: part, file: path },
+          children: [],
+          id: ++currentNodeId,
+        };
         current.children.push(child);
       }
 

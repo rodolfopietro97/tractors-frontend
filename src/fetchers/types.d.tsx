@@ -40,7 +40,8 @@ type UrlType =
   // ********** Payments Endpoints **********
   | 'payments/products/'
   | 'payments/create-checkout-session/'
-  | 'payments/get-subscription/';
+  | 'payments/get-subscription/'
+  | 'payments/delete-subscription/';
 
 /**
  * Fetcher body type.
@@ -137,7 +138,9 @@ type FetcherBodyType<TUrlType extends UrlType> =
                                                   ? null
                                                   : TUrlType extends 'payments/get-subscription/'
                                                     ? null
-                                                    : never;
+                                                    : TUrlType extends 'payments/delete-subscription/'
+                                                      ? null
+                                                      : never;
 
 /**
  * Response
@@ -201,7 +204,9 @@ type APIResponse<TUrlType extends UrlType> =
                                                   ? {}
                                                   : TUrlType extends 'payments/get-subscription/'
                                                     ? null
-                                                    : never;
+                                                    : TUrlType extends 'payments/delete-subscription/'
+                                                      ? null
+                                                      : never;
 
 export {
   type FetcherMethodType,

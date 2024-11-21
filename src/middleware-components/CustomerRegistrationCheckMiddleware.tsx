@@ -1,11 +1,12 @@
 import { useContext } from 'react';
-import { AuthenticationContext, UserInfoContextContext } from '@/contexts';
+import { UserInfoContextContext } from '@/contexts';
 import { Article } from '@/app/components/Article';
 import { CustomerRegistrationAndUpdateForm } from '@/app/components/Forms';
+import { MiddlewareSkeleton } from '@/middleware-components/MiddlewareSkeleton';
 
 /**
  * Middleware to check if the customer is registered or not.
- * If customer is registered we can see content,
+ * If a customer is registered, we can see content,
  * otherwise we can see the registration form.
  */
 function CustomerRegistrationCheckMiddleware({
@@ -13,16 +14,12 @@ function CustomerRegistrationCheckMiddleware({
 }: {
   children: JSX.Element;
 }): JSX.Element {
-  // Authentication context
-  const { token, isJWTValid } = useContext(AuthenticationContext);
-
   // UserInfo context
   const { customerExists } = useContext(UserInfoContextContext);
 
   return (
-    <>
-      {token !== null && isJWTValid ? (
-        // User is logged in
+    <MiddlewareSkeleton
+      loggedInChildren={
         <>
           {customerExists ? (
             // Customer exists (No need to register)
@@ -49,11 +46,9 @@ function CustomerRegistrationCheckMiddleware({
             </Article>
           )}
         </>
-      ) : (
-        // User is not logged in
-        <>{children}</>
-      )}
-    </>
+      }
+      notLoggedInChildren={children}
+    />
   );
 }
 

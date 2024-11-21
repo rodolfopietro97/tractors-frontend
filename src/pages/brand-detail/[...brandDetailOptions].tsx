@@ -17,14 +17,7 @@ const BrandDetail: NextPageWithLayout = () => {
   const router = useRouter();
 
   // Auth context
-  const { token, isJWTValid } = useContext(AuthenticationContext);
-
-  // Redirect to pricing if not logged in
-  useEffect(() => {
-    if (!isJWTValid) {
-      router.push('/pricing');
-    }
-  }, [isJWTValid, router]);
+  const { token } = useContext(AuthenticationContext);
 
   // Brand name
   const brandName = useMemo<string | null>(() => {
@@ -63,13 +56,9 @@ const BrandDetail: NextPageWithLayout = () => {
 
   return (
     <main>
-      <Article
-        isLoading={isLoading || data?.code == 'token_not_valid'}
-        error={error}
-        border
-      >
+      {ordereFilesListFilteredByCategory.length > 0 && (
         <TreeView paths={ordereFilesListFilteredByCategory} />
-      </Article>
+      )}
     </main>
   );
 };
@@ -80,7 +69,7 @@ const BrandDetail: NextPageWithLayout = () => {
  * @param page - Page to wrap
  */
 BrandDetail.getLayout = function getLayout(page: ReactElement) {
-  return <Layout layoutType={LAYOUT_TYPE.PAGE}>{page}</Layout>;
+  return <Layout layoutType={LAYOUT_TYPE.BRAND_FILES}>{page}</Layout>;
 };
 
 export default BrandDetail;

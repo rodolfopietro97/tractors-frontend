@@ -5,6 +5,7 @@ import {
   useCheckCompanyRegistration,
   useGetCompany,
   useGetCustomer,
+  useSubscription,
 } from '@/hooks';
 import { AuthenticationContext, UserInfoContextContextType } from '..';
 
@@ -14,8 +15,10 @@ import { AuthenticationContext, UserInfoContextContextType } from '..';
 const UserInfoContextContext = createContext<UserInfoContextContextType>({
   customerExists: false,
   companyExists: false,
+  hasSubscription: false,
   customer: null,
   company: null,
+  subscription: null,
   error: null,
   isLoading: false,
 });
@@ -25,7 +28,7 @@ const UserInfoContextContext = createContext<UserInfoContextContextType>({
  */
 function UserInfoProvider({ children }: { children: JSX.Element }) {
   // Authentication context
-  const { token, isJWTValid } = useContext(AuthenticationContext);
+  const { token } = useContext(AuthenticationContext);
 
   // Customer (if exists)
   const {
@@ -41,43 +44,49 @@ function UserInfoProvider({ children }: { children: JSX.Element }) {
     isLoading: checkCompanyIsLoading,
   } = useCheckCompanyRegistration(token);
 
-  // Customer
+  // Subscription (if exists)
+  const {
+    data: checkSubscriptionData,
+    error: checkSubscriptionError,
+    isLoading: checkSubscriptionIsLoading,
+  } = useSubscription(token);
+
+  // Customer exists
   const customerExists = useMemo<boolean>(() => {
     // Logged in
-    if (
-      token !== null &&
-      isJWTValid &&
-      !checkCustomerError &&
-      !checkCustomerIsLoading
-    ) {
+    if (token !== null && !checkCustomerError && !checkCustomerIsLoading) {
       return checkCustomerData?.customer_completed_registration;
     }
     return false;
-  }, [
-    checkCustomerData,
-    checkCustomerError,
-    checkCustomerIsLoading,
-    isJWTValid,
-    token,
-  ]);
+  }, [checkCustomerData, checkCustomerError, checkCustomerIsLoading, token]);
 
-  // Company
+  // Company exists
   const companyExists = useMemo<boolean>(() => {
     // Logged in
-    if (
-      token !== null &&
-      isJWTValid &&
-      !checkCompanyError &&
-      !checkCompanyIsLoading
-    ) {
+    if (token !== null && !checkCompanyError && !checkCompanyIsLoading) {
       return checkCompanyData?.company_completed_registration;
     }
     return false;
+  }, [checkCompanyData, checkCompanyError, checkCompanyIsLoading, token]);
+
+  // Subscription exists
+  const hasSubscription = useMemo<boolean>(() => {
+    // Logged in
+    if (
+      token !== null &&
+      !checkSubscriptionError &&
+      !checkSubscriptionIsLoading
+    ) {
+      return (
+        checkSubscriptionData[0] !== undefined &&
+        checkSubscriptionData[0] !== null
+      );
+    }
+    return false;
   }, [
-    checkCompanyData,
-    checkCompanyError,
-    checkCompanyIsLoading,
-    isJWTValid,
+    checkSubscriptionData,
+    checkSubscriptionError,
+    checkSubscriptionIsLoading,
     token,
   ]);
 
@@ -132,8 +141,10 @@ function UserInfoProvider({ children }: { children: JSX.Element }) {
       value={{
         customerExists: customerExists,
         companyExists: companyExists,
+        hasSubscription: hasSubscription,
         customer: customerExists ? customerData : null,
         company: companyExists ? companyData : null,
+        subscription: hasSubscription ? checkSubscriptionData[0] : null,
         error: error,
         isLoading: isLoading,
       }}

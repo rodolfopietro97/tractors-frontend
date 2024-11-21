@@ -31,10 +31,14 @@ function FoldersList({
   node,
   setFilesToShow,
   isRootNode,
+  clickedFolder,
+  setClickedFolder,
 }: {
   node: NodeElement;
   setFilesToShow: (files: NodeElement[]) => void;
   isRootNode: boolean;
+  clickedFolder: number;
+  setClickedFolder: (clickedFolder: number) => void;
 }): JSX.Element {
   // Show or not the children folders hook
   const [showChildrenFolders, setShowChildrenFolders] = useState<boolean>(true);
@@ -53,6 +57,8 @@ function FoldersList({
         setFilesToShow={setFilesToShow}
         // Children folders are not root folders
         isRootNode={false}
+        clickedFolder={clickedFolder}
+        setClickedFolder={setClickedFolder}
       />
     );
   });
@@ -85,12 +91,16 @@ function FoldersList({
               'my-2 flex flex-row hover:underline': true,
               'ml-2': hasSubFolders,
               'ml-4': !hasSubFolders,
+              'font-black': clickedFolder === node.id,
             })}
             onClick={() => {
               // If the folder is the root folder, we need to show all files
               if (isRootNode) setFilesToShow(getAllFilesOfANode(node));
               // Set files to show (the files of the folder)
               else setFilesToShow(node.children);
+
+              // Set the clicked folder
+              setClickedFolder(node.id);
             }}
           >
             {/*Folder icon*/}
@@ -162,6 +172,9 @@ function TreeNode({ node }: { node: NodeElement }): JSX.Element {
   // Search input value
   const [searchValue, setSearchValue] = useState<string>('');
 
+  // Clicked folder
+  const [clickedFolder, setClickedFolder] = useState<number>(node.id);
+
   // Sort files to show by name
   const sortedFilesToShow = useMemo<NodeElement[]>(
     () =>
@@ -210,6 +223,8 @@ function TreeNode({ node }: { node: NodeElement }): JSX.Element {
           setFilesToShow={setFilesToShow}
           // First folder is a root folder
           isRootNode={true}
+          clickedFolder={clickedFolder}
+          setClickedFolder={setClickedFolder}
         />
       </div>
 

@@ -277,6 +277,23 @@ const getCheckoutSessionFetcher = (
   );
 };
 
+/**
+ * Delete a subscription
+ */
+const deleteSubscriptionFetcher = (token: string): Promise<Response> => {
+  // Set url
+  const url: UrlType = 'payments/delete-subscription/';
+
+  // Set body
+  const body: FetcherBodyType<'payments/delete-subscription/'> = null;
+
+  // Return fetcher
+  return genericFetcher('DELETE', url as 'payments/delete-subscription/', {
+    token: token,
+    body,
+  });
+};
+
 export {
   contactsFormFetcher,
   createUpdateCustomerFetcher,
@@ -290,4 +307,5 @@ export {
   createUpdateCompanyFetcher,
   getCheckoutSessionFetcher,
   genericFetcher,
+  deleteSubscriptionFetcher,
 };

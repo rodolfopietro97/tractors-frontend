@@ -15,14 +15,7 @@ const BrandDetailOnline: NextPageWithLayout = () => {
   const router = useRouter();
 
   // Auth context
-  const { token, isJWTValid } = useContext(AuthenticationContext);
-
-  // Redirect to pricing if not logged in
-  useEffect(() => {
-    if (!isJWTValid) {
-      router.push('/pricing');
-    }
-  }, [isJWTValid, router]);
+  const { token } = useContext(AuthenticationContext);
 
   // Brand name
   const brandName = useMemo<string | null>(() => {

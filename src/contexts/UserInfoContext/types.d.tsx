@@ -1,3 +1,5 @@
+import { SubscriptionType } from '@/app/components/Sucscription';
+
 /**
  * UserInfo context type
  */
@@ -7,6 +9,7 @@ type UserInfoContextContextType = {
    */
   customerExists: boolean;
   companyExists: boolean;
+  hasSubscription: boolean;
 
   /**
    * Customer data
@@ -14,13 +17,6 @@ type UserInfoContextContextType = {
   customer: {
     name: string;
     surname: string;
-    fiscal_code: string;
-    phone_number: string;
-    nation: string;
-    region: string;
-    council: string;
-    city: string;
-    address: string;
   } | null;
 
   /**
@@ -33,6 +29,11 @@ type UserInfoContextContextType = {
     pec: string;
     unique_company_code: string;
   } | null;
+
+  /**
+   * Subscription data
+   */
+  subscription: SubscriptionType | null;
 
   /**
    * Error loading request

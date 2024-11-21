@@ -1,8 +1,7 @@
 import { ReactElement, useContext } from 'react';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
 import { NextPageWithLayout } from '@/pages/_app';
-import { useSubscription } from '@/hooks';
-import { AuthenticationContext } from '@/contexts';
+import { UserInfoContextContext } from '@/contexts';
 import {
   SubscriptionHandler,
   SubscriptionType,
@@ -13,19 +12,13 @@ import { Article } from '@/app/components/Article';
  * Subscription page
  */
 const Subscription: NextPageWithLayout = () => {
-  // Authentication context
-  const { token } = useContext(AuthenticationContext);
-
-  // Get the list of products available
-  const { data, error, isLoading } = useSubscription(token);
+  // UserInfo context
+  const { subscription } = useContext(UserInfoContextContext);
 
   return (
     <main>
-      <Article isLoading={isLoading || !data} error={error} border>
-        {/* List of all products */}
-        {data && data[0] && (
-          <SubscriptionHandler subscription={data[0] as SubscriptionType} />
-        )}
+      <Article border>
+        <SubscriptionHandler subscription={subscription} />
       </Article>
     </main>
   );
