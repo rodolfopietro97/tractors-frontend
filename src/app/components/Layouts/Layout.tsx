@@ -12,7 +12,10 @@ import {
   PDFViewerLayout,
   BrandFilesLayout,
 } from '@/app/components/Layouts';
-import { CustomerRegistrationCheckMiddleware } from '@/middleware-components';
+import {
+  CustomerRegistrationCheckMiddleware,
+  SubscriptionCheckMiddleware,
+} from '@/middleware-components';
 import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { PageLoader } from '@/app/components/PageLoader';
@@ -99,7 +102,9 @@ export function Layout({
           >
             {/*Middlewares*/}
             <CustomerRegistrationCheckMiddleware>
-              {children}
+              <SubscriptionCheckMiddleware>
+                {children}
+              </SubscriptionCheckMiddleware>
             </CustomerRegistrationCheckMiddleware>
           </PageLayout>
         );
@@ -108,7 +113,9 @@ export function Layout({
         return (
           /*Middlewares*/
           <CustomerRegistrationCheckMiddleware>
-            <PDFViewerLayout>{children}</PDFViewerLayout>
+            <SubscriptionCheckMiddleware>
+              <PDFViewerLayout>{children}</PDFViewerLayout>
+            </SubscriptionCheckMiddleware>
           </CustomerRegistrationCheckMiddleware>
         );
 
@@ -116,7 +123,11 @@ export function Layout({
         return (
           /*Middlewares*/
           <CustomerRegistrationCheckMiddleware>
-            <BrandFilesLayout navbar={mainNavbar}>{children}</BrandFilesLayout>
+            <SubscriptionCheckMiddleware>
+              <BrandFilesLayout navbar={mainNavbar}>
+                {children}
+              </BrandFilesLayout>
+            </SubscriptionCheckMiddleware>
           </CustomerRegistrationCheckMiddleware>
         );
     }
