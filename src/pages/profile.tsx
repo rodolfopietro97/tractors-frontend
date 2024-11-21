@@ -56,8 +56,8 @@ const Profile: NextPageWithLayout = () => {
                       defaultValues={{
                         name: customer.name,
                         surname: customer.surname,
-                        fiscal_code: customer.fiscal_code,
-                        phone_number: customer.phone_number,
+                        fiscal_code: "customer.fiscal_code",
+                        phone_number: "customer.phone_number",
                       }}
                     />
                   </>
