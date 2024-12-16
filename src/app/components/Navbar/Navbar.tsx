@@ -15,6 +15,7 @@ import { RowColHelper } from '../RowColHelper';
 import { AuthenticationContext } from '@/contexts';
 import { Button } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+import { useAuthentication } from '@/hooks';
 
 /**
  * Type for Menu Entry
@@ -38,7 +39,7 @@ function NavbarActionButtons({
   const router = useRouter();
 
   // Authentication context
-  const { doLogout, token } = useContext(AuthenticationContext);
+  const { doLogout, token } = useAuthentication();
 
   // Is submitting
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -163,7 +164,7 @@ function Navbar({
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   // Authentication context
-  const { token } = useContext(AuthenticationContext);
+  const { token } = useAuthentication();
 
   return (
     // Big Navbar. It is a global div that center our navbar container

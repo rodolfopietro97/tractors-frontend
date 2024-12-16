@@ -19,7 +19,7 @@ import {
   faMagnifyingGlassPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/router';
-import { useFileSignedUrl } from '@/hooks';
+import { useAuthentication, useFileSignedUrl } from '@/hooks';
 import { AuthenticationContext } from '@/contexts';
 import { coder } from '@/utils/coder';
 import { IconButton } from '@chakra-ui/react';
@@ -33,7 +33,7 @@ const PDFViewer: NextPageWithLayout = () => {
   const zoomPluginInstance = zoomPlugin({ enableShortcuts: false });
 
   // Auth context
-  const { token } = useContext(AuthenticationContext);
+  const { token } = useAuthentication();
 
   // File url
   const fileUrl = useMemo<string | null>(() => {

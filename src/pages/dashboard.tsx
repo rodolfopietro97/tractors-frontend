@@ -1,6 +1,6 @@
 'use client';
 import { AuthenticationContext } from '@/contexts';
-import { useUserDetails } from '@/hooks';
+import { useAuthentication, useUserDetails } from '@/hooks';
 import {
   faBook,
   faUser,
@@ -22,7 +22,7 @@ const Dashboard: NextPageWithLayout = () => {
   const router = useRouter();
 
   // Authentication context
-  const { token } = useContext(AuthenticationContext);
+  const { token } = useAuthentication();
 
   // User details
   const { data, error, isLoading } = useUserDetails(token);

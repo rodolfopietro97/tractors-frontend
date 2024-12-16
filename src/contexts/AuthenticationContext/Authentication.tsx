@@ -6,11 +6,6 @@ import { useAuthenticationStore } from '@/hooks/store';
 import { useTokenRefresh } from '@/hooks';
 
 /**
- * Refresh interval in seconds
- */
-const REFRESH_INTERVAL_IN_SECONDS: number = 10;
-
-/**
  * Authentication context
  */
 const AuthenticationContext = createContext<
@@ -26,22 +21,41 @@ const AuthenticationContext = createContext<
  * Authentication provider
  */
 function AuthenticationProvider({ children }: { children: JSX.Element }) {
-  // Authentication store
+  /**
+   *  Authentication store.
+   * It is needed to persist the token and refresh token
+   */
   const authenticationStore = useAuthenticationStore();
 
-  // JWT Token valid or not or checking (null)
+  /**
+   * Check if JWT token is valid or not.
+   *
+   * * True: Valid
+   * * False: Invalid
+   * * Null: Checking...
+   */
   const [isJWTValid, setIsJWTValid] = useState<boolean | null>(null);
 
-  // Token refresh swr hook
+  /**
+   * SWR hook used to refresh the token every JWT_REFRESH_TIME.
+   */
   const { data: tokenRefreshData } = useTokenRefresh(
     authenticationStore.refreshToken,
     isJWTValid
   );
 
   /**
-   * Set new authentication tokens:
+   * Refresh the token effect.
    *
-   * Every time by using the token refresh hook.
+   * If:
+   *
+   * * JWT is valid
+   * AND
+   * * the Refresh token is present
+   * AND
+   * * the refresh token request is successful,
+   *
+   * THEN, do the login with the new token.
    */
   useEffect(() => {
     if (
@@ -55,7 +69,12 @@ function AuthenticationProvider({ children }: { children: JSX.Element }) {
         tokenRefreshData.access,
         authenticationStore.refreshToken as string
       );
-  }, [tokenRefreshData]);
+  }, [
+    tokenRefreshData,
+    authenticationStore.token,
+    authenticationStore.refreshToken,
+    tokenRefreshData,
+  ]);
 
   /**
    * Check if JWT token is valid:
@@ -89,12 +108,11 @@ function AuthenticationProvider({ children }: { children: JSX.Element }) {
   }, [authenticationStore.token]);
 
   /**
-   * If the token is:
-   *
-   * PRESENT BUT INVALID,
-   * THEN, do the logout.
+   * Do the logout at the login page if the JWT token is invalid.
    */
   useEffect(() => {
+    console.log('isJWTValid', isJWTValid);
+    console.log('authenticationStore.token', authenticationStore.token);
     if (isJWTValid === false && authenticationStore.token !== null) {
       authenticationStore.doLogout();
     }
@@ -117,13 +135,13 @@ function AuthenticationProvider({ children }: { children: JSX.Element }) {
         Token:{' '}
         {authenticationStore.token === null
           ? 'null'
-          : authenticationStore.token}
+          : authenticationStore.token.slice(0, 10) + '...'}
       </p>
       <p className='text-sm'>
         Refresh Token:{' '}
         {authenticationStore.refreshToken === null
           ? 'null'
-          : authenticationStore.refreshToken}
+          : authenticationStore.refreshToken.slice(0, 10) + '...'}
       </p>
     </>
   );
@@ -138,7 +156,7 @@ function AuthenticationProvider({ children }: { children: JSX.Element }) {
     >
       <>
         {/*Uncomment the following lines to see the token data*/}
-        {/*{AuthLogger}*/}
+        {AuthLogger}
         {children}
       </>
     </AuthenticationContext.Provider>

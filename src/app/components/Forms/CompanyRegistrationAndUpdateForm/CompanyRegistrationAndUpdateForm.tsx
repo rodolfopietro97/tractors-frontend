@@ -8,6 +8,7 @@ import { faBuilding, faEdit, faX } from '@fortawesome/free-solid-svg-icons';
 import { AuthenticationContext } from '@/contexts';
 import { Button } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useAuthentication } from '@/hooks';
 
 /**
  * Inputs type for Company Registrationform
@@ -69,7 +70,7 @@ function CompanyRegistrationAndUpdateForm({
   });
 
   // Authentication context
-  const { token } = useContext(AuthenticationContext);
+  const { token } = useAuthentication();
 
   // Handle form submit function
   const onSubmit: SubmitHandler<

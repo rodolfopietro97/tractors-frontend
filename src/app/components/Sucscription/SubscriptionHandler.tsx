@@ -17,6 +17,7 @@ import { useContext } from 'react';
 import { AuthenticationContext } from '@/contexts';
 import { deleteSubscriptionFetcher } from '@/fetchers';
 import Link from 'next/link';
+import { useAuthentication } from '@/hooks';
 
 function SubscriptionHandler({
   subscription,
@@ -24,7 +25,7 @@ function SubscriptionHandler({
   subscription: SubscriptionType | null;
 }): JSX.Element {
   // Authentication context
-  const { token } = useContext(AuthenticationContext);
+  const { token } = useAuthentication();
 
   // A subscription exists
   if (subscription !== null)

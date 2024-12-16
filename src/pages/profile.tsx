@@ -5,7 +5,7 @@ import {
   CustomerRegistrationAndUpdateForm,
 } from '@/app/components/Forms';
 import { AuthenticationContext, UserInfoContextContext } from '@/contexts';
-import { useUserDetails } from '@/hooks';
+import { useAuthentication, useUserDetails } from '@/hooks';
 import Link from 'next/link';
 import { ReactElement, useContext } from 'react';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
@@ -17,7 +17,7 @@ import { Article } from '@/app/components/Article';
  */
 const Profile: NextPageWithLayout = () => {
   // Authentication context
-  const { token } = useContext(AuthenticationContext);
+  const { token } = useAuthentication();
 
   // UserInfo context
   const { customer, company, customerExists, companyExists } = useContext(

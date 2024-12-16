@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { ReactElement, useContext, useEffect, useMemo } from 'react';
 import { AuthenticationContext } from '@/contexts';
-import { useBrandOnline } from '@/hooks';
+import { useAuthentication, useBrandOnline } from '@/hooks';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
 import { NextPageWithLayout } from '@/pages/_app';
 import { BrandOnlineContent } from '@/app/components/BrandOnlineContent';
@@ -15,7 +15,7 @@ const BrandDetailOnline: NextPageWithLayout = () => {
   const router = useRouter();
 
   // Auth context
-  const { token } = useContext(AuthenticationContext);
+  const { token } = useAuthentication();
 
   // Brand name
   const brandName = useMemo<string | null>(() => {

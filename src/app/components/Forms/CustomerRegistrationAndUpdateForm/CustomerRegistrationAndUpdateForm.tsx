@@ -8,6 +8,7 @@ import { FormsLayout } from '..';
 import { AuthenticationContext } from '@/contexts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from '@chakra-ui/react';
+import { useAuthentication } from '@/hooks';
 
 /**
  * Inputs type for Customer Registrationform
@@ -59,7 +60,7 @@ function CustomerRegistrationAndUpdateForm({
   });
 
   // Authentication context
-  const { token } = useContext(AuthenticationContext);
+  const { token } = useAuthentication();
 
   // Handle form submit function
   const onSubmit: SubmitHandler<

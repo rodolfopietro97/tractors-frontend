@@ -12,6 +12,7 @@ import { AuthenticationContext } from '@/contexts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRouter } from 'next/router';
 import { Button } from '@chakra-ui/react';
+import { useAuthentication } from '@/hooks';
 
 /**
  * Inputs type for login form
@@ -60,7 +61,7 @@ function LoginForm(): JSX.Element {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   // Login token. No token means no logged in user
-  const { doLogin } = useContext(AuthenticationContext);
+  const { doLogin } = useAuthentication();
 
   // Login errors
   const [loginError, setLoginError] = useState<string | null>(null);

@@ -18,6 +18,7 @@ import {
 } from '@chakra-ui/react';
 import { Card, CardBody, CardFooter } from '@chakra-ui/card';
 import { useRouter } from 'next/router';
+import { useAuthentication } from '@/hooks';
 
 /**
  * Single price plan component
@@ -32,7 +33,7 @@ function PricingPlanComponent({
   price: PricePlanType;
 }): JSX.Element {
   // Authentication context
-  const { token } = useContext(AuthenticationContext);
+  const { token } = useAuthentication();
 
   // Router
   const router = useRouter();

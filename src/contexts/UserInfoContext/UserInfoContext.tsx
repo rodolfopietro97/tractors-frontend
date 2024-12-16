@@ -6,6 +6,7 @@ import {
   useGetCompany,
   useGetCustomer,
   useSubscription,
+  useAuthentication,
 } from '@/hooks';
 import { AuthenticationContext, UserInfoContextContextType } from '..';
 
@@ -28,7 +29,7 @@ const UserInfoContextContext = createContext<UserInfoContextContextType>({
  */
 function UserInfoProvider({ children }: { children: JSX.Element }) {
   // Authentication context
-  const { token } = useContext(AuthenticationContext);
+  const { token } = useAuthentication();
 
   // Customer (if exists)
   const {

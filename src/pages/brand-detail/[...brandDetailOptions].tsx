@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { ReactElement, useContext, useEffect, useMemo } from 'react';
 import { AuthenticationContext } from '@/contexts';
-import { useBrandFilesList } from '@/hooks';
+import { useAuthentication, useBrandFilesList } from '@/hooks';
 import { API_URL } from '@/fetchers';
 import { BrandFilesType } from '@/app/components/BrandsList';
 import { TreeView } from '@/app/components/TreeView';
@@ -17,7 +17,7 @@ const BrandDetail: NextPageWithLayout = () => {
   const router = useRouter();
 
   // Auth context
-  const { token } = useContext(AuthenticationContext);
+  const { token } = useAuthentication();
 
   // Brand name
   const brandName = useMemo<string | null>(() => {

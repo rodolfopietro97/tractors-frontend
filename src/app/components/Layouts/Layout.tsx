@@ -21,6 +21,7 @@ import { useRouter } from 'next/router';
 import { PageLoader } from '@/app/components/PageLoader';
 import { JWT_CHECK_TIME } from '@/utils';
 import { handleRedirect } from '../../../utils/redirect-handler';
+import { useAuthentication } from '@/hooks';
 
 export function Layout({
   children,
@@ -30,7 +31,7 @@ export function Layout({
   layoutType: LAYOUT_TYPE;
 }): JSX.Element {
   // Authentication context
-  const { token } = useContext(AuthenticationContext);
+  const { token } = useAuthentication();
 
   // Router
   const router = useRouter();
