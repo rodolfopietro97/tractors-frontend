@@ -1,8 +1,8 @@
+import { Button } from '@/app/catalyst-components/button';
 import { BrandOnlineCredentialsContentData } from '@/app/components/BrandOnlineContent/types.d';
-import Link from 'next/link';
-import { Button } from '@chakra-ui/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Link from 'next/link';
 
 /**
  * Content for a single brand online
@@ -23,11 +23,8 @@ function BrandOnlineContent({
       {brandName.toLowerCase().includes('sdf') && data.credentials.jwt && (
         <form action={data.url} target='_blank'>
           <input type='hidden' name='jwt' value={data.credentials.jwt} />
-          <Button
-            leftIcon={<FontAwesomeIcon icon={faGlobe} className='h-4' />}
-            colorScheme={'blue'}
-            type='submit'
-          >
+          <Button color='white' type='submit'>
+            <FontAwesomeIcon icon={faGlobe} className='h-4' />
             Vai al portale
           </Button>
         </form>

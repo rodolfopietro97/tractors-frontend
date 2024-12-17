@@ -1,14 +1,14 @@
-import { useRouter } from 'next/router';
-import { FormsLayout } from '..';
-import { SelectInput, TextInput } from '../../ui/Input';
-import { useContext, useMemo, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { Button } from '@/app/catalyst-components/button';
 import { createUpdateCompanyFetcher } from '@/fetchers';
-import { faBuilding, faEdit, faX } from '@fortawesome/free-solid-svg-icons';
-import { AuthenticationContext } from '@/contexts';
-import { Button } from '@chakra-ui/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAuthentication } from '@/hooks';
+import { faBuilding, faEdit, faX } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRouter } from 'next/router';
+import { useMemo, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { FormsLayout } from '..';
+import { Spinner } from '../../Spinner';
+import { SelectInput, TextInput } from '../../ui/Input';
 
 /**
  * Inputs type for Company Registrationform
@@ -240,24 +240,30 @@ function CompanyRegistrationAndUpdateForm({
             // Update button
             <Button
               type='submit'
-              isLoading={isSubmitting}
-              rightIcon={<FontAwesomeIcon icon={faEdit} className='h-4' />}
               disabled={
-                JSON.stringify(watch()) === JSON.stringify(defaultValues)
+                JSON.stringify(watch()) === JSON.stringify(defaultValues) ||
+                isSubmitting
               }
-              colorScheme={'blue'}
+              color='blue'
             >
-              Update
+              {isSubmitting ? (
+                <Spinner size='xxs' />
+              ) : (
+                <>
+                  Aggiorna <FontAwesomeIcon icon={faEdit} className='h-4' />
+                </>
+              )}
             </Button>
           ) : (
             // Register button
-            <Button
-              type='submit'
-              isLoading={isSubmitting}
-              rightIcon={<FontAwesomeIcon icon={faBuilding} className='h-4' />}
-              colorScheme={'blue'}
-            >
-              Registra
+            <Button type='submit' disabled={isSubmitting} color='blue'>
+              {isSubmitting ? (
+                <Spinner size='xxs' />
+              ) : (
+                <>
+                  Registrati <FontAwesomeIcon icon={faBuilding} />
+                </>
+              )}
             </Button>
           )}
         </>
@@ -265,12 +271,8 @@ function CompanyRegistrationAndUpdateForm({
         {/* Continue without registering company */}
         <>
           {!update && (
-            <Button
-              colorScheme={'red'}
-              rightIcon={<FontAwesomeIcon icon={faX} className='h-4' />}
-              onClick={() => router.push('/dashboard')}
-            >
-              Non registrare
+            <Button color='red' onClick={() => router.push('/dashboard')}>
+              Non registrare <FontAwesomeIcon icon={faX} />
             </Button>
           )}
         </>

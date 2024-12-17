@@ -1,18 +1,31 @@
-import { Article } from '@/app/components/Article/Article';
+import { Container } from '@/app/components/Container';
 import { RegistrationForm } from '@/app/components/Forms';
-import { ReactElement } from 'react';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
+import { useAuthentication } from '@/hooks';
 import { NextPageWithLayout } from '@/pages/_app';
+import { useRouter } from 'next/router';
+import { ReactElement, useEffect } from 'react';
 
 /**
  * Registration page
  */
 const Register: NextPageWithLayout = () => {
+  // Authentication hook
+  const { token } = useAuthentication();
+
+  // Router instance
+  const router = useRouter();
+
+  // Redirect to brands page if the user is already logged in
+  useEffect(() => {
+    if (token !== null) router.push('/brands');
+  }, [token]);
+
   return (
     <main>
-      <Article border>
+      <Container>
         <RegistrationForm />
-      </Article>
+      </Container>
     </main>
   );
 };

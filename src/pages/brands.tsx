@@ -1,16 +1,16 @@
-import { Article } from '@/app/components/Article';
 import { BrandType } from '@/app/components/BrandsList';
-import { useBrandsList } from '@/hooks';
-import { ReactElement, useMemo } from 'react';
 import { BrandsListWithFilters } from '@/app/components/BrandsList/BrandsListWithFilters';
-import { NextPageWithLayout } from '@/pages/_app';
+import { Container } from '@/app/components/Container';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
+import { useBrandsList } from '@/hooks';
+import { NextPageWithLayout } from '@/pages/_app';
+import { ReactElement, useMemo } from 'react';
 
 /**
  * Brands catalog for logged user page
  */
 const Brands: NextPageWithLayout = () => {
-  // User details
+  // Brand list details
   const { data, error, isLoading } = useBrandsList();
 
   // All brands to fetch
@@ -29,14 +29,13 @@ const Brands: NextPageWithLayout = () => {
 
   return (
     <main>
-      <Article
+      <Container
         isLoading={isLoading || !data || !Array.isArray(data)}
         error={error}
-        border
       >
         {/* List of all brands */}
         <BrandsListWithFilters brands={brands} />
-      </Article>
+      </Container>
     </main>
   );
 };

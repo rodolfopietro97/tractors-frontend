@@ -1,7 +1,7 @@
-import { ReactElement } from 'react';
+import { Container } from '@/app/components/Container';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
 import { NextPageWithLayout } from '@/pages/_app';
-import { Article } from '@/app/components/Article';
+import { ReactElement } from 'react';
 
 /**
  * Terms page
@@ -9,12 +9,12 @@ import { Article } from '@/app/components/Article';
 const Privacy: NextPageWithLayout = () => {
   return (
     <main>
-      <Article border>
+      <Container>
         <p>
           Non c&apos;è nel documento, ma visto che ci sono gli utenti dovrebbe
           esserci qualcosa sulla privacy.
         </p>
-      </Article>
+      </Container>
     </main>
   );
 };

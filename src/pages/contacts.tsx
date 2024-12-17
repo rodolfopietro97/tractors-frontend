@@ -1,8 +1,8 @@
-import { Article } from '@/app/components/Article/Article';
+import { Container } from '@/app/components/Container';
 import { ContactsForm } from '@/app/components/Forms';
-import { ReactElement } from 'react';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
 import { NextPageWithLayout } from '@/pages/_app';
+import { ReactElement } from 'react';
 
 /**
  * Contacts page
@@ -10,9 +10,9 @@ import { NextPageWithLayout } from '@/pages/_app';
 const Contacts: NextPageWithLayout = () => {
   return (
     <main>
-      <Article border>
+      <Container>
         <ContactsForm />
-      </Article>
+      </Container>
     </main>
   );
 };

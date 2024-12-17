@@ -1,10 +1,10 @@
-import { PricingListComponent } from '@/app/components/PricingList/PricingListComponent';
-import { ReactElement, useMemo } from 'react';
+import { Container } from '@/app/components/Container';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
-import { NextPageWithLayout } from '@/pages/_app';
-import { useProductsList } from '@/hooks';
 import { ProductFuturePlanType } from '@/app/components/PricingList';
-import { Article } from '@/app/components/Article';
+import { PricingListComponent } from '@/app/components/PricingList/PricingListComponent';
+import { useProductsList } from '@/hooks';
+import { NextPageWithLayout } from '@/pages/_app';
+import { ReactElement, useMemo } from 'react';
 
 /**
  * Pricing page
@@ -40,14 +40,13 @@ const Pricing: NextPageWithLayout = () => {
 
   return (
     <main>
-      <Article
+      <Container
         isLoading={isLoading || !data || !Array.isArray(data)}
         error={error}
-        border
       >
         {/* List of all products */}
         {data && products && <PricingListComponent productFutures={products} />}
-      </Article>
+      </Container>
     </main>
   );
 };

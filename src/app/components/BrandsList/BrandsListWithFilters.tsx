@@ -1,17 +1,18 @@
 import { BrandType } from '@/app/components/BrandsList/types.d';
-import { BrandsList } from '@/app/components/BrandsList/BrandsList';
-import { useMemo, useState } from 'react';
 import { faTractor, faWrench } from '@fortawesome/free-solid-svg-icons';
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/tabs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Container, SimpleGrid } from '@chakra-ui/react';
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
+import clsx from 'clsx';
+import { useMemo, useState } from 'react';
+import { BrandsList } from '.';
+import { Container } from '../Container';
 
 /**
  * Main categories
  */
 const categories = [
-  { name: 'Trattori', buttonIcon: faTractor },
-  { name: 'Attrezzature', buttonIcon: faWrench },
+  { name: 'Trattori', icon: faTractor },
+  { name: 'Attrezzature', icon: faWrench },
 ];
 
 /**
@@ -35,45 +36,35 @@ function BrandsListWithFilters({
   }, [brands, categoryFilter]);
 
   return (
-    <Container centerContent>
-      <Tabs
-        className={'w-[300px] sm:w-[500px] md:w-[700px] lg:w-[1000px]'}
-        isFitted
-      >
-        <TabList>
-          {categories.map((category) => {
-            return (
-              <Tab
-                key={category.name}
-                onClick={() => setCategoryFilter(category.name)}
-              >
-                <SimpleGrid
-                  columns={{ base: 1, md: 2, lg: 2 }}
-                  spacingX={3}
-                  spacingY={2}
-                >
-                  {category.name}
-                  <Container centerContent>
-                    <FontAwesomeIcon icon={category.buttonIcon} />
-                  </Container>
-                </SimpleGrid>
-              </Tab>
-            );
-          })}
+    <Container>
+      <TabGroup>
+        <TabList className='flex flex-col justify-around py-7 sm:flex-row'>
+          {categories.map((category) => (
+            <Tab
+              key={category.name}
+              className={clsx({
+                'my-2 rounded-full border border-mainBorder px-4 py-2 text-sm/6 font-semibold text-black hover:bg-gray-200 sm:my-0':
+                  true,
+                'bg-gray-200': categoryFilter === category.name,
+              })}
+              onClick={() => setCategoryFilter(category.name)}
+            >
+              {category.name}
+              <FontAwesomeIcon icon={category.icon} className='mx-2' />
+            </Tab>
+          ))}
         </TabList>
-
         <TabPanels>
-          <TabPanel>
-            <BrandsList brands={filteredBrands} categoryFilter={'Trattori'} />
-          </TabPanel>
-          <TabPanel>
-            <BrandsList
-              brands={filteredBrands}
-              categoryFilter={'Attrezzature'}
-            />
-          </TabPanel>
+          {categories.map((category) => (
+            <TabPanel>
+              <BrandsList
+                brands={filteredBrands}
+                categoryFilter={category.name}
+              />
+            </TabPanel>
+          ))}
         </TabPanels>
-      </Tabs>
+      </TabGroup>
     </Container>
   );
 }

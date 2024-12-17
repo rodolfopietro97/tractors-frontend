@@ -1,18 +1,14 @@
 'use client';
-import { AuthenticationContext } from '@/contexts';
-import { useAuthentication, useUserDetails } from '@/hooks';
-import {
-  faBook,
-  faUser,
-  faCreditCard,
-} from '@fortawesome/free-solid-svg-icons';
-import { ReactElement, useContext } from 'react';
-import { NextPageWithLayout } from '@/pages/_app';
+import { Button } from '@/app/catalyst-components/button';
+import { Container } from '@/app/components/Container';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
-import { Article } from '@/app/components/Article';
-import { Button, SimpleGrid, Text } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
+import { useAuthentication, useUserDetails } from '@/hooks';
+import { NextPageWithLayout } from '@/pages/_app';
+import { SimpleGrid, Text } from '@chakra-ui/react';
+import { faCreditCard, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRouter } from 'next/router';
+import { ReactElement, useEffect } from 'react';
 
 /**
  * Dashboard page
@@ -24,16 +20,20 @@ const Dashboard: NextPageWithLayout = () => {
   // Authentication context
   const { token } = useAuthentication();
 
+  // Redirect to login page if the user is NOT logged in
+  useEffect(() => {
+    if (token === null) router.push('/login');
+  }, [token]);
+
   // User details
   const { data, error, isLoading } = useUserDetails(token);
 
   return (
     <main>
       <div>
-        <Article
+        <Container
           isLoading={isLoading || data?.code == 'token_not_valid'}
           error={error}
-          border
         >
           <>
             {data?.email && (
@@ -41,30 +41,21 @@ const Dashboard: NextPageWithLayout = () => {
                 <Text mb={10}>
                   <h1 className='text-2xl'>Benvenuto {data.email}</h1>
                 </Text>
-                <Button
-                  onClick={() => router.push('/profile')}
-                  leftIcon={<FontAwesomeIcon icon={faUser} className='h-4' />}
-                >
+                <Button color='white' onClick={() => router.push('/profile')}>
+                  <FontAwesomeIcon icon={faUser} />
                   Gestisci il tuo profilo
                 </Button>
                 <Button
-                  onClick={() => router.push('/brands')}
-                  leftIcon={<FontAwesomeIcon icon={faBook} className='h-4' />}
-                >
-                  Consulta il catalogo
-                </Button>
-                <Button
+                  color='white'
                   onClick={() => router.push('/subscription')}
-                  leftIcon={
-                    <FontAwesomeIcon icon={faCreditCard} className='h-4' />
-                  }
                 >
+                  <FontAwesomeIcon icon={faCreditCard} />
                   Sottoscrizioni e Pagamento
                 </Button>
               </SimpleGrid>
             )}
           </>
-        </Article>
+        </Container>
       </div>
     </main>
   );

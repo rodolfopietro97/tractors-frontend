@@ -1,9 +1,10 @@
+import { Container } from '@/app/components/Container';
 import { PasswordResetForm } from '@/app/components/Forms';
-import { useRouter } from 'next/router';
-import { ReactElement } from 'react';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
+import { useAuthentication } from '@/hooks';
 import { NextPageWithLayout } from '@/pages/_app';
-import { Article } from '@/app/components/Article';
+import { useRouter } from 'next/router';
+import { ReactElement, useEffect } from 'react';
 
 /**
  * Email confirmation page
@@ -12,9 +13,17 @@ const PasswordResetConfirm: NextPageWithLayout = () => {
   // Router
   const router = useRouter();
 
+  // Authentication context
+  const { token } = useAuthentication();
+
+  // Redirect to brands page if the user is already logged in
+  useEffect(() => {
+    if (token !== null) router.push('/brands');
+  }, [token]);
+
   return (
     <main>
-      <Article
+      <Container
         isLoading={
           router.query.userParameters === undefined ||
           router.query.userParameters[0] == undefined ||
@@ -25,7 +34,6 @@ const PasswordResetConfirm: NextPageWithLayout = () => {
             ? 'Link non valido'
             : undefined
         }
-        border
       >
         <>
           {router.query.userParameters &&
@@ -37,7 +45,7 @@ const PasswordResetConfirm: NextPageWithLayout = () => {
               />
             )}
         </>
-      </Article>
+      </Container>
     </main>
   );
 };

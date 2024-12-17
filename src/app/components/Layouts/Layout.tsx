@@ -1,27 +1,20 @@
-import { Header } from '@/app/components/Header';
 import { Footer } from '@/app/components/Footer';
-import { Navbar } from '@/app/components/Navbar';
+import { Header } from '@/app/components/Header';
 import {
-  AuthenticationContext,
-  AuthenticationProvider,
-  UserInfoProvider,
-} from '@/contexts';
-import {
-  PageLayout,
-  LAYOUT_TYPE,
-  PDFViewerLayout,
   BrandFilesLayout,
+  LAYOUT_TYPE,
+  PageLayout,
+  PDFViewerLayout,
 } from '@/app/components/Layouts';
-import {
-  CustomerRegistrationCheckMiddleware,
-  SubscriptionCheckMiddleware,
-} from '@/middleware-components';
-import { useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { PageLoader } from '@/app/components/PageLoader';
-import { JWT_CHECK_TIME } from '@/utils';
-import { handleRedirect } from '../../../utils/redirect-handler';
+import { Navbar } from '@/app/components/Navbar';
+import { AuthenticationProvider, UserInfoProvider } from '@/contexts';
 import { useAuthentication } from '@/hooks';
+import { CustomerRegistrationCheckMiddleware } from '@/middleware-components';
+import { JWT_CHECK_TIME } from '@/utils';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { handleRedirect } from '../../../utils/redirect-handler';
+import { Spinner } from '../Spinner';
 
 export function Layout({
   children,
@@ -103,32 +96,22 @@ export function Layout({
           >
             {/*Middlewares*/}
             <CustomerRegistrationCheckMiddleware>
-              <SubscriptionCheckMiddleware>
-                {children}
-              </SubscriptionCheckMiddleware>
+              {children}
             </CustomerRegistrationCheckMiddleware>
           </PageLayout>
         );
 
       case LAYOUT_TYPE.PDF_VIEWER:
         return (
-          /*Middlewares*/
-          <CustomerRegistrationCheckMiddleware>
-            <SubscriptionCheckMiddleware>
-              <PDFViewerLayout>{children}</PDFViewerLayout>
-            </SubscriptionCheckMiddleware>
-          </CustomerRegistrationCheckMiddleware>
+          // NOTE: No middleware here
+          <PDFViewerLayout>{children}</PDFViewerLayout>
         );
 
       case LAYOUT_TYPE.BRAND_FILES:
         return (
           /*Middlewares*/
           <CustomerRegistrationCheckMiddleware>
-            <SubscriptionCheckMiddleware>
-              <BrandFilesLayout navbar={mainNavbar}>
-                {children}
-              </BrandFilesLayout>
-            </SubscriptionCheckMiddleware>
+            <BrandFilesLayout navbar={mainNavbar}>{children}</BrandFilesLayout>
           </CustomerRegistrationCheckMiddleware>
         );
     }
@@ -139,7 +122,15 @@ export function Layout({
     <AuthenticationProvider>
       <UserInfoProvider>
         {/* Main page layout or loading (needed to wait correct JWT) */}
-        {isLoadingJWTToken ? <PageLoader /> : <LayoutToApply />}
+        {isLoadingJWTToken ? (
+          // Spinner over the page
+          <div className='flex h-screen w-screen items-center justify-center'>
+            <Spinner size='md' />
+          </div>
+        ) : (
+          // Apply the layout
+          <LayoutToApply />
+        )}
       </UserInfoProvider>
     </AuthenticationProvider>
   );

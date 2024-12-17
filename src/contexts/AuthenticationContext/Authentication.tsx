@@ -1,9 +1,9 @@
 'use client';
-import { tokenVerifyFetcher } from '@/fetchers';
-import { createContext, useEffect, useState } from 'react';
 import { AuthenticationContextType } from '@/contexts';
-import { useAuthenticationStore } from '@/hooks/store';
+import { tokenVerifyFetcher } from '@/fetchers';
 import { useTokenRefresh } from '@/hooks';
+import { useAuthenticationStore } from '@/hooks/store';
+import { createContext, useEffect, useState } from 'react';
 
 /**
  * Authentication context
@@ -110,13 +110,13 @@ function AuthenticationProvider({ children }: { children: JSX.Element }) {
   /**
    * Do the logout at the login page if the JWT token is invalid.
    */
-  useEffect(() => {
-    console.log('isJWTValid', isJWTValid);
-    console.log('authenticationStore.token', authenticationStore.token);
-    if (isJWTValid === false && authenticationStore.token !== null) {
-      authenticationStore.doLogout();
-    }
-  });
+  // useEffect(() => {
+  //   console.log('isJWTValid', isJWTValid);
+  //   console.log('authenticationStore.token', authenticationStore.token);
+  //   if (isJWTValid === false && authenticationStore.token !== null) {
+  //     authenticationStore.doLogout();
+  //   }
+  // });
 
   /**
    * Logger to see authentication data
@@ -156,7 +156,7 @@ function AuthenticationProvider({ children }: { children: JSX.Element }) {
     >
       <>
         {/*Uncomment the following lines to see the token data*/}
-        {AuthLogger}
+        {/* {AuthLogger} */}
         {children}
       </>
     </AuthenticationContext.Provider>

@@ -1,11 +1,10 @@
-import { useRouter } from 'next/router';
-import { ReactElement, useContext, useEffect, useMemo } from 'react';
-import { AuthenticationContext } from '@/contexts';
-import { useAuthentication, useBrandOnline } from '@/hooks';
-import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
-import { NextPageWithLayout } from '@/pages/_app';
 import { BrandOnlineContent } from '@/app/components/BrandOnlineContent';
-import { Article } from '@/app/components/Article';
+import { Container } from '@/app/components/Container';
+import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
+import { useAuthentication, useBrandOnline } from '@/hooks';
+import { NextPageWithLayout } from '@/pages/_app';
+import { useRouter } from 'next/router';
+import { ReactElement, useEffect, useMemo } from 'react';
 
 /**
  * Brand detail page
@@ -16,6 +15,11 @@ const BrandDetailOnline: NextPageWithLayout = () => {
 
   // Auth context
   const { token } = useAuthentication();
+
+  // Redirect to login page if the user is NOT logged in
+  useEffect(() => {
+    if (token === null) router.push('/login');
+  }, [token]);
 
   // Brand name
   const brandName = useMemo<string | null>(() => {
@@ -32,13 +36,13 @@ const BrandDetailOnline: NextPageWithLayout = () => {
 
   return (
     <main>
-      <Article isLoading={data === undefined || brandName === null} border>
+      <Container isLoading={data === undefined || brandName === null}>
         <>
           {data !== undefined && brandName !== null && (
             <BrandOnlineContent brandName={brandName as string} data={data} />
           )}
         </>
-      </Article>
+      </Container>
     </main>
   );
 };

@@ -14,7 +14,7 @@ function BrandFilesLayout({
     // Main layout
     <div className='flex h-screen w-full flex-col justify-center overflow-y-hidden bg-main'>
       {/* Navbar */}
-      <div className='w-full bg-navbar text-navbarText'>{navbar}</div>
+      <div className='w-full bg-white'>{navbar}</div>
 
       {/* Scroll layout */}
       <div className='flex h-auto w-full flex-grow flex-col overflow-y-auto'>

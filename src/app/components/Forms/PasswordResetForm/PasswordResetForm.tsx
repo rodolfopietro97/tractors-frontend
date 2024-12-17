@@ -1,12 +1,13 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { faRefresh } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { Button } from '@/app/catalyst-components/button';
 import { passwordResetConfirmFetcher } from '@/fetchers';
-import { TextInput } from '../../ui/Input';
-import { FormsLayout } from '..';
+import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { FormsLayout } from '..';
+import { Spinner } from '../../Spinner';
+import { TextInput } from '../../ui/Input';
 
 /**
  * Inputs type for password reset form
@@ -125,13 +126,14 @@ function PasswordResetForm({
             )}
         </div>
 
-        <Button
-          type='submit'
-          isLoading={isSubmitting}
-          rightIcon={<FontAwesomeIcon icon={faRefresh} className='h-4' />}
-          colorScheme={'red'}
-        >
-          Reset
+        <Button type='submit' disabled={isSubmitting} color={'red'}>
+          {isSubmitting ? (
+            <Spinner size='xxs' />
+          ) : (
+            <>
+              Reset <FontAwesomeIcon icon={faRefresh} />
+            </>
+          )}
         </Button>
       </FormsLayout.Body>
     </form>

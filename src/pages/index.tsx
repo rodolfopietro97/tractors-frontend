@@ -1,15 +1,28 @@
-import { Article } from '@/app/components/Article';
-import { NextPageWithLayout } from '@/pages/_app';
-import { ReactElement } from 'react';
+import { Container } from '@/app/components/Container';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
+import { useAuthentication } from '@/hooks';
+import { NextPageWithLayout } from '@/pages/_app';
+import { useRouter } from 'next/router';
+import { ReactElement, useEffect } from 'react';
 
 /**
  * Home page
  */
 const Home: NextPageWithLayout = () => {
+  // Authentication hook
+  const { token } = useAuthentication();
+
+  // Router instance
+  const router = useRouter();
+
+  // Redirect to brands page if the user is already logged in
+  useEffect(() => {
+    if (token !== null) router.push('/brands');
+  }, [token]);
+
   return (
     <main>
-      <Article border>
+      <Container>
         <>
           <h1 className='text-2xl'>Home page</h1>
           <p className='my-10'>
@@ -17,7 +30,7 @@ const Home: NextPageWithLayout = () => {
             3
           </p>
         </>
-      </Article>
+      </Container>
     </main>
   );
 };

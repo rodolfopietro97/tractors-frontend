@@ -1,7 +1,7 @@
-import { ReactElement } from 'react';
+import { Container } from '@/app/components/Container';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
 import { NextPageWithLayout } from '@/pages/_app';
-import { Article } from '@/app/components/Article';
+import { ReactElement } from 'react';
 
 /**
  * Terms page
@@ -9,9 +9,9 @@ import { Article } from '@/app/components/Article';
 const Terms: NextPageWithLayout = () => {
   return (
     <main>
-      <Article border>
+      <Container>
         <p>Ci saranno tutti i termini e le condizioni.</p>
-      </Article>
+      </Container>
     </main>
   );
 };

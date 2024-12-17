@@ -1,20 +1,21 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { Button } from '@/app/catalyst-components/button';
 import { signUpFetcher } from '@/fetchers';
-import { TextInput } from '../../ui/Input';
-import { FormsLayout } from '..';
 import {
-  Button,
   Checkbox,
   Container,
   ListItem,
   Text,
   UnorderedList,
 } from '@chakra-ui/react';
-import Link from 'next/link';
+import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { FormsLayout } from '..';
+import { Spinner } from '../../Spinner';
+import { TextInput } from '../../ui/Input';
 
 /**
  * Inputs type for Registration form
@@ -169,13 +170,17 @@ function RegistrationForm(): JSX.Element {
 
         {/* Register */}
         <Button
-          isDisabled={!termsAccepted}
+          disabled={!termsAccepted || isSubmitting}
           type='submit'
-          isLoading={isSubmitting}
-          rightIcon={<FontAwesomeIcon icon={faUserPlus} className='h-4' />}
-          colorScheme={'blue'}
+          color={'lime'}
         >
-          Registra
+          {isSubmitting ? (
+            <Spinner size='xxs' />
+          ) : (
+            <>
+              Registrati <FontAwesomeIcon icon={faUserPlus} />
+            </>
+          )}
         </Button>
       </FormsLayout.Body>
     </form>

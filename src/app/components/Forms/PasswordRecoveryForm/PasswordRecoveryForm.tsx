@@ -1,12 +1,13 @@
-import { faKitMedical } from '@fortawesome/free-solid-svg-icons';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { Button } from '@/app/catalyst-components/button';
 import { passwordResetFetcher } from '@/fetchers';
-import { TextInput } from '../../ui/Input';
-import { FormsLayout } from '..';
+import { faKitMedical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { FormsLayout } from '..';
+import { Spinner } from '../../Spinner';
+import { TextInput } from '../../ui/Input';
 
 /**
  * Inputs type for password recovery form
@@ -87,13 +88,14 @@ function PasswordRecoveryForm(): JSX.Element {
         </p>
 
         {/* Reset */}
-        <Button
-          type='submit'
-          rightIcon={<FontAwesomeIcon icon={faKitMedical} className='h-4' />}
-          isLoading={isSubmitting}
-          colorScheme={'red'}
-        >
-          Recupera Password
+        <Button type='submit' disabled={isSubmitting} color={'red'}>
+          {isSubmitting ? (
+            <Spinner size='xxs' />
+          ) : (
+            <>
+              Recupera Password <FontAwesomeIcon icon={faKitMedical} />
+            </>
+          )}
         </Button>
       </FormsLayout.Body>
     </form>

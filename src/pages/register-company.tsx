@@ -1,9 +1,11 @@
-import { Article } from '@/app/components/Article/Article';
-import { CompanyRegistrationAndUpdateForm } from '@/app/components/Forms/CompanyRegistrationAndUpdateForm';
-import { UserInfoContextContext } from '@/contexts/UserInfoContext';
-import { ReactElement, useContext } from 'react';
+import { Container } from '@/app/components/Container';
+import { CompanyRegistrationAndUpdateForm } from '@/app/components/Forms';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
+import { UserInfoContextContext } from '@/contexts/UserInfoContext';
+import { useAuthentication } from '@/hooks';
 import { NextPageWithLayout } from '@/pages/_app';
+import { useRouter } from 'next/router';
+import { ReactElement, useContext, useEffect } from 'react';
 
 /**
  * Registration page
@@ -12,9 +14,20 @@ const RegisterCompany: NextPageWithLayout = () => {
   // UserInfo context
   const { companyExists, customerExists } = useContext(UserInfoContextContext);
 
+  // Authentication hook
+  const { token } = useAuthentication();
+
+  // Router instance
+  const router = useRouter();
+
+  // Redirect to login page if the user is NOT logged in
+  useEffect(() => {
+    if (token === null) router.push('/login');
+  }, [token]);
+
   return (
     <main>
-      <Article border>
+      <Container>
         <>
           {companyExists ? (
             // Company already registered
@@ -56,7 +69,7 @@ const RegisterCompany: NextPageWithLayout = () => {
             </>
           )}
         </>
-      </Article>
+      </Container>
     </main>
   );
 };

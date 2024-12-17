@@ -1,29 +1,28 @@
-import React, { ReactElement, useContext, useMemo } from 'react';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
 import { NextPageWithLayout } from '@/pages/_app';
 import { Viewer, Worker } from '@react-pdf-viewer/core';
+import { ReactElement, useEffect, useMemo } from 'react';
 
 // Import the styles for pdf-viewer. Core and Zoom plugins
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/zoom/lib/styles/index.css';
 
+import { RowColHelper } from '@/app/components/RowColHelper';
 import {
   RenderZoomInProps,
   RenderZoomOutProps,
   zoomPlugin,
 } from '@react-pdf-viewer/zoom';
-import { RowColHelper } from '@/app/components/RowColHelper';
 
+import { Button } from '@/app/catalyst-components/button';
+import { useAuthentication, useFileSignedUrl } from '@/hooks';
+import { coder } from '@/utils/coder';
 import {
   faMagnifyingGlassMinus,
   faMagnifyingGlassPlus,
 } from '@fortawesome/free-solid-svg-icons';
-import { useRouter } from 'next/router';
-import { useAuthentication, useFileSignedUrl } from '@/hooks';
-import { AuthenticationContext } from '@/contexts';
-import { coder } from '@/utils/coder';
-import { IconButton } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRouter } from 'next/router';
 
 const PDFViewer: NextPageWithLayout = () => {
   // Router
@@ -34,6 +33,11 @@ const PDFViewer: NextPageWithLayout = () => {
 
   // Auth context
   const { token } = useAuthentication();
+
+  // Redirect to login page if the user is NOT logged in
+  useEffect(() => {
+    if (token === null) router.push('/login');
+  }, [token]);
 
   // File url
   const fileUrl = useMemo<string | null>(() => {
@@ -51,42 +55,32 @@ const PDFViewer: NextPageWithLayout = () => {
       <div onContextMenu={(e) => e.preventDefault()}>
         <RowColHelper
           classNames={[
-            'flex flex-row justify-center',
-            'flex flex-row justify-center',
+            'flex flex-row justify-center px-2 py-1',
+            'flex flex-row justify-center px-2 py-1',
           ]}
           className='flex h-[44px] flex-row justify-center border border-gray-200 bg-[#fcfdfe]'
         >
           <zoomPluginInstance.ZoomOut>
             {(props: RenderZoomOutProps) => (
-              <IconButton
-                ml={1}
-                mr={1}
+              <Button
                 onClick={props.onClick}
                 aria-label='zoom out'
-                icon={
-                  <FontAwesomeIcon
-                    icon={faMagnifyingGlassMinus}
-                    className='h-4'
-                  />
-                }
-              />
+                color='white'
+              >
+                <FontAwesomeIcon icon={faMagnifyingGlassMinus} />
+              </Button>
             )}
           </zoomPluginInstance.ZoomOut>
 
           <zoomPluginInstance.ZoomIn>
             {(props: RenderZoomInProps) => (
-              <IconButton
-                ml={1}
-                mr={1}
+              <Button
                 onClick={props.onClick}
                 aria-label='zoom in'
-                icon={
-                  <FontAwesomeIcon
-                    icon={faMagnifyingGlassPlus}
-                    className='h-4'
-                  />
-                }
-              />
+                color='white'
+              >
+                <FontAwesomeIcon icon={faMagnifyingGlassPlus} />
+              </Button>
             )}
           </zoomPluginInstance.ZoomIn>
         </RowColHelper>

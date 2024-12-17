@@ -1,13 +1,11 @@
-import { useRouter } from 'next/router';
-import { ReactElement, useContext, useEffect, useMemo } from 'react';
-import { AuthenticationContext } from '@/contexts';
-import { useAuthentication, useBrandFilesList } from '@/hooks';
-import { API_URL } from '@/fetchers';
 import { BrandFilesType } from '@/app/components/BrandsList';
-import { TreeView } from '@/app/components/TreeView';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
+import { TreeView } from '@/app/components/TreeView';
+import { API_URL } from '@/fetchers';
+import { useAuthentication, useBrandFilesList } from '@/hooks';
 import { NextPageWithLayout } from '@/pages/_app';
-import { Article } from '@/app/components/Article';
+import { useRouter } from 'next/router';
+import { ReactElement, useEffect, useMemo } from 'react';
 
 /**
  * Brand detail page
@@ -18,6 +16,11 @@ const BrandDetail: NextPageWithLayout = () => {
 
   // Auth context
   const { token } = useAuthentication();
+
+  // Redirect to login page if the user is NOT logged in
+  useEffect(() => {
+    if (token === null) router.push('/login');
+  }, [token]);
 
   // Brand name
   const brandName = useMemo<string | null>(() => {

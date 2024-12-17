@@ -1,12 +1,13 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { faMailForward } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { Button } from '@/app/catalyst-components/button';
 import { contactsFormFetcher } from '@/fetchers';
-import { TextAreaInput, TextInput } from '../../ui/Input';
-import { FormsLayout } from '..';
+import { faMailForward } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { FormsLayout } from '..';
+import { Spinner } from '../../Spinner';
+import { TextAreaInput, TextInput } from '../../ui/Input';
 
 /**
  * Inputs type for the contact form
@@ -136,13 +137,14 @@ function ContactsForm(): JSX.Element {
         />
 
         {/* Submit */}
-        <Button
-          type='submit'
-          rightIcon={<FontAwesomeIcon icon={faMailForward} className='h-4' />}
-          isLoading={isSubmitting}
-          colorScheme={'blue'}
-        >
-          Invia
+        <Button type='submit' disabled={isSubmitting} color={'blue'}>
+          {isSubmitting ? (
+            <Spinner size='xxs' />
+          ) : (
+            <>
+              Invia <FontAwesomeIcon icon={faMailForward} className='h-4' />
+            </>
+          )}
         </Button>
       </FormsLayout.Body>
     </form>

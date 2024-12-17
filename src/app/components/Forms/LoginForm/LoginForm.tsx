@@ -1,18 +1,18 @@
+import { Button } from '@/app/catalyst-components/button';
+import { loginFetcher } from '@/fetchers';
+import { useAuthentication } from '@/hooks';
 import {
   faRightToBracket,
   faUserPlus,
 } from '@fortawesome/free-solid-svg-icons';
-import Link from 'next/link';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { useContext, useState } from 'react';
-import { loginFetcher } from '@/fetchers';
-import { TextInput } from '../../ui/Input';
-import { FormsLayout } from '..';
-import { AuthenticationContext } from '@/contexts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Button } from '@chakra-ui/react';
-import { useAuthentication } from '@/hooks';
+import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { FormsLayout } from '..';
+import { Spinner } from '../../Spinner';
+import { TextInput } from '../../ui/Input';
 
 /**
  * Inputs type for login form
@@ -108,24 +108,19 @@ function LoginForm(): JSX.Element {
         {/* Submit buttons */}
         <FormsLayout.PairRow>
           {/* Register */}
-          <Button
-            rightIcon={<FontAwesomeIcon icon={faUserPlus} className='h-4' />}
-            colorScheme={'blackAlpha'}
-            onClick={() => router.push('/register')}
-          >
-            Registra
+          <Button color={'lime'} onClick={() => router.push('/register')}>
+            Registrati <FontAwesomeIcon icon={faUserPlus} />
           </Button>
 
           {/* Login */}
-          <Button
-            isLoading={isSubmitting}
-            type='submit'
-            rightIcon={
-              <FontAwesomeIcon icon={faRightToBracket} className='h-4' />
-            }
-            colorScheme={'blue'}
-          >
-            <span className='mx-2 text-sm'>Login</span>
+          <Button disabled={isSubmitting} type='submit' color={'white'}>
+            {isSubmitting ? (
+              <Spinner size='xxs' />
+            ) : (
+              <>
+                Login <FontAwesomeIcon icon={faRightToBracket} />
+              </>
+            )}
           </Button>
         </FormsLayout.PairRow>
       </FormsLayout.Body>

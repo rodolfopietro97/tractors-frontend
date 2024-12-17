@@ -1,16 +1,17 @@
 'use client';
 
+import { Container } from '@/app/components/Container';
 import {
   CompanyRegistrationAndUpdateForm,
   CustomerRegistrationAndUpdateForm,
 } from '@/app/components/Forms';
-import { AuthenticationContext, UserInfoContextContext } from '@/contexts';
-import { useAuthentication, useUserDetails } from '@/hooks';
-import Link from 'next/link';
-import { ReactElement, useContext } from 'react';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
+import { UserInfoContextContext } from '@/contexts';
+import { useAuthentication, useUserDetails } from '@/hooks';
 import { NextPageWithLayout } from '@/pages/_app';
-import { Article } from '@/app/components/Article';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { ReactElement, useContext, useEffect } from 'react';
 
 /**
  * Profile page
@@ -24,16 +25,23 @@ const Profile: NextPageWithLayout = () => {
     UserInfoContextContext
   );
 
+  // Router instance
+  const router = useRouter();
+
+  // Redirect to login page if the user is NOT logged in
+  useEffect(() => {
+    if (token === null) router.push('/login');
+  }, [token]);
+
   // User details
   const { data, error, isLoading } = useUserDetails(token);
 
   return (
     <main>
       <div>
-        <Article
+        <Container
           isLoading={isLoading || data?.code == 'token_not_valid'}
           error={error}
-          border
         >
           <>
             {data?.email && customerExists && customer && (
@@ -106,7 +114,7 @@ const Profile: NextPageWithLayout = () => {
               </>
             )}
           </>
-        </Article>
+        </Container>
       </div>
     </main>
   );

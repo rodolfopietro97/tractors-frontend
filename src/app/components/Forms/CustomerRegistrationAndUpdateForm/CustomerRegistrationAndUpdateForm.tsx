@@ -1,14 +1,14 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { faEdit, faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import { useContext, useMemo, useState } from 'react';
-import { useRouter } from 'next/router';
+import { Button } from '@/app/catalyst-components/button';
 import { createUpdateCustomerFetcher } from '@/fetchers';
-import { TextInput } from '../../ui/Input';
-import { FormsLayout } from '..';
-import { AuthenticationContext } from '@/contexts';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button } from '@chakra-ui/react';
 import { useAuthentication } from '@/hooks';
+import { faEdit, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRouter } from 'next/router';
+import { useMemo, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { FormsLayout } from '..';
+import { Spinner } from '../../Spinner';
+import { TextInput } from '../../ui/Input';
 
 /**
  * Inputs type for Customer Registrationform
@@ -155,24 +155,30 @@ function CustomerRegistrationAndUpdateForm({
             // Update button
             <Button
               type='submit'
-              isLoading={isSubmitting}
-              rightIcon={<FontAwesomeIcon icon={faEdit} className='h-4' />}
-              colorScheme={'blue'}
+              color={'blue'}
               disabled={
-                JSON.stringify(watch()) === JSON.stringify(defaultValues)
+                JSON.stringify(watch()) === JSON.stringify(defaultValues) ||
+                isSubmitting
               }
             >
-              Aggiorna
+              {isSubmitting ? (
+                <Spinner size='xxs' />
+              ) : (
+                <>
+                  Aggiorna <FontAwesomeIcon icon={faEdit} />
+                </>
+              )}
             </Button>
           ) : (
             // Register button
-            <Button
-              type='submit'
-              isLoading={isSubmitting}
-              rightIcon={<FontAwesomeIcon icon={faUserPlus} className='h-4' />}
-              colorScheme={'blue'}
-            >
-              Registra
+            <Button type='submit' disabled={isSubmitting} color={'blue'}>
+              {isSubmitting ? (
+                <Spinner size='xxs' />
+              ) : (
+                <>
+                  Registrati <FontAwesomeIcon icon={faUserPlus} />
+                </>
+              )}
             </Button>
           )}
         </>

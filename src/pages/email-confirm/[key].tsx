@@ -1,21 +1,22 @@
-import { emailConfirmFetcher } from '@/fetchers';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { ReactElement, useState } from 'react';
+import { Button } from '@/app/catalyst-components/button';
+import { Container } from '@/app/components/Container';
 import { Layout, LAYOUT_TYPE } from '@/app/components/Layouts';
+import { Spinner } from '@/app/components/Spinner';
+import { emailConfirmFetcher } from '@/fetchers';
+import { useAuthentication } from '@/hooks';
 import { NextPageWithLayout } from '@/pages/_app';
-import { Article } from '@/app/components/Article';
 import {
-  Button,
   Checkbox,
-  Container,
   ListItem,
   Stack,
   Text,
   UnorderedList,
 } from '@chakra-ui/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { ReactElement, useEffect, useState } from 'react';
 
 /**
  * Email confirmation page
@@ -23,6 +24,14 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 const EmailConfirmation: NextPageWithLayout = () => {
   // Router
   const router = useRouter();
+
+  // Authentication context
+  const { token } = useAuthentication();
+
+  // Redirect to brands page if the user is already logged in
+  useEffect(() => {
+    if (token !== null) router.push('/brands');
+  }, [token]);
 
   // If request is submitting
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -61,8 +70,8 @@ const EmailConfirmation: NextPageWithLayout = () => {
 
   return (
     <main>
-      <Article border>
-        <Container centerContent>
+      <Container>
+        <>
           <Stack spacing={10}>
             <Text>
               Cliccando &quot;Conferma&quot;, registrerai un nuovo account.{' '}
@@ -85,7 +94,7 @@ const EmailConfirmation: NextPageWithLayout = () => {
               </ListItem>
             </UnorderedList>
 
-            <Container centerContent>
+            <Container>
               <Checkbox
                 isInvalid
                 onChange={(e) => setTermsAccepted(e.target.checked)}
@@ -94,14 +103,17 @@ const EmailConfirmation: NextPageWithLayout = () => {
               </Checkbox>
             </Container>
             <Button
-              colorScheme='blue'
-              isLoading={isSubmitting}
-              size='md'
+              color='blue'
               onClick={() => confirmEmail()}
-              rightIcon={<FontAwesomeIcon icon={faCheck} className='h-4' />}
-              isDisabled={!termsAccepted}
+              disabled={!termsAccepted || isSubmitting}
             >
-              Conferma
+              {isSubmitting ? (
+                <Spinner size='xxs' />
+              ) : (
+                <>
+                  Conferma <FontAwesomeIcon icon={faCheck} />
+                </>
+              )}
             </Button>
           </Stack>
           {emailConfirmationError && (
@@ -109,8 +121,8 @@ const EmailConfirmation: NextPageWithLayout = () => {
               {emailConfirmationError}
             </p>
           )}
-        </Container>
-      </Article>
+        </>
+      </Container>
     </main>
   );
 };
