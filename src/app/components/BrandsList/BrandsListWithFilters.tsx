@@ -56,7 +56,7 @@ function BrandsListWithFilters({
         </TabList>
         <TabPanels>
           {categories.map((category) => (
-            <TabPanel>
+            <TabPanel key={category.name}>
               <BrandsList
                 brands={filteredBrands}
                 categoryFilter={category.name}
